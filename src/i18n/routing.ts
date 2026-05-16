@@ -6,9 +6,9 @@ export type Locale = (typeof locales)[number];
 
 export const routing = defineRouting({
   locales,
-  defaultLocale: 'zh',
-  localePrefix: 'always', // Changed to 'always' for consistent URL structure
-  localeDetection: true,  // Enabled automatic locale detection
+  defaultLocale: 'en',
+  localePrefix: 'always',
+  localeDetection: true,
 });
 
 export const { Link, redirect, usePathname, useRouter } = createNavigation(routing);
