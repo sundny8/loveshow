@@ -21,7 +21,7 @@ try {
 export default {
   schema: './src/db/schema.ts',
   out: './drizzle',
-  dialect: 'postgresql',
+  driver: 'postgresql',
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
