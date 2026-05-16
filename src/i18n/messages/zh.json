@@ -1,0 +1,1323 @@
+{
+  "common": {
+    "appName": "StartFast Pro",
+    "loading": "加载中...",
+    "error": "出错了",
+    "success": "成功！",
+    "cancel": "取消",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "create": "创建",
+    "submit": "提交",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "search": "搜索",
+    "filter": "筛选",
+    "sort": "排序",
+    "viewAll": "查看全部",
+    "learnMore": "了解更多"
+  },
+  "nav": {
+    "features": "功能",
+    "pricing": "价格",
+    "testimonials": "用户评价",
+    "faq": "常见问题",
+    "docs": "文档",
+    "blog": "博客",
+    "signIn": "登录",
+    "signUp": "注册",
+    "signOut": "退出",
+    "getStarted": "开始使用",
+    "myAccount": "我的账户",
+    "admin": "管理后台",
+    "dashboard": "仪表盘",
+    "settings": "设置",
+    "billing": "账单"
+  },
+  "hero": {
+    "badge": "LoveShow · 用创意留住爱",
+    "title": {
+      "part1": "让每一次创作",
+      "highlight": "都有光"
+    },
+    "description": {
+      "line1": "一次拍摄，一次生成锁定专属于您的瞬间。",
+      "line2": "LoveShow 用 AI 引擎，让专业影像变成一次点击就搞定的事。"
+    },
+    "cta": {
+      "primary": "创作图片",
+      "secondary": "创作音乐",
+      "tertiary": "创作艺术照",
+      "column520": "520专栏"
+    },
+    "stats": {
+      "sizes": "证件照尺寸",
+      "engines": "AI 引擎冗余",
+      "time": "单张平均耗时"
+    }
+  },
+  "features": {
+    "title": "你需要的一切",
+    "subtitle": "构建 SaaS 所需的所有功能，预配置完成，开箱即用。",
+    "authentication": {
+      "title": "认证系统",
+      "description": "使用 Better-Auth 的安全认证，支持邮箱/密码、OAuth 和魔法链接。"
+    },
+    "payments": {
+      "title": "支付集成",
+      "description": "Stripe 订阅和一次性支付集成，包含 Webhook 处理。"
+    },
+    "email": {
+      "title": "邮件服务",
+      "description": "使用 Resend 发送事务性邮件。包含精美的邮件模板。"
+    },
+    "database": {
+      "title": "数据库",
+      "description": "使用 Drizzle ORM 和 PostgreSQL 进行类型安全的数据库操作。"
+    },
+    "darkMode": {
+      "title": "深色模式",
+      "description": "使用 next-themes 支持精美的深色模式。自动检测系统偏好。"
+    },
+    "seo": {
+      "title": "SEO 优化",
+      "description": "内置 SEO 最佳实践，包含 meta 标签、Open Graph 和 JSON-LD。"
+    },
+    "i18n": {
+      "title": "国际化",
+      "description": "使用 next-intl 内置多语言支持。轻松添加新语言。"
+    },
+    "roles": {
+      "title": "角色权限",
+      "description": "细粒度权限控制，包含管理员、成员和访客角色。支持团队邀请。"
+    },
+    "analytics": {
+      "title": "数据分析",
+      "description": "预配置 Posthog 分析钩子。轻松追踪事件和用户行为。"
+    },
+    "blog": {
+      "title": "博客系统",
+      "description": "MDX 驱动的博客，包含语法高亮、阅读时间和 SEO 优化。"
+    },
+    "testing": {
+      "title": "端到端测试",
+      "description": "预配置 Playwright 测试和 CI/CD 工作流。放心地测试你的应用。"
+    },
+    "proUI": {
+      "title": "Pro UI 组件",
+      "description": "高级 UI 组件，包含数据表格、图表、模态框等。"
+    }
+  },
+  "pricing": {
+    "title": "简单定价",
+    "subtitle": "免费开始，按需升级。",
+    "free": {
+      "name": "免费版",
+      "price": "¥0",
+      "description": "适合入门",
+      "features": [
+        "无限项目",
+        "认证系统",
+        "邮件集成",
+        "社区支持"
+      ],
+      "cta": "开始使用"
+    },
+    "pro": {
+      "name": "专业版",
+      "price": "¥199",
+      "period": "/月",
+      "description": "适合成长中的企业",
+      "features": [
+        "免费版所有功能",
+        "优先支持",
+        "高级分析",
+        "自定义域名",
+        "API 访问"
+      ],
+      "cta": "开始试用",
+      "popular": "热门"
+    },
+    "enterprise": {
+      "name": "企业版",
+      "price": "定制",
+      "description": "适合大型组织",
+      "features": [
+        "专业版所有功能",
+        "专属支持",
+        "SLA 保证",
+        "自定义集成",
+        "本地部署"
+      ],
+      "cta": "联系我们"
+    }
+  },
+  "testimonials": {
+    "title": "深受开发者喜爱",
+    "subtitle": "加入数千名使用 StartFast 快速交付的开发者"
+  },
+  "faq": {
+    "title": "常见问题",
+    "subtitle": "关于 StartFast 你需要知道的一切",
+    "questions": {
+      "free": {
+        "question": "StartFast 真的免费吗？",
+        "answer": "我们提供免费版和专业版。免费版包含所有基本功能。专业版增加了国际化、角色权限、分析和高级 UI 组件。"
+      },
+      "stack": {
+        "question": "StartFast 使用什么技术栈？",
+        "answer": "StartFast 使用 Next.js 15、React 19、TypeScript、Tailwind CSS、Better-Auth 认证、Drizzle ORM 和 PostgreSQL、Stripe 支付、Resend 邮件。"
+      },
+      "typescript": {
+        "question": "我需要了解 TypeScript 吗？",
+        "answer": "虽然了解 TypeScript 有帮助，但代码有良好的文档和常见模式。如果你了解 JavaScript，可以边用边学 TypeScript。"
+      },
+      "database": {
+        "question": "我可以使用不同的数据库吗？",
+        "answer": "可以！虽然我们默认使用 PostgreSQL 和 Drizzle ORM，但你可以轻松切换到 MySQL、SQLite 或其他 Drizzle 支持的数据库。"
+      },
+      "deploy": {
+        "question": "如何部署 StartFast？",
+        "answer": "StartFast 在 Vercel 上运行良好（推荐），但你可以部署到任何支持 Next.js 的平台，包括 Railway、Render、AWS 或自己的服务器。"
+      },
+      "pro": {
+        "question": "专业版包含什么？",
+        "answer": "专业版包含国际化（7+ 语言）、角色权限控制、团队邀请、Posthog 高级分析、博客系统、Playwright 测试、CI/CD 工作流和高级 UI 组件。"
+      },
+      "support": {
+        "question": "如何获得支持？",
+        "answer": "免费用户可以在 GitHub Discussions 社区提问。专业版用户可获得优先邮件支持和私有 Discord 频道。"
+      },
+      "customize": {
+        "question": "我可以自定义设计吗？",
+        "answer": "当然可以！UI 使用 Tailwind CSS 构建，可以轻松自定义颜色、间距和组件。修改 tailwind.config.ts 即可匹配你的品牌。"
+      }
+    }
+  },
+  "cta": {
+    "title": "准备好更快交付了吗？",
+    "subtitle": "加入数千名使用 StartFast 构建 SaaS 产品的开发者。",
+    "button": "免费开始"
+  },
+  "footer": {
+    "description": "包含高级功能的 Next.js SaaS 模板。",
+    "product": "产品",
+    "resources": "资源",
+    "legal": "法律",
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "copyright": "© {year} StartFast. 保留所有权利。"
+  },
+  "auth": {
+    "signIn": {
+      "title": "登录",
+      "subtitle": "输入你的凭据访问账户",
+      "email": "邮箱",
+      "password": "密码",
+      "forgotPassword": "忘记密码？",
+      "submit": "登录",
+      "submitting": "登录中...",
+      "noAccount": "没有账户？",
+      "signUp": "注册",
+      "orContinueWith": "或继续使用",
+      "error": "邮箱或密码无效"
+    },
+    "signUp": {
+      "title": "注册",
+      "subtitle": "创建账户开始使用",
+      "name": "姓名",
+      "email": "邮箱",
+      "password": "密码",
+      "submit": "注册",
+      "submitting": "创建账户中...",
+      "hasAccount": "已有账户？",
+      "signIn": "登录",
+      "orContinueWith": "或继续使用",
+      "error": "创建账户失败，请重试。"
+    }
+  },
+  "dashboard": {
+    "title": "我的账户",
+    "welcome": "欢迎回来，{name}！",
+    "sidebar": {
+      "account": "账户",
+      "overview": "概览",
+      "profile": "个人资料",
+      "organizations": "组织",
+      "billing": "账单",
+      "security": "安全",
+      "notifications": "通知",
+      "settings": "设置",
+      "proPlan": "专业版已激活",
+      "allFeatures": "所有功能已解锁"
+    },
+    "signIn": {
+      "title": "请登录",
+      "description": "您需要登录才能访问您的账户",
+      "button": "登录"
+    },
+    "profile": {
+      "title": "个人资料",
+      "subtitle": "管理你的账户",
+      "user": "用户",
+      "proPlan": "专业版",
+      "memberSince": "2024年1月成为会员",
+      "editProfile": "编辑资料",
+      "email": "邮箱",
+      "name": "姓名",
+      "notSet": "未设置",
+      "edit": "编辑资料",
+      "signIn": {
+        "title": "请先登录",
+        "description": "请登录后查看个人资料",
+        "button": "登录"
+      },
+      "profilePicture": "个人头像",
+      "updatePicture": "更新您的头像",
+      "changePicture": "更换头像",
+      "personalInfo": "个人信息",
+      "updateDetails": "更新您的个人详情",
+      "emailCannotChange": "邮箱不可更改",
+      "saveChanges": "保存更改",
+      "saving": "保存中...",
+      "updateSuccess": "个人资料更新成功！",
+      "updateFailed": "更新失败，请重试。",
+      "dangerZone": "危险区域",
+      "irreversible": "不可撤销的操作",
+      "deleteAccount": "删除账户",
+      "deleteWarning": "永久删除您的账户及所有数据"
+    },
+    "billing": {
+      "title": "账单",
+      "subtitle": "管理积分套餐与购买记录",
+      "plan": "方案",
+      "status": "状态",
+      "manage": "管理账单",
+      "availablePlans": "可选套餐",
+      "trialIncluded": "已包含",
+      "signIn": {
+        "title": "请登录",
+        "description": "您需要登录才能管理账单",
+        "button": "登录"
+      },
+      "balance": {
+        "title": "我的积分",
+        "description": "当前账户可用积分余额",
+        "unit": "积分"
+      },
+      "paymentMethod": {
+        "title": "支付方式",
+        "description": "管理您的支付方式",
+        "expires": "有效期至 {date}",
+        "update": "更新"
+      },
+      "history": {
+        "title": "账单历史",
+        "description": "下载您的历史账单",
+        "invoice": "账单号",
+        "date": "日期",
+        "amount": "金额",
+        "status": "状态",
+        "actions": "操作"
+      },
+      "qrcode": {
+        "title": "扫码充值",
+        "description": "使用微信、支付宝或淘宝 App 扫描下方二维码完成充值",
+        "scanHint": "📱 请使用手机扫码",
+        "linkLabel": "或复制链接到手机浏览器打开：",
+        "copyLink": "复制链接",
+        "copied": "已复制"
+      },
+      "redeem": {
+        "title": "兑换码充值",
+        "description": "输入管理员提供的兑换码获取积分",
+        "placeholder": "输入32位兑换码",
+        "button": "兑换",
+        "redeeming": "兑换中..."
+      }
+    },
+    "settings": {
+      "title": "设置",
+      "subtitle": "自定义偏好",
+      "theme": "主题",
+      "notifications": "通知",
+      "enabled": "已启用",
+      "edit": "编辑设置"
+    },
+    "security": {
+      "title": "安全",
+      "subtitle": "密码与会话"
+    },
+    "securityPage": {
+      "title": "安全设置",
+      "subtitle": "管理您的账户安全",
+      "signIn": {
+        "title": "请登录",
+        "description": "您需要登录才能管理安全设置",
+        "button": "登录"
+      },
+      "password": {
+        "title": "密码",
+        "description": "定期修改密码以保护账户安全",
+        "lastChanged": "{count} 天前修改",
+        "change": "修改密码",
+        "current": "当前密码",
+        "new": "新密码",
+        "confirm": "确认新密码",
+        "currentPlaceholder": "请输入当前密码",
+        "newPlaceholder": "请输入新密码",
+        "confirmPlaceholder": "请再次输入新密码",
+        "update": "更新密码",
+        "cancel": "取消",
+        "success": "密码修改成功！",
+        "failed": "密码修改失败，请重试。",
+        "validation": {
+          "currentRequired": "请输入当前密码",
+          "tooShort": "新密码至少 8 个字符",
+          "mismatch": "两次输入的新密码不一致"
+        }
+      },
+      "sessions": {
+        "title": "活跃会话",
+        "description": "管理已登录此账户的设备",
+        "current": "当前",
+        "revoke": "撤销",
+        "signOutAll": "退出所有其他会话",
+        "now": "刚刚",
+        "hoursAgo": "{count} 小时前",
+        "dayAgo": "{count} 天前",
+        "locationSF": "上海，中国",
+        "locationNY": "北京，中国"
+      },
+      "danger": {
+        "title": "危险操作",
+        "description": "不可逆的账户操作",
+        "deleteTitle": "删除账户",
+        "deleteDescription": "永久删除您的账户及所有数据",
+        "deleteButton": "删除账户"
+      }
+    },
+    "notifications": {
+      "title": "通知",
+      "subtitle": "邮件偏好设置"
+    },
+    "apiKeys": {
+      "title": "API 密钥",
+      "subtitle": "管理访问令牌"
+    },
+    "activity": {
+      "title": "最近活动",
+      "description": "您的账户最近活动",
+      "passwordChanged": "密码已修改",
+      "newDevice": "从新设备登录",
+      "profileUpdated": "个人资料已更新",
+      "subscriptionRenewed": "订阅已续费",
+      "hoursAgo": "{count}小时前",
+      "daysAgo": "{count}天前",
+      "weeksAgo": "{count}周前"
+    }
+  },
+  "blog": {
+    "title": "博客",
+    "subtitle": "最新新闻、更新和见解",
+    "readMore": "阅读更多",
+    "readingTime": "{minutes} 分钟阅读",
+    "publishedOn": "发布于 {date}",
+    "backToBlog": "返回博客",
+    "relatedPosts": "相关文章",
+    "categories": "分类",
+    "tags": "标签",
+    "noPosts": "暂无文章"
+  },
+  "roles": {
+    "admin": "管理员",
+    "member": "成员",
+    "viewer": "访客",
+    "owner": "所有者"
+  },
+  "team": {
+    "title": "团队",
+    "members": "成员",
+    "invitations": "邀请",
+    "invite": "邀请成员",
+    "inviteSubtitle": "发送邀请加入团队",
+    "inviteEmail": "邮箱地址",
+    "inviteRole": "角色",
+    "sendInvite": "发送邀请",
+    "pending": "待处理",
+    "accepted": "已接受",
+    "expired": "已过期",
+    "revoke": "撤销",
+    "remove": "移除"
+  },
+  "header": {
+    "nav": {
+      "workspace": "制作证件照",
+      "engines": "创作引擎",
+      "gallery": "您的作品",
+      "pricing": "价格方案"
+    },
+    "user": {
+      "profile": "个人中心",
+      "billing": "积分与订阅",
+      "admin": "后台管理",
+      "signOut": "退出登录"
+    },
+    "auth": {
+      "signIn": "登录",
+      "getStarted": "立即开始"
+    }
+  },
+  "footer": {
+    "brand": {
+      "description": "多引擎 AI 创意工作室。从证件照到肖像场景，让每一次拍摄都有光。"
+    },
+    "product": {
+      "title": "产品",
+      "engines": "AI 引擎",
+      "features": "核心能力",
+      "pricing": "价格方案",
+      "workspace": "证件照工作台"
+    },
+    "resources": {
+      "title": "资源",
+      "gallery": "作品画廊",
+      "faq": "常见问题",
+      "dashboard": "个人中心"
+    },
+    "legal": {
+      "title": "法律",
+      "privacy": "隐私政策",
+      "terms": "服务条款"
+    },
+    "copyright": "© {year} LoveShow. 保留所有权利。"
+  },
+  "workspace": {
+    "backToHome": "返回首页",
+    "title": "AI 证件照工作台",
+    "description": "选择规格 → 上传照片 → 一键生成。支持批量上传最多 20 张。"
+  },
+  "gallery": {
+    "title": "您的作品",
+    "stats": "共 {total} 张 · 当前筛选 {filtered} 张",
+    "backToHome": "返回首页",
+    "general": "通用",
+    "loading": "正在加载作品库…",
+    "download": "下载图片",
+    "preview": "放大预览",
+    "tabs": {
+      "idPhoto": "证件照",
+      "portrait": "肖像照",
+      "music": "音频",
+      "portraitComingSoon": "肖像场景即将上线，敬请期待！",
+      "musicComingSoon": "AI 音乐制作板块即将开放，敬请期待！"
+    },
+    "filters": {
+      "time": "时间",
+      "category": "类别",
+      "allSpecs": "全部规格",
+      "timeOptions": {
+        "all": "全部",
+        "today": "今天",
+        "week": "本周",
+        "month": "本月"
+      }
+    },
+    "empty": {
+      "title": "还没有作品",
+      "description": "前往工作台上传第一张照片，几秒就能拿到高清证件照。",
+      "goToWorkspace": "去工作台"
+    },
+    "noResults": {
+      "title": "当前筛选没有结果",
+      "description": "换个时间范围或规格类别试试。",
+      "clearFilters": "清除筛选"
+    }
+  },
+  "photoStudio": {
+    "errors": {
+      "uploadRequired": "请先上传至少一张照片",
+      "generateFailed": "生成失败",
+      "batchFailed": "批量生成失败",
+      "insufficientPoints": "积分不足，请购买",
+      "goRecharge": "前往充值 →"
+    },
+    "upload": {
+      "title": "上传证件照"
+    },
+    "results": {
+      "title": "生成结果",
+      "count": "已生成 {count} 张",
+      "empty": "上传证件照并设置规格",
+      "emptyDesc": "点击「开始生成」即可生成你的专属证件照",
+      "generatingHint": "AI 正在创作中…",
+      "generatingWait": "证件照生成通常需要 10-30 秒，请耐心等待",
+      "preview": "放大预览",
+      "download": "下载图片",
+      "delete": "删除",
+      "photoAlt": "证件照",
+      "previewAlt": "证件照预览"
+    },
+    "settings": {
+      "title": "生成设置",
+      "background": "背景色",
+      "suit": "正装合成",
+      "suitOptions": {
+        "none": "不合成",
+        "male": "男款西装",
+        "female": "女款西装",
+        "student": "学生装"
+      },
+      "skipAI": "跳过 AI，仅使用 Sharp 本地处理（更快，艺术效果稍弱）"
+    },
+    "cost": {
+      "label": "消耗积分",
+      "prefix": "将消耗",
+      "points": "积分",
+      "photos": "张",
+      "balanceLabel": "当前余额",
+      "balance": "（当前余额：{balance} 积分）",
+      "insufficientTooltip": "积分不足，需要 {cost} 积分"
+    },
+    "actions": {
+      "generating": "生成中…",
+      "batchGenerate": "批量生成",
+      "startGenerate": "开始生成"
+    }
+  },
+  "specPicker": {
+    "title": "选择规格"
+  },
+  "specDetails": {
+    "size": "尺寸",
+    "dpi": "分辨率",
+    "bgColor": "默认底色"
+  },
+  "dropzone": {
+    "dragActive": "松开以上传",
+    "dragDefault": "点击或拖拽图片到这里",
+    "formats": "支持 JPG / PNG / WEBP / HEIC · 最多 {maxFiles} 张",
+    "noFiles": "尚未选择文件"
+  },
+  "taskList": {
+    "loading": "加载任务中…",
+    "empty": "暂无任务，快上传一张照片试试吧。"
+  },
+  "taskCard": {
+    "status": {
+      "pending": "排队中",
+      "processing": "生成中",
+      "completed": "已完成",
+      "failed": "失败"
+    },
+    "resultAlt": "生成结果",
+    "download": "下载图片",
+    "preview": "放大预览",
+    "delete": "删除图片"
+  },
+  "portraitStudio": {
+    "page": {
+      "backToHome": "返回首页",
+      "title": "AI 肖像照",
+      "description": "上传参考照片 → 选择肖像风格 → AI 一键生成影棚级肖像照"
+    },
+    "upload": {
+      "title": "上传参考照片"
+    },
+    "gender": {
+      "title": "选择性别",
+      "auto": "自动",
+      "male": "男",
+      "female": "女"
+    },
+    "styles": {
+      "title": "肖像风格",
+      "count": "已选 {count} 个"
+    },
+    "cost": {
+      "label": "消耗积分",
+      "suffix": "积分",
+      "balance": "当前余额",
+      "points": "积分"
+    },
+    "actions": {
+      "generating": "生成中…",
+      "generatingProgress": "生成中 ({current}/{total})…",
+      "startGenerate": "开始生成{count}张肖像照",
+      "startGenerateSingle": "开始生成肖像照"
+    },
+    "errors": {
+      "uploadRequired": "请先上传参考照片",
+      "styleRequired": "请至少选择一个风格",
+      "insufficientPoints": "积分不足（需要 {cost} 积分），请先充值",
+      "generationFailed": "生成失败，请重试",
+      "goRecharge": "前往充值 →"
+    },
+    "results": {
+      "title": "生成结果",
+      "count": "已生成 {count} 张",
+      "generatingHint": "AI 正在创作中…",
+      "generatingStatus": "正在生成第 {current}/{total} 张",
+      "generatingWait": "肖像照生成通常需要 30-60 秒，请耐心等待",
+      "empty": "上传照片并选择风格",
+      "emptyDesc": "点击「开始生成肖像照」即可创作你的专属肖像",
+      "preview": "放大预览",
+      "download": "下载图片",
+      "previewAlt": "肖像照预览"
+    }
+  },
+  "musicStudio": {
+    "page": {
+      "backToHome": "返回首页",
+      "title": "AI 音乐制作",
+      "description": "描述你想要的音乐，AI 自动生成完整歌曲"
+    },
+    "title": "创建音乐",
+    "mode": {
+      "simple": "简单模式",
+      "custom": "自定义模式"
+    },
+    "mood": {
+      "label": "情感类型"
+    },
+    "style": {
+      "label": "曲风"
+    },
+    "prompt": {
+      "labelSimple": "歌曲主题",
+      "labelCustom": "歌词 (Lyrics)",
+      "lengthHint": "(最长 {max} 字符)",
+      "placeholderSimple": "描述歌曲主题，例如：夏天的海边旅行、失去的爱情、对未来的期待…",
+      "placeholderCustom": "输入你想要的歌词，AI 将按此歌词演唱…"
+    },
+    "titleField": {
+      "label": "歌曲标题 (Title)",
+      "placeholder": "给你的歌曲起个名字"
+    },
+    "vocal": {
+      "label": "人声选择"
+    },
+    "duration": {
+      "label": "歌曲时长"
+    },
+    "model": {
+      "label": "模型",
+      "placeholder": "选择模型"
+    },
+    "instrumental": {
+      "label": "纯器乐 (无人声)"
+    },
+    "cost": {
+      "label": "消耗",
+      "points": "积分",
+      "balance": "余额"
+    },
+    "actions": {
+      "generating": "生成中…",
+      "submitting": "提交中…",
+      "startGenerate": "开始生成"
+    },
+    "status": {
+      "pending": "排队中",
+      "generating": "生成中",
+      "success": "已完成",
+      "failed": "失败"
+    },
+    "errors": {
+      "promptRequired": "请输入音乐描述或歌词",
+      "promptTooLong": "提示词最长 {max} 字符",
+      "requestFailed": "请求失败",
+      "generationFailed": "生成失败，请重试",
+      "generateFailed": "生成失败"
+    },
+    "progress": {
+      "waitHint": "音乐生成通常需要 2-3 分钟，请耐心等待…"
+    },
+    "result": {
+      "title": "生成结果",
+      "untitled": "未命名歌曲",
+      "download": "下载",
+      "lyrics": "歌词",
+      "syncing": "同步中"
+    },
+    "styleLabels": {
+      "流行": "流行",
+      "摇滚": "摇滚",
+      "电子": "电子",
+      "说唱": "说唱",
+      "R&B": "R&B",
+      "爵士": "爵士",
+      "民谣": "民谣",
+      "古典": "古典",
+      "金属": "金属",
+      "乡村": "乡村",
+      "舞曲": "舞曲",
+      "拉丁": "拉丁",
+      "朋克": "朋克",
+      "布鲁斯": "布鲁斯",
+      "雷鬼": "雷鬼"
+    },
+    "moodLabels": {
+      "欢快": "欢快",
+      "浪漫": "浪漫",
+      "平静": "平静",
+      "悲伤": "悲伤",
+      "激昂": "激昂",
+      "梦幻": "梦幻",
+      "温暖": "温暖",
+      "神秘": "神秘"
+    },
+    "vocalLabels": {
+      "不限": "不限",
+      "男声": "男声",
+      "女声": "女声",
+      "男女对唱": "男女对唱",
+      "合唱": "合唱"
+    },
+    "durationLabels": {
+      "不限": "不限",
+      "30 秒": "30 秒",
+      "1 分钟": "1 分钟",
+      "2 分钟": "2 分钟",
+      "4 分钟": "4 分钟"
+    },
+    "modelLabels": {
+      "V4·5 All — 更好歌曲结构": "V4·5 All — 更好歌曲结构",
+      "V4·5 — 智能提示词理解": "V4·5 — 智能提示词理解",
+      "V4·5 Plus — 更丰富音色": "V4·5 Plus — 更丰富音色",
+      "V5 — 最新模型": "V5 — 最新模型"
+    }
+  },
+  "engines": {
+    "title": {
+      "part1": "选择属于你的",
+      "highlight": "创作引擎"
+    },
+    "description": "每一个引擎对应一种专业影像场景。先挑场景，再挑风格，最后一键生成。",
+    "column520": {
+      "engineLabel": "Engine · 520",
+      "title": "520 专栏",
+      "description": "为爱而生的情感专栏。从情侣写真到 520 文案、感情分析、专属音乐与回忆录，一站式记录两个人的故事。",
+      "chips": ["情侣写真", "520 文案", "情侣感情分析", "情侣音乐生成", "恋爱记录回忆录", "情侣大头贴"],
+      "cta": "进入 520 专栏"
+    },
+    "idPhoto": {
+      "engineLabel": "Engine · 01",
+      "title": "AI 证件照",
+      "description": "上传一张自拍，自动完成人脸识别、构图裁切、背景替换、光线修复与正装合成。OpenAI gpt-image 与 Gemini 双引擎互为备份。",
+      "chips": ["一寸照", "二寸照", "护照", "签证", "简历", "学生证", "驾照", "自由创作"],
+      "cta": "进入证件照工作台"
+    },
+    "portrait": {
+      "engineLabel": "Engine · 02",
+      "title": "AI 肖像",
+      "description": "上传一张照片，选择 10 种专业摄影风格之一，AI 自动生成影棚级肖像照。从高级摄影棚到法式街拍，让每个人都能拥有杂志封面级肖像。",
+      "chips": ["高级摄影肖像", "高级时尚", "影棚质感", "日系写真", "胶片人像", "黑白纪实", "极简现代", "暗黑情绪", "森林自然", "法式街拍"],
+      "cta": "进入AI肖像工作台"
+    },
+    "music": {
+      "engineLabel": "Engine · 03",
+      "title": "AI 音乐制作",
+      "description": "输入一段描述或歌词，AI 自动生成带人声或纯器乐的完整歌曲。支持流行、摇滚、电子、说唱、古典、民谣等多种风格。Suno V4.5 / V5 模型驱动。",
+      "chips": ["流行", "摇滚", "电子", "说唱", "古典", "民谣", "R&B", "爵士"],
+      "cta": "进入音乐工作台"
+    }
+  },
+  "column520": {
+    "page": {
+      "title": "520 专栏",
+      "subtitle": "六大功能，把你们的甜蜜浓缩成一张图、一段文字、一首歌",
+      "back": "返回首页",
+      "balance": "积分余额",
+      "loginRequired": "请先登录后再使用 520 专栏功能",
+      "tabs": {
+        "copy": "520 文案",
+        "photo": "情侣写真",
+        "avatar": "情侣大头贴",
+        "analysis": "情感分析",
+        "music": "情侣音乐",
+        "memoir": "恋爱回忆录"
+      }
+    },
+    "common": {
+      "generate": "立即生成",
+      "regenerate": "再来一次",
+      "generating": "AI 创作中…",
+      "result": "生成结果",
+      "download": "保存图片",
+      "copy": "复制",
+      "copied": "已复制",
+      "cost": "本次消耗 {n} 积分",
+      "balanceLeft": "（余额 {n} 积分）",
+      "downloadTxt": "下载文本",
+      "uploadHint": "请上传一张清晰的双人合照",
+      "uploadMulti": "支持多张照片，最多 {n} 张",
+      "errors": {
+        "auth": "请登录后再试",
+        "balance": "积分不足，请先充值",
+        "missingFile": "请先上传照片",
+        "missingField": "请补全必填项",
+        "server": "生成失败，请稍后重试"
+      }
+    },
+    "copy": {
+      "title": "520 浪漫文案",
+      "description": "输入关键字，AI 自动写出 200 字以内的甜蜜情话；选择文艺风格还能生成一首诗。",
+      "keywordLabel": "关键字 / 主题",
+      "keywordPlaceholder": "例如：周年纪念、第一次见面、想认真表白…",
+      "scenarioLabel": "使用场景（选填）",
+      "scenarioPlaceholder": "例如：朋友圈、生日卡片、晨间消息…",
+      "styleLabel": "选择风格",
+      "styles": {
+        "sincere": "深情",
+        "literary": "文艺",
+        "playful": "俏皮",
+        "cool": "耍酷",
+        "cheeky": "贱贱的"
+      },
+      "musicHint": "想为这段文字配一首甜歌？",
+      "musicCta": "把这段文案送进情侣音乐"
+    },
+    "photo": {
+      "title": "情侣写真",
+      "description": "上传双人照，AI 自动构思场景与镜头，生成一张全新写真。",
+      "sceneLabel": "选择场景",
+      "noteLabel": "补充想法（选填）",
+      "notePlaceholder": "例如：我穿白色连衣裙，他穿黑色衬衫…",
+      "scenes": {
+        "beach-sunset": "夕阳沙滩",
+        "cherry-blossom": "樱花树下",
+        "starry-night": "星空夜景",
+        "cafe-date": "咖啡馆约会",
+        "paris-street": "巴黎街头",
+        "autumn-park": "秋日公园",
+        "wedding-style": "韩式婚纱",
+        "film-grain": "胶片复古"
+      }
+    },
+    "avatar": {
+      "title": "情侣大头贴",
+      "description": "上传合照，生成卡通风格情侣头像，可做微信 / 聊天贴纸。",
+      "styleLabel": "选择风格",
+      "styles": {
+        "chibi": "Q 版萌系",
+        "studio-ghibli": "宫崎骏风",
+        "pixar3d": "皮克斯 3D",
+        "korean-manhwa": "韩漫风",
+        "sticker-doodle": "贴纸涂鸦"
+      },
+      "noteLabel": "补充想法（选填）",
+      "notePlaceholder": "例如：戴着情侣帽、抱着柯基…"
+    },
+    "analysis": {
+      "title": "情感分析",
+      "description": "上传双人照，告诉我们你们的故事，得到一份甜蜜的情感解读报告。",
+      "durationLabel": "在一起时长（月）",
+      "durationPlaceholder": "例如：18",
+      "metAtLabel": "相识地点 / 场景",
+      "metAtPlaceholder": "例如：大学社团、地铁通勤、朋友聚会…",
+      "noteLabel": "补充信息（选填）",
+      "notePlaceholder": "可以告诉我们最难忘的小事…"
+    },
+    "music": {
+      "title": "情侣音乐",
+      "description": "把刚才的文案变成一首甜歌，或者重新写一段灵感。",
+      "fromCopyHint": "✨ 已使用最近一次生成的文案作为灵感",
+      "promptLabel": "灵感 / 描述（中英文均可）",
+      "promptPlaceholder": "例如：献给小鹿的温柔民谣，吉他抒情，男声…",
+      "lyricsLabel": "歌词",
+      "lyricsPlaceholder": "想自己写歌词？粘贴在这里…",
+      "instrumentalLabel": "纯音乐 / 不要人声",
+      "submit": "生成情侣音乐",
+      "running": "音乐生成已提交，正在为你创作中…",
+      "generating": "AI 正在创作你的专属音乐…",
+      "waitHint": "通常需要 1-3 分钟，请耐心等待",
+      "untitled": "未命名歌曲",
+      "syncing": "同步中"
+    },
+    "memoir": {
+      "title": "恋爱回忆录",
+      "description": "上传你们的照片、粘贴聊天片段、整理时间线，AI 帮你写一篇图文回忆录。",
+      "titleLabel": "回忆录标题（选填）",
+      "titlePlaceholder": "例如：我们的第 365 天",
+      "photosLabel": "上传照片（最多 6 张）",
+      "timelineLabel": "时间线（每行一条：日期｜事件）",
+      "timelinePlaceholder": "2023-05-20｜在咖啡馆第一次见面\n2023-09-09｜确认恋爱关系\n2024-02-14｜第一次一起旅行",
+      "chatLabel": "聊天记录节选",
+      "chatPlaceholder": "粘贴一段你们觉得最甜或最有梗的聊天…",
+      "noteLabel": "补充说明（选填）"
+    }
+  },
+  "pricing": {
+    "title": {
+      "part1": "按",
+      "highlight": "积分",
+      "part2": "计费，不必订阅"
+    },
+    "description": "所有套餐均为一次性购买，积分永不过期。",
+    "mostPopular": "最受欢迎",
+    "plans": {
+      "trial": {
+        "name": "免费体验",
+        "price": "￥0",
+        "unit": "注册即送 20 积分",
+        "features": [
+          "首次注册赠送 20 积分",
+          "OpenAI + Gemini 双引擎",
+          "证件照 / AI 人像 / AI 音乐 全部体验",
+          "JPEG 高清下载"
+        ],
+        "cta": "免费开始"
+      },
+      "creator": {
+        "name": "创作者",
+        "price": "￥29.9",
+        "unit": "300 积分",
+        "features": [
+          "全部免费体验功能",
+          "批量上传最多 20 张",
+          "作品保留 30 天",
+          "优先队列，平均耗时更短"
+        ],
+        "cta": "选择创作者"
+      },
+      "enthusiast": {
+        "name": "发烧友",
+        "price": "￥49.9",
+        "unit": "700 积分",
+        "features": [
+          "全部创作者功能",
+          "更高优先级队列",
+          "AI 人像高级风格全开放",
+          "AI 音乐高品质模型 V4.5 / V5"
+        ],
+        "cta": "选择发烧友"
+      },
+      "studio": {
+        "name": "工作室",
+        "price": "￥99.9",
+        "unit": "1500 积分",
+        "features": [
+          "全部发烧友功能",
+          "肖像场景引擎内测资格",
+          "发票与团队账单",
+          "专属客服通道"
+        ],
+        "cta": "选择工作室"
+      }
+    }
+  },
+  "cta": {
+    "title": "让下一张美照，就出在 LoveShow",
+    "description": "注册即送 20 积分，立即开启创作之旅。",
+    "button": "立即免费生成",
+    "column520": "520 专栏"
+  },
+  "photoSpecs": {
+    "one_inch": {
+      "label": "一寸照",
+      "description": "身份证 / 普通登记照，白底免冠。"
+    },
+    "two_inch": {
+      "label": "二寸照",
+      "description": "毕业证 / 简历常用，蓝底商务正装。"
+    },
+    "passport": {
+      "label": "护照照",
+      "description": "中国护照标准：白底、正面免冠、双耳可见。"
+    },
+    "visa": {
+      "label": "签证照",
+      "description": "美、加、申根等通用 2x2 英寸白底签证照。"
+    },
+    "resume": {
+      "label": "简历照",
+      "description": "灰/米底商务简历照，微笑、自然光。"
+    },
+    "student": {
+      "label": "学生证",
+      "description": "红底校服风，适合学籍 / 学生证补办。"
+    },
+    "driver": {
+      "label": "驾照",
+      "description": "机动车驾驶证白底人像照。"
+    },
+    "free": {
+      "label": "自由创作",
+      "description": "创意肖像，用户自定义背景与风格。"
+    }
+  },
+  "privacy": {
+    "title": "隐私政策",
+    "lastUpdated": "最后更新",
+    "sections": {
+      "intro": {
+        "title": "1. 引言",
+        "content": "欢迎使用LoveShow。我们尊重您的隐私并致力于保护您的个人数据。本隐私政策将告知我们如何保护您的个人数据以及您的隐私权利。"
+      },
+      "dataCollection": {
+        "title": "2. 我们收集的数据",
+        "intro": "我们可能收集、使用、存储和传输不同类型的个人数据：",
+        "items": [
+          "身份数据：姓名、用户名",
+          "联系数据：电子邮件地址",
+          "技术数据：IP地址、浏览器类型、设备信息",
+          "使用数据：有关您如何使用我们网站和服务的信息"
+        ]
+      },
+      "dataUsage": {
+        "title": "3. 我们如何使用您的数据",
+        "intro": "我们将您的个人数据用于：",
+        "items": [
+          "提供和维护我们的服务",
+          "通知您有关服务的变更",
+          "提供客户支持",
+          "监控服务使用情况",
+          "检测、预防和解决技术问题"
+        ]
+      },
+      "dataSecurity": {
+        "title": "4. 数据安全",
+        "content": "我们已实施适当的安全措施，防止您的个人数据被意外丢失、使用或以未经授权的方式访问。我们限制对个人数据的访问，仅限于有业务需要知道的相关员工和合作伙伴。"
+      },
+      "rights": {
+        "title": "5. 您的权利",
+        "content": "在某些情况下，根据数据保护法律，您对个人数据享有权利，包括访问、更正、删除、限制或反对处理您的个人数据的权利。"
+      },
+      "contact": {
+        "title": "6. 联系我们",
+        "content": "如果您对本隐私政策有任何疑问，请通过 privacy@example.com 联系我们。"
+      }
+    }
+  },
+  "terms": {
+    "title": "服务条款",
+    "lastUpdated": "最后更新",
+    "sections": {
+      "agreement": {
+        "title": "1. 条款同意",
+        "content": "访问或使用LoveShow即表示您同意受这些服务条款的约束。如果您不同意任何条款，则不得访问该服务。"
+      },
+      "license": {
+        "title": "2. 使用许可",
+        "intro": "授予临时下载LoveShow上的一份材料供个人、非商业性短暂观看的权限。这是许可的授予，而非所有权的转让。",
+        "intro2": "在此许可下，您不得：",
+        "items": [
+          "修改或复制材料",
+          "将材料用于任何商业目的",
+          "尝试反编译或逆向工程任何软件",
+          "删除任何版权或其他专有标记",
+          "将材料转让给他人"
+        ]
+      },
+      "disclaimer": {
+        "title": "3. 免责声明",
+        "content": "LoveShow上的材料按\"现状\"提供。LoveShow不作任何明示或暗示的保证，并在此声明和否定所有其他保证，包括但不限于对适销性、特定用途适用性或不侵犯知识产权或其他权利的暗示保证或条件。"
+      },
+      "limitations": {
+        "title": "4. 限制",
+        "content": "在任何情况下，LoveShow或其供应商均不对因使用或无法使用LoveShow上的材料而造成的任何损害（包括但不限于数据或利润损失或业务中断的损害）承担责任。"
+      },
+      "accuracy": {
+        "title": "5. 材料准确性",
+        "content": "出现在LoveShow上的材料可能包含技术、排版或摄影错误。LoveShow不保证其网站上的任何材料准确、完整或最新。"
+      },
+      "links": {
+        "title": "6. 链接",
+        "content": "LoveShow尚未审查其网站链接的所有站点，不对任何此类链接站点的内容负责。包含任何链接并不意味着LoveShow对该站点的认可。"
+      },
+      "modifications": {
+        "title": "7. 修改",
+        "content": "LoveShow可能会随时修订这些服务条款，恕不另行通知。使用本网站即表示您同意受当时最新版本的服务条款约束。"
+      },
+      "contact": {
+        "title": "8. 联系我们",
+        "content": "如果您对这些条款有任何疑问，请通过 legal@example.com 联系我们。"
+      }
+    }
+  },
+  "admin": {
+    "title": "管理后台",
+    "overview": "概览",
+    "management": "管理",
+    "system": "系统",
+    "dashboard": "仪表盘",
+    "analytics": "数据分析",
+    "users": "用户管理",
+    "tasks": "任务管理",
+    "orders": "订单管理",
+    "points": "积分管理",
+    "redeemCodes": "兑换码管理",
+    "content": "内容管理",
+    "roles": "角色权限",
+    "settings": "系统设置",
+    "backToSite": "返回网站",
+    "panel": "管理面板 v1.0",
+    "refresh": "刷新",
+    "export": "导出",
+    "total": "总计",
+    "verified": "已验证",
+    "members": "常规成员",
+    "admins": "管理员",
+    "searchUsersPlaceholder": "通过姓名或邮箱搜索用户...",
+    "allRoles": "所有角色",
+    "allStatus": "所有状态",
+    "noUsersFound": "未找到用户",
+    "adjustFilters": "尝试调整搜索或筛选条件",
+    "tableUser": "用户信息",
+    "tableRole": "角色权限",
+    "tablePoints": "积分",
+    "tableStatus": "状态",
+    "tableEmailVerified": "邮箱验证",
+    "tableJoined": "加入时间",
+    "tableActions": "操作",
+    "isVerified": "已验证",
+    "notVerified": "待验证",
+    "edit": "编辑",
+    "sendEmail": "发送邮件",
+    "changeRole": "修改角色",
+    "delete": "删除",
+    "cancel": "取消",
+    "previous": "上一页",
+    "next": "下一页",
+    "showingUsers": "显示 {count} / {total} 用户 (第 {page} / {totalPages} 页)",
+    "usersSelected": "已选择 {count} 个用户",
+    "addNewUser": "添加新用户",
+    "editUser": "编辑用户",
+    "changeUserRole": "修改角色",
+    "deleteUser": "删除用户",
+    "name": "姓名",
+    "email": "邮箱",
+    "role": "角色",
+    "emailVerified": "邮箱已验证",
+    "saveChanges": "保存更改",
+    "createConfirm": "创建用户",
+    "deleteDescription": "此操作无法撤销",
+    "deleteConfirmation": "确定要删除 {name} ({email}) 吗？",
+    "bulkDeleteConfirm": "确定要删除选中的 {count} 个用户吗？",
+    "current": "当前",
+    "selectNewRole": "为 {name} 选择新角色",
+    "normal": "正常",
+    "banned": "已拉黑",
+    "frozen": "已冻结",
+    "confirmBan": "确定要拉黑用户 {name} 吗？",
+    "confirmUnban": "确定要取消拉黑用户 {name} 吗？",
+    "confirmFreeze": "确定要冻结用户 {name} 吗？",
+    "confirmUnfreeze": "确定要解除冻结用户 {name} 吗？",
+    "confirmResetPassword": "确定要将用户 {name} ({email}) 的密码重置为默认密码吗？",
+    "resetPassword": "重置密码",
+    "passwordResetSuccess": "密码重置成功",
+    "adjustPoints": "调整积分",
+    "pointsBalance": "积分余额",
+    "grantPoints": "发放积分",
+    "deductPoints": "扣除积分",
+    "reason": "原因",
+    "reasonRequired": "请填写原因",
+    "quickSelect": "快速选择",
+    "customAmount": "或输入自定义数量",
+    "currentBalance": "当前余额",
+    "newBalance": "新余额",
+    "tasksTitle": "任务管理",
+    "tasksDesc": "管理所有图片和音乐生成任务",
+    "taskStatus": {
+      "pending": "等待中",
+      "processing": "处理中",
+      "completed": "已完成",
+      "failed": "已失败"
+    },
+    "tableTask": "任务",
+    "tableType": "类型",
+    "tablePlatform": "类型",
+    "tableCost": "消耗",
+    "tableCreated": "创建时间",
+    "tableCompleted": "完成时间",
+    "tableDuration": "耗时",
+    "noTasks": "暂无任务",
+    "noTasksDesc": "生成任务将在这里显示",
+    "viewTask": "查看详情",
+    "retryTask": "重试",
+    "aiProvider": "AI 服务商",
+    "taskTypes": {
+      "photo": "AI证件照",
+      "portrait": "AI肖像",
+      "music": "AI音乐",
+      "loveColumn": "520专栏",
+      "couple_photo": "情侣写真",
+      "couple_avatar": "情侣大头贴",
+      "couple_music": "情侣音乐"
+    },
+    "ordersTitle": "订单管理",
+    "ordersDesc": "管理兑换码充值订单与流水记录",
+    "rechargeOrders": "充值订单",
+    "rechargeCount": "充值笔数",
+    "totalPointsIssued": "发放总积分",
+    "statusMonitor": "状态监控",
+    "statusNormal": "正常",
+    "statusRunning": "兑换功能实时运行中",
+    "pendingPlans": "待激活计划",
+    "autoIssue": "全部自动发放",
+    "searchOrdersPlaceholder": "搜索用户邮箱、兑换码描述...",
+    "tableOrderInfo": "流水/兑换码信息",
+    "tablePlan": "充值套餐",
+    "tableAmount": "积分",
+    "issued": "已发放",
+    "noOrders": "暂无订单",
+    "noOrdersDesc": "所有充值订单记录将显示在此处",
+    "pointsTitle": "积分扣减记录",
+    "pointsDesc": "查看用户积分消耗流水和生成详情",
+    "totalDeductions": "总扣减次数",
+    "totalPointsUsed": "总消耗积分",
+    "todayUsed": "今日消耗",
+    "todayGenerations": "{count} 次生成",
+    "avgCost": "平均消耗",
+    "avgCostUnit": "积分/次",
+    "searchPointsPlaceholder": "搜索用户、任务ID...",
+    "tableTime": "时间",
+    "tablePrompt": "提示词",
+    "tableQuantity": "生成张数",
+    "pointDetail": "扣减详情",
+    "taskId": "任务ID",
+    "deductionTime": "扣减时间",
+    "taskDetail": "生成任务详情",
+    "imageSize": "图片比例",
+    "actualCost": "实际消耗积分",
+    "generatedImages": "成功生成图片",
+    "scenePrompt": "场景微调提示词",
+    "close": "关闭",
+    "noRecords": "暂无扣减记录",
+    "noRecordsDesc": "用户生成图片消耗积分的记录将在这里显示",
+    "redeemCodesPage": {
+      "title": "兑换码管理",
+      "subtitle": "生成并跟踪用于积分充值的兑换码",
+      "generate": "生成兑换码",
+      "generateDesc": "选择计划生成 32 位随机兑换码",
+      "selectPlan": "选择计划",
+      "count": "数量",
+      "generateBtn": "生成",
+      "generating": "生成中...",
+      "generateSuccess": "成功生成 {count} 个兑换码",
+      "generateFailed": "生成失败",
+      "filterAndCopy": "筛选并复制未使用兑换码",
+      "allPlans": "所有计划",
+      "totalUnused": "未使用:",
+      "refresh": "刷新",
+      "copyAll": "复制全部",
+      "copiedCount": "已复制 {count} 个兑换码",
+      "noUnusedCodes": "没有未使用的兑换码",
+      "codeList": "兑换码列表",
+      "code": "兑换码",
+      "plan": "对应计划",
+      "status": "状态",
+      "redeemedBy": "兑换用户",
+      "redeemedAt": "兑换时间",
+      "unused": "未使用",
+      "used": "已使用",
+      "copySuccess": "兑换码已复制",
+      "copyTooltip": "复制兑换码",
+      "loading": "加载中...",
+      "empty": "暂无兑换码，请先生成"
+    }
+  }
+}

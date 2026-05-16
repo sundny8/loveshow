@@ -1,0 +1,1323 @@
+{
+  "common": {
+    "appName": "StartFast Pro",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "success": "Success!",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "submit": "Submit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "viewAll": "View All",
+    "learnMore": "Learn More"
+  },
+  "nav": {
+    "features": "Features",
+    "pricing": "Pricing",
+    "testimonials": "Testimonials",
+    "faq": "FAQ",
+    "docs": "Docs",
+    "blog": "Blog",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "getStarted": "Get Started",
+    "myAccount": "My Account",
+    "admin": "Admin Panel",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "billing": "Billing"
+  },
+  "hero": {
+    "badge": "LoveShow · Keep Love with Creativity",
+    "title": {
+      "part1": "Make Every Creation",
+      "highlight": "Shine with Light"
+    },
+    "description": {
+      "line1": "One shoot, one generation to lock your exclusive moment.",
+      "line2": "LoveShow uses AI engines to make professional imaging just one click away."
+    },
+    "cta": {
+      "primary": "Create Images",
+      "secondary": "Create Music",
+      "tertiary": "Create Art Photos",
+      "column520": "520 Column"
+    },
+    "stats": {
+      "sizes": "ID Photo Sizes",
+      "engines": "AI Engine Redundancy",
+      "time": "Average Time per Photo"
+    }
+  },
+  "features": {
+    "title": "Everything You Need",
+    "subtitle": "All the features you need to build your SaaS, pre-configured and ready to go.",
+    "authentication": {
+      "title": "Authentication",
+      "description": "Secure authentication with Better-Auth, supporting email/password, OAuth, and magic links."
+    },
+    "payments": {
+      "title": "Payments",
+      "description": "Stripe integration for subscriptions and one-time payments with webhook handling."
+    },
+    "email": {
+      "title": "Email",
+      "description": "Transactional emails with Resend. Beautiful templates included."
+    },
+    "database": {
+      "title": "Database",
+      "description": "Type-safe database operations with Drizzle ORM and PostgreSQL."
+    },
+    "darkMode": {
+      "title": "Dark Mode",
+      "description": "Beautiful dark mode support with next-themes. Automatic system preference detection."
+    },
+    "seo": {
+      "title": "SEO Optimized",
+      "description": "Built-in SEO best practices with meta tags, Open Graph, and JSON-LD."
+    },
+    "i18n": {
+      "title": "Internationalization",
+      "description": "Built-in support for multiple languages with next-intl. Easy to add new locales."
+    },
+    "roles": {
+      "title": "Role-Based Access",
+      "description": "Granular permissions with admin, member, and viewer roles. Team invitations included."
+    },
+    "analytics": {
+      "title": "Analytics Ready",
+      "description": "Pre-configured hooks for Posthog analytics. Track events and user behavior easily."
+    },
+    "blog": {
+      "title": "Blog System",
+      "description": "MDX-powered blog with syntax highlighting, reading time, and SEO optimization."
+    },
+    "testing": {
+      "title": "E2E Testing",
+      "description": "Playwright tests pre-configured with CI/CD workflow. Test your app with confidence."
+    },
+    "proUI": {
+      "title": "Pro UI Kit",
+      "description": "Premium UI components including data tables, charts, modals, and more."
+    }
+  },
+  "pricing": {
+    "title": "Simple Pricing",
+    "subtitle": "Start for free, upgrade when you need to.",
+    "free": {
+      "name": "Free",
+      "price": "$0",
+      "description": "Perfect for getting started",
+      "features": [
+        "Unlimited projects",
+        "Authentication system",
+        "Email integration",
+        "Community support"
+      ],
+      "cta": "Get Started"
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "$29",
+      "period": "/month",
+      "description": "For growing businesses",
+      "features": [
+        "Everything in Free",
+        "Priority support",
+        "Advanced analytics",
+        "Custom domain",
+        "API access"
+      ],
+      "cta": "Start Trial",
+      "popular": "Popular"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "price": "Custom",
+      "description": "For large organizations",
+      "features": [
+        "Everything in Pro",
+        "Dedicated support",
+        "SLA guarantee",
+        "Custom integrations",
+        "On-premise option"
+      ],
+      "cta": "Contact Us"
+    }
+  },
+  "testimonials": {
+    "title": "Loved by Developers",
+    "subtitle": "Join thousands of developers who ship faster with StartFast"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know about StartFast",
+    "questions": {
+      "free": {
+        "question": "Is StartFast really free?",
+        "answer": "We offer both free and pro versions. The free version includes all essential features. The Pro version adds internationalization, role-based access, analytics, and premium UI components."
+      },
+      "stack": {
+        "question": "What tech stack does StartFast use?",
+        "answer": "StartFast is built with Next.js 15, React 19, TypeScript, Tailwind CSS, Better-Auth for authentication, Drizzle ORM with PostgreSQL, Stripe for payments, and Resend for emails."
+      },
+      "typescript": {
+        "question": "Do I need to know TypeScript?",
+        "answer": "While TypeScript knowledge helps, the code is well-documented and follows common patterns. If you know JavaScript, you can work with the codebase and learn TypeScript along the way."
+      },
+      "database": {
+        "question": "Can I use a different database?",
+        "answer": "Yes! While we use PostgreSQL by default with Drizzle ORM, you can easily switch to MySQL, SQLite, or other databases supported by Drizzle. Just update the configuration and schema."
+      },
+      "deploy": {
+        "question": "How do I deploy StartFast?",
+        "answer": "StartFast works great with Vercel (recommended), but you can deploy to any platform that supports Next.js, including Railway, Render, AWS, or your own server."
+      },
+      "pro": {
+        "question": "What's included in the Pro version?",
+        "answer": "Pro includes internationalization (7+ languages), role-based access control, team invitations, advanced analytics with Posthog, blog system, Playwright tests, CI/CD workflows, and premium UI components."
+      },
+      "support": {
+        "question": "How do I get support?",
+        "answer": "For free users, we have a GitHub Discussions community where you can ask questions. Pro users get access to priority email support and a private Discord channel."
+      },
+      "customize": {
+        "question": "Can I customize the design?",
+        "answer": "Absolutely! The UI is built with Tailwind CSS, making it easy to customize colors, spacing, and components. You can modify the tailwind.config.ts to match your brand."
+      }
+    }
+  },
+  "cta": {
+    "title": "Ready to Ship Faster?",
+    "subtitle": "Join thousands of developers who are building their SaaS products with StartFast.",
+    "button": "Get Started Free"
+  },
+  "footer": {
+    "description": "Premium Next.js SaaS boilerplate with Pro features.",
+    "product": "Product",
+    "resources": "Resources",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "copyright": "© {year} StartFast. All rights reserved."
+  },
+  "auth": {
+    "signIn": {
+      "title": "Sign In",
+      "subtitle": "Enter your credentials to access your account",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign In",
+      "submitting": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign Up",
+      "orContinueWith": "Or continue with",
+      "error": "Invalid email or password"
+    },
+    "signUp": {
+      "title": "Sign Up",
+      "subtitle": "Create your account to get started",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign Up",
+      "submitting": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "signIn": "Sign In",
+      "orContinueWith": "Or continue with",
+      "error": "Failed to create account. Please try again."
+    }
+  },
+  "dashboard": {
+    "title": "My Account",
+    "welcome": "Welcome back, {name}!",
+    "sidebar": {
+      "account": "Account",
+      "overview": "Overview",
+      "profile": "Profile",
+      "organizations": "Organizations",
+      "billing": "Billing",
+      "security": "Security",
+      "notifications": "Notifications",
+      "settings": "Settings",
+      "proPlan": "Pro Plan Active",
+      "allFeatures": "All features unlocked"
+    },
+    "signIn": {
+      "title": "Please Sign In",
+      "description": "You need to be signed in to access your account",
+      "button": "Sign In"
+    },
+    "profile": {
+      "title": "Profile",
+      "subtitle": "Manage your account",
+      "user": "User",
+      "proPlan": "Pro Plan",
+      "memberSince": "Member since Jan 2024",
+      "editProfile": "Edit Profile",
+      "email": "Email",
+      "name": "Name",
+      "notSet": "Not set",
+      "edit": "Edit Profile",
+      "signIn": {
+        "title": "Please Sign In",
+        "description": "You need to be signed in to view your profile",
+        "button": "Sign In"
+      },
+      "profilePicture": "Profile Picture",
+      "updatePicture": "Update your profile picture",
+      "changePicture": "Change Picture",
+      "personalInfo": "Personal Information",
+      "updateDetails": "Update your personal details",
+      "emailCannotChange": "Email cannot be changed",
+      "saveChanges": "Save Changes",
+      "saving": "Saving...",
+      "updateSuccess": "Profile updated successfully!",
+      "updateFailed": "Failed to update profile. Please try again.",
+      "dangerZone": "Danger Zone",
+      "irreversible": "Irreversible actions",
+      "deleteAccount": "Delete Account",
+      "deleteWarning": "Permanently delete your account and all data"
+    },
+    "billing": {
+      "title": "Billing",
+      "subtitle": "Manage credit packs and purchase history",
+      "plan": "Plan",
+      "status": "Status",
+      "manage": "Manage Billing",
+      "availablePlans": "Available Plans",
+      "trialIncluded": "Included",
+      "signIn": {
+        "title": "Please Sign In",
+        "description": "You need to be signed in to manage billing",
+        "button": "Sign In"
+      },
+      "balance": {
+        "title": "My Credits",
+        "description": "Credits currently available on your account",
+        "unit": "credits"
+      },
+      "paymentMethod": {
+        "title": "Payment Method",
+        "description": "Manage your payment method",
+        "expires": "Expires {date}",
+        "update": "Update"
+      },
+      "history": {
+        "title": "Billing History",
+        "description": "Download your past invoices",
+        "invoice": "Invoice",
+        "date": "Date",
+        "amount": "Amount",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "qrcode": {
+        "title": "Scan to Recharge",
+        "description": "Scan the QR code below with WeChat, Alipay or Taobao app to top up",
+        "scanHint": "📱 Please scan with your phone",
+        "linkLabel": "Or copy the link and open it on your phone:",
+        "copyLink": "Copy Link",
+        "copied": "Copied"
+      },
+      "redeem": {
+        "title": "Redeem Code",
+        "description": "Enter a redeem code provided by admin to get credits",
+        "placeholder": "Enter 32-digit redeem code",
+        "button": "Redeem",
+        "redeeming": "Redeeming..."
+      }
+    },
+    "settings": {
+      "title": "Settings",
+      "subtitle": "Customize preferences",
+      "theme": "Theme",
+      "notifications": "Notifications",
+      "enabled": "Enabled",
+      "edit": "Edit Settings"
+    },
+    "security": {
+      "title": "Security",
+      "subtitle": "Password & sessions"
+    },
+    "securityPage": {
+      "title": "Security Settings",
+      "subtitle": "Manage your account security",
+      "signIn": {
+        "title": "Please Sign In",
+        "description": "You need to be signed in to manage security settings",
+        "button": "Sign In"
+      },
+      "password": {
+        "title": "Password",
+        "description": "Change your password regularly to keep your account safe",
+        "lastChanged": "Last changed {count} days ago",
+        "change": "Change Password",
+        "current": "Current Password",
+        "new": "New Password",
+        "confirm": "Confirm New Password",
+        "currentPlaceholder": "Enter current password",
+        "newPlaceholder": "Enter new password",
+        "confirmPlaceholder": "Confirm new password",
+        "update": "Update Password",
+        "cancel": "Cancel",
+        "success": "Password changed successfully!",
+        "failed": "Failed to change password.",
+        "validation": {
+          "currentRequired": "Current password is required",
+          "tooShort": "New password must be at least 8 characters",
+          "mismatch": "New passwords do not match"
+        }
+      },
+      "sessions": {
+        "title": "Active Sessions",
+        "description": "Manage devices where you're logged in",
+        "current": "Current",
+        "revoke": "Revoke",
+        "signOutAll": "Sign out of all other sessions",
+        "now": "Now",
+        "hoursAgo": "{count} hours ago",
+        "dayAgo": "{count} day ago",
+        "locationSF": "San Francisco, US",
+        "locationNY": "New York, US"
+      },
+      "danger": {
+        "title": "Danger Zone",
+        "description": "Irreversible account actions",
+        "deleteTitle": "Delete Account",
+        "deleteDescription": "Permanently delete your account and all data",
+        "deleteButton": "Delete Account"
+      }
+    },
+    "notifications": {
+      "title": "Notifications",
+      "subtitle": "Email preferences"
+    },
+    "apiKeys": {
+      "title": "API Keys",
+      "subtitle": "Manage access tokens"
+    },
+    "activity": {
+      "title": "Recent Activity",
+      "description": "Your recent account activity",
+      "passwordChanged": "Password changed",
+      "newDevice": "Logged in from new device",
+      "profileUpdated": "Profile updated",
+      "subscriptionRenewed": "Subscription renewed",
+      "hoursAgo": "{count} hours ago",
+      "daysAgo": "{count} days ago",
+      "weeksAgo": "{count} weeks ago"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Latest news, updates, and insights",
+    "readMore": "Read More",
+    "readingTime": "{minutes} min read",
+    "publishedOn": "Published on {date}",
+    "backToBlog": "Back to Blog",
+    "relatedPosts": "Related Posts",
+    "categories": "Categories",
+    "tags": "Tags",
+    "noPosts": "No posts found"
+  },
+  "roles": {
+    "admin": "Admin",
+    "member": "Member",
+    "viewer": "Viewer",
+    "owner": "Owner"
+  },
+  "team": {
+    "title": "Team",
+    "members": "Members",
+    "invitations": "Invitations",
+    "invite": "Invite Member",
+    "inviteSubtitle": "Send an invitation to join your team",
+    "inviteEmail": "Email address",
+    "inviteRole": "Role",
+    "sendInvite": "Send Invitation",
+    "pending": "Pending",
+    "accepted": "Accepted",
+    "expired": "Expired",
+    "revoke": "Revoke",
+    "remove": "Remove"
+  },
+  "header": {
+    "nav": {
+      "workspace": "Make ID Photo",
+      "engines": "Creative Engines",
+      "gallery": "Your Works",
+      "pricing": "Pricing"
+    },
+    "user": {
+      "profile": "Profile",
+      "billing": "Credits & Subscription",
+      "admin": "Admin Panel",
+      "signOut": "Sign Out"
+    },
+    "auth": {
+      "signIn": "Sign In",
+      "getStarted": "Get Started"
+    }
+  },
+  "footer": {
+    "brand": {
+      "description": "Multi-engine AI creative studio. From ID photos to portrait scenarios, let every shot shine."
+    },
+    "product": {
+      "title": "Product",
+      "engines": "AI Engines",
+      "features": "Core Features",
+      "pricing": "Pricing",
+      "workspace": "ID Photo Workspace"
+    },
+    "resources": {
+      "title": "Resources",
+      "gallery": "Photo Gallery",
+      "faq": "FAQ",
+      "dashboard": "Dashboard"
+    },
+    "legal": {
+      "title": "Legal",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    },
+    "copyright": "© {year} LoveShow. All rights reserved."
+  },
+  "workspace": {
+    "backToHome": "Back to Home",
+    "title": "AI ID Photo Workspace",
+    "description": "Select specs → Upload photos → One-click generation. Supports batch upload up to 20 photos."
+  },
+  "gallery": {
+    "title": "Your Works",
+    "stats": "{total} total · {filtered} shown",
+    "backToHome": "Back to Home",
+    "general": "General",
+    "loading": "Loading gallery…",
+    "download": "Download photo",
+    "preview": "Preview photo",
+    "tabs": {
+      "idPhoto": "ID Photos",
+      "portrait": "Portraits",
+      "music": "Music",
+      "portraitComingSoon": "Portrait studio coming soon, stay tuned!",
+      "musicComingSoon": "AI music production coming soon, stay tuned!"
+    },
+    "filters": {
+      "time": "Time",
+      "category": "Category",
+      "allSpecs": "All Specs",
+      "timeOptions": {
+        "all": "All",
+        "today": "Today",
+        "week": "This Week",
+        "month": "This Month"
+      }
+    },
+    "empty": {
+      "title": "No Works Yet",
+      "description": "Go to workspace and upload your first photo. Get HD ID photos in seconds.",
+      "goToWorkspace": "Go to Workspace"
+    },
+    "noResults": {
+      "title": "No Results for Current Filter",
+      "description": "Try a different time range or spec category.",
+      "clearFilters": "Clear Filters"
+    }
+  },
+  "photoStudio": {
+    "errors": {
+      "uploadRequired": "Please upload at least one photo first",
+      "generateFailed": "Generation failed",
+      "batchFailed": "Batch generation failed",
+      "insufficientPoints": "Insufficient points, please purchase",
+      "goRecharge": "Go to Recharge →"
+    },
+    "upload": {
+      "title": "Upload ID Photo"
+    },
+    "results": {
+      "title": "Generated Results",
+      "count": "{count} generated",
+      "empty": "Upload ID photo and set specifications",
+      "emptyDesc": "Click 'Start Generation' to create your ID photo",
+      "generatingHint": "AI is creating…",
+      "generatingWait": "ID photo generation usually takes 10-30 seconds, please wait",
+      "preview": "Zoom Preview",
+      "download": "Download",
+      "delete": "Delete",
+      "photoAlt": "ID Photo",
+      "previewAlt": "ID Photo Preview"
+    },
+    "settings": {
+      "title": "Generation Settings",
+      "background": "Background Color",
+      "suit": "Suit Synthesis",
+      "suitOptions": {
+        "none": "None",
+        "male": "Men's Suit",
+        "female": "Women's Suit",
+        "student": "Student Uniform"
+      },
+      "skipAI": "Skip AI, use only Sharp local processing (faster, slightly weaker artistic effect)"
+    },
+    "cost": {
+      "label": "Cost",
+      "prefix": "Will consume",
+      "points": "points",
+      "photos": "photos",
+      "balanceLabel": "Current Balance",
+      "balance": "(Current balance: {balance} points)",
+      "insufficientTooltip": "Insufficient points, need {cost} points"
+    },
+    "actions": {
+      "generating": "Generating…",
+      "batchGenerate": "Batch Generate",
+      "startGenerate": "Start Generation"
+    }
+  },
+  "specPicker": {
+    "title": "Select Spec"
+  },
+  "specDetails": {
+    "size": "Size",
+    "dpi": "Resolution",
+    "bgColor": "Default Background"
+  },
+  "dropzone": {
+    "dragActive": "Release to upload",
+    "dragDefault": "Click or drag images here",
+    "formats": "Supports JPG / PNG / WEBP / HEIC · Up to {maxFiles} photos",
+    "noFiles": "No files selected yet"
+  },
+  "taskList": {
+    "loading": "Loading tasks…",
+    "empty": "No tasks yet, upload a photo to get started."
+  },
+  "taskCard": {
+    "status": {
+      "pending": "Queued",
+      "processing": "Processing",
+      "completed": "Completed",
+      "failed": "Failed"
+    },
+    "resultAlt": "Generated Result",
+    "download": "Download photo",
+    "preview": "Preview",
+    "delete": "Delete photo"
+  },
+  "portraitStudio": {
+    "page": {
+      "backToHome": "Back to Home",
+      "title": "AI Portrait",
+      "description": "Upload a reference photo → Choose a style → AI generates studio-quality portraits in one click"
+    },
+    "upload": {
+      "title": "Upload Reference Photo"
+    },
+    "gender": {
+      "title": "Select Gender",
+      "auto": "Auto",
+      "male": "Male",
+      "female": "Female"
+    },
+    "styles": {
+      "title": "Portrait Styles",
+      "count": "{count} selected"
+    },
+    "cost": {
+      "label": "Cost",
+      "suffix": "points",
+      "balance": "Balance",
+      "points": "points"
+    },
+    "actions": {
+      "generating": "Generating…",
+      "generatingProgress": "Generating ({current}/{total})…",
+      "startGenerate": "Generate {count} Portraits",
+      "startGenerateSingle": "Generate Portrait"
+    },
+    "errors": {
+      "uploadRequired": "Please upload a reference photo first",
+      "styleRequired": "Please select at least one style",
+      "insufficientPoints": "Insufficient points (need {cost} points), please recharge",
+      "generationFailed": "Generation failed, please retry",
+      "goRecharge": "Go to Recharge →"
+    },
+    "results": {
+      "title": "Generated Results",
+      "count": "{count} generated",
+      "generatingHint": "AI is creating…",
+      "generatingStatus": "Generating {current} of {total}",
+      "generatingWait": "Portrait generation usually takes 30-60 seconds, please wait",
+      "empty": "Upload a photo and select a style",
+      "emptyDesc": "Click 'Generate Portrait' to create your own portrait",
+      "preview": "Preview",
+      "download": "Download photo",
+      "previewAlt": "Portrait preview"
+    }
+  },
+  "musicStudio": {
+    "page": {
+      "backToHome": "Back to Home",
+      "title": "AI Music Production",
+      "description": "Describe the music you want, and AI will auto-generate a complete song"
+    },
+    "title": "Create Music",
+    "mode": {
+      "simple": "Simple Mode",
+      "custom": "Custom Mode"
+    },
+    "mood": {
+      "label": "Mood"
+    },
+    "style": {
+      "label": "Genre"
+    },
+    "prompt": {
+      "labelSimple": "Song Theme",
+      "labelCustom": "Lyrics",
+      "lengthHint": "(max {max} characters)",
+      "placeholderSimple": "Describe the song theme, e.g.: summer beach trip, lost love, hope for the future…",
+      "placeholderCustom": "Enter your lyrics, AI will sing them…"
+    },
+    "titleField": {
+      "label": "Song Title",
+      "placeholder": "Give your song a name"
+    },
+    "vocal": {
+      "label": "Vocal Style"
+    },
+    "duration": {
+      "label": "Duration"
+    },
+    "model": {
+      "label": "Model",
+      "placeholder": "Select model"
+    },
+    "instrumental": {
+      "label": "Instrumental (no vocals)"
+    },
+    "cost": {
+      "label": "Consumes",
+      "points": "points",
+      "balance": "Balance"
+    },
+    "actions": {
+      "generating": "Generating…",
+      "submitting": "Submitting…",
+      "startGenerate": "Generate"
+    },
+    "status": {
+      "pending": "Queued",
+      "generating": "Generating",
+      "success": "Completed",
+      "failed": "Failed"
+    },
+    "errors": {
+      "promptRequired": "Please enter a music description or lyrics",
+      "promptTooLong": "Prompt max {max} characters",
+      "requestFailed": "Request failed",
+      "generationFailed": "Generation failed, please retry",
+      "generateFailed": "Generation failed"
+    },
+    "progress": {
+      "waitHint": "Music generation usually takes 2-3 minutes, please be patient…"
+    },
+    "result": {
+      "title": "Result",
+      "untitled": "Untitled Song",
+      "download": "Download",
+      "lyrics": "Lyrics",
+      "syncing": "Syncing"
+    },
+    "styleLabels": {
+      "流行": "Pop",
+      "摇滚": "Rock",
+      "电子": "Electronic",
+      "说唱": "Rap",
+      "R&B": "R&B",
+      "爵士": "Jazz",
+      "民谣": "Folk",
+      "古典": "Classical",
+      "金属": "Metal",
+      "乡村": "Country",
+      "舞曲": "Dance",
+      "拉丁": "Latin",
+      "朋克": "Punk",
+      "布鲁斯": "Blues",
+      "雷鬼": "Reggae"
+    },
+    "moodLabels": {
+      "欢快": "Cheerful",
+      "浪漫": "Romantic",
+      "平静": "Calm",
+      "悲伤": "Sad",
+      "激昂": "Epic",
+      "梦幻": "Dreamy",
+      "温暖": "Warm",
+      "神秘": "Mysterious"
+    },
+    "vocalLabels": {
+      "不限": "Any",
+      "男声": "Male",
+      "女声": "Female",
+      "男女对唱": "Duet",
+      "合唱": "Chorus"
+    },
+    "durationLabels": {
+      "不限": "Any",
+      "30 秒": "30 sec",
+      "1 分钟": "1 min",
+      "2 分钟": "2 min",
+      "4 分钟": "4 min"
+    },
+    "modelLabels": {
+      "V4·5 All — 更好歌曲结构": "V4.5 All — Better song structure",
+      "V4·5 — 智能提示词理解": "V4.5 — Smart prompt understanding",
+      "V4·5 Plus — 更丰富音色": "V4.5 Plus — Richer tones",
+      "V5 — 最新模型": "V5 — Latest model"
+    }
+  },
+  "engines": {
+    "title": {
+      "part1": "Choose Your",
+      "highlight": "Creative Engine"
+    },
+    "description": "Each engine corresponds to a professional imaging scenario. Pick a scene, choose a style, then generate with one click.",
+    "column520": {
+      "engineLabel": "Engine · 520",
+      "title": "520 Column",
+      "description": "A romance-driven creative column. From couple photoshoots to 520 copywriting, relationship analysis, custom music, and memoirs — capture every chapter of your love story in one place.",
+      "chips": ["Couple Photos", "520 Copywriting", "Relationship Analysis", "Couple Music", "Love Memoirs", "Couple Stickers"],
+      "cta": "Enter 520 Column"
+    },
+    "idPhoto": {
+      "engineLabel": "Engine · 01",
+      "title": "AI ID Photo",
+      "description": "Upload a selfie to automatically complete face recognition, composition cropping, background replacement, lighting correction, and suit synthesis. OpenAI gpt-image and Gemini dual engines serve as backups.",
+      "chips": ["1-inch", "2-inch", "Passport", "Visa", "Resume", "Student ID", "Driver's License", "Free Creation"],
+      "cta": "Enter ID Photo Workspace"
+    },
+    "portrait": {
+      "engineLabel": "Engine · 02",
+      "title": "AI Portrait",
+      "description": "Upload a photo, choose from 10 professional photography styles, and let AI generate studio-quality portraits. From studio portraits to French street style, everyone deserves a magazine-cover-worthy portrait.",
+      "chips": ["Studio Portrait", "High Fashion", "Studio Texture", "Japanese Style", "Film Portrait", "B&W Documentary", "Minimalist Modern", "Dark Mood", "Forest Natural", "French Street"],
+      "cta": "Enter AI Portrait Workspace"
+    },
+    "music": {
+      "engineLabel": "Engine · 03",
+      "title": "AI Music Production",
+      "description": "Enter a description or lyrics, and AI will generate complete songs with vocals or instrumental only. Supports Pop, Rock, Electronic, Rap, Classical, Folk, and more. Powered by Suno V4.5 / V5 models.",
+      "chips": ["Pop", "Rock", "Electronic", "Rap", "Classical", "Folk", "R&B", "Jazz"],
+      "cta": "Enter Music Workbench"
+    }
+  },
+  "column520": {
+    "page": {
+      "title": "520 Column",
+      "subtitle": "Six romance-powered tools that turn your love story into images, copy, and music.",
+      "back": "Back to home",
+      "balance": "Credit balance",
+      "loginRequired": "Please sign in to use the 520 Column features.",
+      "tabs": {
+        "copy": "Love Copy",
+        "photo": "Couple Photo",
+        "avatar": "Couple Avatar",
+        "analysis": "Vibe Report",
+        "music": "Couple Music",
+        "memoir": "Love Memoir"
+      }
+    },
+    "common": {
+      "generate": "Generate",
+      "regenerate": "Regenerate",
+      "generating": "AI is creating…",
+      "result": "Result",
+      "download": "Download",
+      "copy": "Copy",
+      "copied": "Copied!",
+      "cost": "Costs {n} credits",
+      "balanceLeft": "(Balance: {n})",
+      "downloadTxt": "Download as text",
+      "uploadHint": "Upload a clear photo of the two of you",
+      "uploadMulti": "Multiple photos supported, up to {n}",
+      "errors": {
+        "auth": "Please sign in first",
+        "balance": "Not enough credits — please top up",
+        "missingFile": "Please upload a photo first",
+        "missingField": "Please complete the required fields",
+        "server": "Generation failed, please try again later"
+      }
+    },
+    "copy": {
+      "title": "520 Love Copy",
+      "description": "Type a keyword, AI writes a sweet love message under 200 characters. Pick Literary style for a poem.",
+      "keywordLabel": "Keyword / topic",
+      "keywordPlaceholder": "e.g. anniversary, our first meeting, a serious confession…",
+      "scenarioLabel": "Use case (optional)",
+      "scenarioPlaceholder": "e.g. social post, birthday card, good-morning text…",
+      "styleLabel": "Pick a style",
+      "styles": {
+        "sincere": "Sincere",
+        "literary": "Literary",
+        "playful": "Playful",
+        "cool": "Cool",
+        "cheeky": "Cheeky"
+      },
+      "musicHint": "Want a song to go with this copy?",
+      "musicCta": "Send this copy to Couple Music"
+    },
+    "photo": {
+      "title": "Couple Photo",
+      "description": "Upload a couple photo. AI imagines the scene and re-shoots it in a brand-new setting.",
+      "sceneLabel": "Pick a scene",
+      "noteLabel": "Extra note (optional)",
+      "notePlaceholder": "e.g. she wears a white dress, he wears a black shirt…",
+      "scenes": {
+        "beach-sunset": "Beach Sunset",
+        "cherry-blossom": "Cherry Blossom",
+        "starry-night": "Starry Night",
+        "cafe-date": "Cafe Date",
+        "paris-street": "Paris Street",
+        "autumn-park": "Autumn Park",
+        "wedding-style": "Korean Wedding",
+        "film-grain": "Film Grain"
+      }
+    },
+    "avatar": {
+      "title": "Couple Avatar",
+      "description": "Upload a couple photo, get a cartoon-style sticker / avatar pair you can use in chats.",
+      "styleLabel": "Pick a style",
+      "styles": {
+        "chibi": "Chibi Cute",
+        "studio-ghibli": "Ghibli Anime",
+        "pixar3d": "Pixar 3D",
+        "korean-manhwa": "Korean Manhwa",
+        "sticker-doodle": "Sticker Doodle"
+      },
+      "noteLabel": "Extra note (optional)",
+      "notePlaceholder": "e.g. matching beanies, holding a corgi…"
+    },
+    "analysis": {
+      "title": "Relationship Vibe Report",
+      "description": "Upload a couple photo, tell us your story, get a sweet, positive analysis report.",
+      "durationLabel": "Months together",
+      "durationPlaceholder": "e.g. 18",
+      "metAtLabel": "Where you met",
+      "metAtPlaceholder": "e.g. college club, daily commute, friend's party…",
+      "noteLabel": "Extra context (optional)",
+      "notePlaceholder": "Tell us your favorite tiny memory…"
+    },
+    "music": {
+      "title": "Couple Music",
+      "description": "Turn your fresh copy into a sweet song — or write a fresh prompt.",
+      "fromCopyHint": "✨ Using your latest 520 copy as inspiration",
+      "promptLabel": "Inspiration / description",
+      "promptPlaceholder": "e.g. a tender folk song with acoustic guitar, male vocals…",
+      "lyricsLabel": "Lyrics",
+      "lyricsPlaceholder": "Write your own lyrics here…",
+      "instrumentalLabel": "Instrumental only (no vocals)",
+      "submit": "Generate couple music",
+      "running": "Music submitted, creating your song…",
+      "generating": "AI is composing your exclusive song…",
+      "waitHint": "Usually takes 1-3 minutes, please wait",
+      "untitled": "Untitled Song",
+      "syncing": "Syncing"
+    },
+    "memoir": {
+      "title": "Love Memoir",
+      "description": "Upload photos, paste chat snippets, list your timeline — AI writes an illustrated memoir.",
+      "titleLabel": "Memoir title (optional)",
+      "titlePlaceholder": "e.g. Our 365th day",
+      "photosLabel": "Upload photos (up to 6)",
+      "timelineLabel": "Timeline (one per line: date | event)",
+      "timelinePlaceholder": "2023-05-20 | First met at the cafe\n2023-09-09 | Officially together\n2024-02-14 | Our first trip",
+      "chatLabel": "Chat excerpt",
+      "chatPlaceholder": "Paste your sweetest or funniest chat moment…",
+      "noteLabel": "Extra note (optional)"
+    }
+  },
+  "pricing": {
+    "title": {
+      "part1": "Pay by ",
+      "highlight": "Credits",
+      "part2": ", No Subscription"
+    },
+    "description": "All plans are one-time purchases, credits never expire.",
+    "mostPopular": "Most Popular",
+    "plans": {
+      "trial": {
+        "name": "Free Trial",
+        "price": "$0",
+        "unit": "20 credits on signup",
+        "features": [
+          "20 free credits on first signup",
+          "OpenAI + Gemini dual engines",
+          "ID Photo / AI Portrait / AI Music — all access",
+          "JPEG HD download"
+        ],
+        "cta": "Start Free"
+      },
+      "creator": {
+        "name": "Creator",
+        "price": "$29.9",
+        "unit": "300 credits",
+        "features": [
+          "All Free Trial features",
+          "Batch upload up to 20 photos",
+          "Works retained for 30 days",
+          "Priority queue, shorter average time"
+        ],
+        "cta": "Choose Creator"
+      },
+      "enthusiast": {
+        "name": "Enthusiast",
+        "price": "$49.9",
+        "unit": "700 credits",
+        "features": [
+          "All Creator features",
+          "Higher priority queue",
+          "Full access to advanced portrait styles",
+          "AI Music high-quality models V4.5 / V5"
+        ],
+        "cta": "Choose Enthusiast"
+      },
+      "studio": {
+        "name": "Studio",
+        "price": "$99.9",
+        "unit": "1500 credits",
+        "features": [
+          "All Enthusiast features",
+          "Beta access to Portrait engine",
+          "Invoices & team billing",
+          "Dedicated support channel"
+        ],
+        "cta": "Choose Studio"
+      }
+    }
+  },
+  "cta": {
+    "title": "Make Your Next Beautiful Photo on LoveShow",
+    "description": "Sign up and get 20 free credits to start creating right away.",
+    "button": "Generate Free Now",
+    "column520": "520 Column"
+  },
+  "photoSpecs": {
+    "one_inch": {
+      "label": "1-Inch Photo",
+      "description": "ID card / standard registration photo, white background without hat."
+    },
+    "two_inch": {
+      "label": "2-Inch Photo",
+      "description": "Graduation certificate / resume standard, blue background business suit."
+    },
+    "passport": {
+      "label": "Passport Photo",
+      "description": "Chinese passport standard: white background, front-facing without hat, ears visible."
+    },
+    "visa": {
+      "label": "Visa Photo",
+      "description": "US, Canada, Schengen universal 2x2 inch white background visa photo."
+    },
+    "resume": {
+      "label": "Resume Photo",
+      "description": "Gray/beige business resume photo, smile, natural light."
+    },
+    "student": {
+      "label": "Student ID",
+      "description": "Red background school uniform style, suitable for student records / ID replacement."
+    },
+    "driver": {
+      "label": "Driver's License",
+      "description": "Motor vehicle driver's license white background portrait photo."
+    },
+    "free": {
+      "label": "Free Creation",
+      "description": "Creative portrait, user-defined background and style."
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated",
+    "sections": {
+      "intro": {
+        "title": "1. Introduction",
+        "content": "Welcome to LoveShow. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you about how we look after your personal data and tell you about your privacy rights."
+      },
+      "dataCollection": {
+        "title": "2. Data We Collect",
+        "intro": "We may collect, use, store and transfer different kinds of personal data about you:",
+        "items": [
+          "Identity Data: name, username",
+          "Contact Data: email address",
+          "Technical Data: IP address, browser type, device information",
+          "Usage Data: information about how you use our website and services"
+        ]
+      },
+      "dataUsage": {
+        "title": "3. How We Use Your Data",
+        "intro": "We use your personal data to:",
+        "items": [
+          "Provide and maintain our service",
+          "Notify you about changes to our service",
+          "Provide customer support",
+          "Monitor the usage of our service",
+          "Detect, prevent and address technical issues"
+        ]
+      },
+      "dataSecurity": {
+        "title": "4. Data Security",
+        "content": "We have implemented appropriate security measures to prevent your personal data from being accidentally lost, used, or accessed in an unauthorized way. We limit access to your personal data to those employees and partners who have a business need to know."
+      },
+      "rights": {
+        "title": "5. Your Rights",
+        "content": "Under certain circumstances, you have rights under data protection laws in relation to your personal data, including the right to access, correct, erase, restrict, or object to processing of your personal data."
+      },
+      "contact": {
+        "title": "6. Contact Us",
+        "content": "If you have any questions about this privacy policy, please contact us at privacy@example.com."
+      }
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated",
+    "sections": {
+      "agreement": {
+        "title": "1. Agreement to Terms",
+        "content": "By accessing or using LoveShow, you agree to be bound by these Terms of Service. If you disagree with any part of the terms, you may not access the service."
+      },
+      "license": {
+        "title": "2. Use License",
+        "intro": "Permission is granted to temporarily download one copy of the materials on LoveShow for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title.",
+        "intro2": "Under this license you may not:",
+        "items": [
+          "Modify or copy the materials",
+          "Use the materials for any commercial purpose",
+          "Attempt to decompile or reverse engineer any software",
+          "Remove any copyright or other proprietary notations",
+          "Transfer the materials to another person"
+        ]
+      },
+      "disclaimer": {
+        "title": "3. Disclaimer",
+        "content": "The materials on LoveShow are provided on an 'as is' basis. LoveShow makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights."
+      },
+      "limitations": {
+        "title": "4. Limitations",
+        "content": "In no event shall LoveShow or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on LoveShow."
+      },
+      "accuracy": {
+        "title": "5. Accuracy of Materials",
+        "content": "The materials appearing on LoveShow could include technical, typographical, or photographic errors. LoveShow does not warrant that any of the materials on its website are accurate, complete, or current."
+      },
+      "links": {
+        "title": "6. Links",
+        "content": "LoveShow has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by LoveShow of the site."
+      },
+      "modifications": {
+        "title": "7. Modifications",
+        "content": "LoveShow may revise these terms of service at any time without notice. By using this website you are agreeing to be bound by the then current version of these terms of service."
+      },
+      "contact": {
+        "title": "8. Contact Us",
+        "content": "If you have any questions about these Terms, please contact us at legal@example.com."
+      }
+    }
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "overview": "Overview",
+    "management": "Management",
+    "system": "System",
+    "dashboard": "Dashboard",
+    "analytics": "Analytics",
+    "users": "Users",
+    "tasks": "Tasks",
+    "orders": "Orders",
+    "points": "Credits",
+    "redeemCodes": "Redeem Codes",
+    "content": "Content",
+    "roles": "Roles",
+    "settings": "Settings",
+    "backToSite": "Back to Site",
+    "panel": "Admin Panel v1.0",
+    "refresh": "Refresh",
+    "export": "Export",
+    "total": "Total",
+    "verified": "Verified",
+    "members": "Members",
+    "admins": "Admins",
+    "searchUsersPlaceholder": "Search users by name or email...",
+    "allRoles": "All Roles",
+    "allStatus": "All Status",
+    "noUsersFound": "No users found",
+    "adjustFilters": "Try adjusting your search or filters",
+    "tableUser": "User",
+    "tableRole": "Role",
+    "tablePoints": "Points",
+    "tableStatus": "Status",
+    "tableEmailVerified": "Email Verified",
+    "tableJoined": "Joined",
+    "tableActions": "Actions",
+    "isVerified": "Verified",
+    "notVerified": "Not verified",
+    "edit": "Edit",
+    "sendEmail": "Send Email",
+    "changeRole": "Change Role",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "previous": "Previous",
+    "next": "Next",
+    "showingUsers": "Showing {count} of {total} users (Page {page} of {totalPages})",
+    "usersSelected": "{count} users selected",
+    "addNewUser": "Add New User",
+    "editUser": "Edit User",
+    "changeUserRole": "Change Role",
+    "deleteUser": "Delete User",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "emailVerified": "Email Verified",
+    "saveChanges": "Save Changes",
+    "createConfirm": "Create User",
+    "deleteDescription": "This action cannot be undone",
+    "deleteConfirmation": "Are you sure you want to delete {name} ({email})?",
+    "bulkDeleteConfirm": "Are you sure you want to delete {count} users?",
+    "current": "current",
+    "selectNewRole": "Select a new role for {name}",
+    "normal": "Normal",
+    "banned": "Banned",
+    "frozen": "Frozen",
+    "confirmBan": "Are you sure you want to ban user {name}?",
+    "confirmUnban": "Are you sure you want to unban user {name}?",
+    "confirmFreeze": "Are you sure you want to freeze user {name}?",
+    "confirmUnfreeze": "Are you sure you want to unfreeze user {name}?",
+    "confirmResetPassword": "Are you sure you want to reset the password for user {name} ({email})?",
+    "resetPassword": "Reset Password",
+    "passwordResetSuccess": "Password reset successfully",
+    "adjustPoints": "Adjust Points",
+    "pointsBalance": "Points Balance",
+    "grantPoints": "Grant Points",
+    "deductPoints": "Deduct Points",
+    "reason": "Reason",
+    "reasonRequired": "Please enter a reason",
+    "quickSelect": "Quick Select",
+    "customAmount": "Or enter custom amount",
+    "currentBalance": "Current Balance",
+    "newBalance": "New Balance",
+    "tasksTitle": "Task Management",
+    "tasksDesc": "Manage all image and music generation tasks",
+    "taskStatus": {
+      "pending": "Pending",
+      "processing": "Processing",
+      "completed": "Completed",
+      "failed": "Failed"
+    },
+    "tableTask": "Task",
+    "tableType": "Type",
+    "tablePlatform": "Type",
+    "tableCost": "Cost",
+    "tableCreated": "Created",
+    "tableCompleted": "Completed",
+    "tableDuration": "Duration",
+    "noTasks": "No tasks found",
+    "noTasksDesc": "Generation tasks will appear here",
+    "viewTask": "View Details",
+    "retryTask": "Retry",
+    "aiProvider": "AI Provider",
+    "taskTypes": {
+      "photo": "AI ID Photo",
+      "portrait": "AI Portrait",
+      "music": "AI Music",
+      "loveColumn": "520 Column",
+      "couple_photo": "Couple Photo",
+      "couple_avatar": "Couple Avatar",
+      "couple_music": "Couple Music"
+    },
+    "ordersTitle": "Order Management",
+    "ordersDesc": "Manage redeem code recharge orders and transaction records",
+    "rechargeOrders": "Recharge Orders",
+    "rechargeCount": "Recharge Count",
+    "totalPointsIssued": "Total Points Issued",
+    "statusMonitor": "Status Monitor",
+    "statusNormal": "Normal",
+    "statusRunning": "Redeem function is running",
+    "pendingPlans": "Pending Plans",
+    "autoIssue": "All auto-issued",
+    "searchOrdersPlaceholder": "Search user email, redeem code description...",
+    "tableOrderInfo": "Transaction / Code Info",
+    "tablePlan": "Plan",
+    "tableAmount": "Points",
+    "issued": "Issued",
+    "noOrders": "No orders",
+    "noOrdersDesc": "All recharge order records will appear here",
+    "pointsTitle": "Credit Deduction Records",
+    "pointsDesc": "View user credit consumption and generation details",
+    "totalDeductions": "Total Deductions",
+    "totalPointsUsed": "Total Points Used",
+    "todayUsed": "Today's Usage",
+    "todayGenerations": "{count} generations",
+    "avgCost": "Avg Cost",
+    "avgCostUnit": "pts/time",
+    "searchPointsPlaceholder": "Search users, task IDs...",
+    "tableTime": "Time",
+    "tablePrompt": "Prompt",
+    "tableQuantity": "Quantity",
+    "pointDetail": "Deduction Details",
+    "taskId": "Task ID",
+    "deductionTime": "Deduction Time",
+    "taskDetail": "Generation Task Details",
+    "imageSize": "Image Size",
+    "actualCost": "Actual Cost",
+    "generatedImages": "Generated Images",
+    "scenePrompt": "Scene Prompt",
+    "close": "Close",
+    "noRecords": "No deduction records",
+    "noRecordsDesc": "User credit consumption records will appear here",
+    "redeemCodesPage": {
+      "title": "Redeem Codes",
+      "subtitle": "Generate and track redeem codes for credit top-ups",
+      "generate": "Generate Code",
+      "generateDesc": "Select a plan to generate a 32-digit random code",
+      "selectPlan": "Select Plan",
+      "count": "Count",
+      "generateBtn": "Generate",
+      "generating": "Generating...",
+      "generateSuccess": "Successfully generated {count} codes",
+      "generateFailed": "Generation failed",
+      "filterAndCopy": "Filter & copy unused codes",
+      "allPlans": "All Plans",
+      "totalUnused": "Unused:",
+      "refresh": "Refresh",
+      "copyAll": "Copy All",
+      "copiedCount": "Copied {count} codes",
+      "noUnusedCodes": "No unused codes",
+      "codeList": "Code List",
+      "code": "Code",
+      "plan": "Plan",
+      "status": "Status",
+      "redeemedBy": "Redeemed By",
+      "redeemedAt": "Redeemed At",
+      "unused": "Unused",
+      "used": "Used",
+      "copySuccess": "Code copied to clipboard",
+      "copyTooltip": "Copy code",
+      "loading": "Loading...",
+      "empty": "No codes yet. Generate some first."
+    }
+  }
+}

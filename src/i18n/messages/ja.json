@@ -1,0 +1,292 @@
+{
+  "common": {
+    "appName": "StartFast Pro",
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "success": "成功！",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "delete": "削除",
+    "edit": "編集",
+    "create": "作成",
+    "submit": "送信",
+    "back": "戻る",
+    "next": "次へ",
+    "previous": "前へ",
+    "search": "検索",
+    "filter": "フィルター",
+    "sort": "並べ替え",
+    "viewAll": "すべて見る",
+    "learnMore": "詳細を見る"
+  },
+  "nav": {
+    "features": "機能",
+    "pricing": "料金",
+    "testimonials": "お客様の声",
+    "faq": "よくある質問",
+    "docs": "ドキュメント",
+    "blog": "ブログ",
+    "signIn": "ログイン",
+    "signUp": "登録",
+    "signOut": "ログアウト",
+    "getStarted": "始める",
+    "myAccount": "マイアカウント",
+    "admin": "管理パネル",
+    "dashboard": "ダッシュボード",
+    "settings": "設定",
+    "billing": "請求"
+  },
+  "hero": {
+    "badge": "Pro版 - プレミアム機能搭載",
+    "title": "SaaSを",
+    "titleHighlight": "10倍速く",
+    "description": "認証、決済、メール、国際化、ロールベースアクセスなど、本番環境対応のNext.jsボイラープレート。ボイラープレートコードで時間を無駄にしません。",
+    "cta": "無料で始める",
+    "viewGithub": "GitHubで見る",
+    "stats": {
+      "developers": "開発者",
+      "projects": "プロジェクト",
+      "satisfaction": "満足度"
+    }
+  },
+  "features": {
+    "title": "必要なものすべて",
+    "subtitle": "SaaS構築に必要なすべての機能が、事前設定済みですぐに使えます。",
+    "authentication": {
+      "title": "認証",
+      "description": "Better-Authによるセキュアな認証。メール/パスワード、OAuth、マジックリンクをサポート。"
+    },
+    "payments": {
+      "title": "決済",
+      "description": "Webhook処理付きのStripeサブスクリプションと一回払いの統合。"
+    },
+    "email": {
+      "title": "メール",
+      "description": "Resendによるトランザクションメール。美しいテンプレート付き。"
+    },
+    "database": {
+      "title": "データベース",
+      "description": "Drizzle ORMとPostgreSQLによる型安全なデータベース操作。"
+    },
+    "darkMode": {
+      "title": "ダークモード",
+      "description": "next-themesによる美しいダークモード対応。システム設定の自動検出。"
+    },
+    "seo": {
+      "title": "SEO最適化",
+      "description": "メタタグ、Open Graph、JSON-LDによるSEOベストプラクティス。"
+    },
+    "i18n": {
+      "title": "国際化",
+      "description": "next-intlによる多言語サポート内蔵。新しい言語の追加も簡単。"
+    },
+    "roles": {
+      "title": "ロールベースアクセス",
+      "description": "管理者、メンバー、閲覧者の権限を細かく制御。チーム招待機能付き。"
+    },
+    "analytics": {
+      "title": "分析対応",
+      "description": "Posthog分析用フック設定済み。イベントとユーザー行動を簡単に追跡。"
+    },
+    "blog": {
+      "title": "ブログシステム",
+      "description": "シンタックスハイライト、読了時間、SEO最適化付きのMDXブログ。"
+    },
+    "testing": {
+      "title": "E2Eテスト",
+      "description": "CI/CDワークフロー付きのPlaywrightテスト設定済み。安心してアプリをテスト。"
+    },
+    "proUI": {
+      "title": "Pro UIキット",
+      "description": "データテーブル、チャート、モーダルなどのプレミアムUIコンポーネント。"
+    }
+  },
+  "pricing": {
+    "title": "シンプルな料金",
+    "subtitle": "無料で始めて、必要に応じてアップグレード。",
+    "free": {
+      "name": "無料",
+      "price": "¥0",
+      "description": "始めるのに最適",
+      "features": [
+        "無制限のプロジェクト",
+        "認証システム",
+        "メール統合",
+        "コミュニティサポート"
+      ],
+      "cta": "始める"
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "¥2,900",
+      "period": "/月",
+      "description": "成長するビジネス向け",
+      "features": [
+        "無料版のすべて",
+        "優先サポート",
+        "高度な分析",
+        "カスタムドメイン",
+        "APIアクセス"
+      ],
+      "cta": "トライアル開始",
+      "popular": "人気"
+    },
+    "enterprise": {
+      "name": "エンタープライズ",
+      "price": "カスタム",
+      "description": "大規模組織向け",
+      "features": [
+        "Proのすべて",
+        "専任サポート",
+        "SLA保証",
+        "カスタム統合",
+        "オンプレミス"
+      ],
+      "cta": "お問い合わせ"
+    }
+  },
+  "testimonials": {
+    "title": "開発者に愛されています",
+    "subtitle": "StartFastで高速に開発する数千人の開発者に参加"
+  },
+  "faq": {
+    "title": "よくある質問",
+    "subtitle": "StartFastについて知っておくべきことすべて",
+    "questions": {
+      "free": {
+        "question": "StartFastは本当に無料ですか？",
+        "answer": "無料版とPro版の両方を提供しています。無料版にはすべての基本機能が含まれています。Pro版には国際化、ロールベースアクセス、分析、プレミアムUIコンポーネントが追加されています。"
+      },
+      "stack": {
+        "question": "StartFastはどんな技術スタックを使っていますか？",
+        "answer": "StartFastはNext.js 15、React 19、TypeScript、Tailwind CSS、認証にBetter-Auth、Drizzle ORMとPostgreSQL、決済にStripe、メールにResendを使用しています。"
+      },
+      "typescript": {
+        "question": "TypeScriptを知っている必要がありますか？",
+        "answer": "TypeScriptの知識があると役立ちますが、コードは十分にドキュメント化されており、一般的なパターンに従っています。JavaScriptを知っていれば、コードベースで作業しながらTypeScriptを学べます。"
+      },
+      "database": {
+        "question": "別のデータベースを使用できますか？",
+        "answer": "はい！デフォルトではDrizzle ORMでPostgreSQLを使用していますが、MySQL、SQLite、またはDrizzleがサポートする他のデータベースに簡単に切り替えられます。"
+      },
+      "deploy": {
+        "question": "StartFastをどうやってデプロイしますか？",
+        "answer": "StartFastはVercelで最適に動作しますが（推奨）、Railway、Render、AWS、または自分のサーバーなど、Next.jsをサポートする任意のプラットフォームにデプロイできます。"
+      },
+      "pro": {
+        "question": "Pro版には何が含まれていますか？",
+        "answer": "Pro版には国際化（7以上の言語）、ロールベースアクセス制御、チーム招待、Posthog高度分析、ブログシステム、Playwrightテスト、CI/CDワークフロー、プレミアムUIコンポーネントが含まれています。"
+      },
+      "support": {
+        "question": "サポートを受けるにはどうすればいいですか？",
+        "answer": "無料ユーザーはGitHub Discussionsコミュニティで質問できます。Proユーザーは優先メールサポートとプライベートDiscordチャンネルにアクセスできます。"
+      },
+      "customize": {
+        "question": "デザインをカスタマイズできますか？",
+        "answer": "もちろん！UIはTailwind CSSで構築されているため、色、スペース、コンポーネントを簡単にカスタマイズできます。tailwind.config.tsを変更してブランドに合わせましょう。"
+      }
+    }
+  },
+  "cta": {
+    "title": "より速く出荷する準備はできましたか？",
+    "subtitle": "StartFastでSaaS製品を構築する数千人の開発者に参加しましょう。",
+    "button": "無料で始める"
+  },
+  "footer": {
+    "description": "Pro機能付きのプレミアムNext.js SaaSボイラープレート。",
+    "product": "製品",
+    "resources": "リソース",
+    "legal": "法的事項",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "copyright": "© {year} StartFast. All rights reserved."
+  },
+  "auth": {
+    "signIn": {
+      "title": "ログイン",
+      "subtitle": "アカウントにアクセスするための認証情報を入力してください",
+      "email": "メール",
+      "password": "パスワード",
+      "forgotPassword": "パスワードをお忘れですか？",
+      "submit": "ログイン",
+      "submitting": "ログイン中...",
+      "noAccount": "アカウントをお持ちでないですか？",
+      "signUp": "登録",
+      "orContinueWith": "または続行",
+      "error": "メールまたはパスワードが無効です"
+    },
+    "signUp": {
+      "title": "登録",
+      "subtitle": "始めるためにアカウントを作成してください",
+      "name": "名前",
+      "email": "メール",
+      "password": "パスワード",
+      "submit": "登録",
+      "submitting": "アカウント作成中...",
+      "hasAccount": "すでにアカウントをお持ちですか？",
+      "signIn": "ログイン",
+      "orContinueWith": "または続行",
+      "error": "アカウントの作成に失敗しました。もう一度お試しください。"
+    }
+  },
+  "dashboard": {
+    "title": "マイアカウント",
+    "welcome": "おかえりなさい、{name}さん！",
+    "profile": {
+      "title": "プロフィール",
+      "subtitle": "アカウントを管理",
+      "email": "メール",
+      "name": "名前",
+      "notSet": "未設定",
+      "edit": "プロフィール編集"
+    },
+    "billing": {
+      "title": "請求",
+      "subtitle": "サブスクリプション管理",
+      "plan": "プラン",
+      "status": "ステータス",
+      "manage": "請求管理"
+    },
+    "settings": {
+      "title": "設定",
+      "subtitle": "環境設定をカスタマイズ",
+      "theme": "テーマ",
+      "notifications": "通知",
+      "enabled": "有効",
+      "edit": "設定編集"
+    }
+  },
+  "blog": {
+    "title": "ブログ",
+    "subtitle": "最新のニュース、更新、洞察",
+    "readMore": "もっと読む",
+    "readingTime": "{minutes}分で読めます",
+    "publishedOn": "{date}に公開",
+    "backToBlog": "ブログに戻る",
+    "relatedPosts": "関連記事",
+    "categories": "カテゴリー",
+    "tags": "タグ",
+    "noPosts": "記事がありません"
+  },
+  "roles": {
+    "admin": "管理者",
+    "member": "メンバー",
+    "viewer": "閲覧者",
+    "owner": "オーナー"
+  },
+  "team": {
+    "title": "チーム",
+    "members": "メンバー",
+    "invitations": "招待",
+    "invite": "メンバー招待",
+    "inviteSubtitle": "チームへの招待を送信",
+    "inviteEmail": "メールアドレス",
+    "inviteRole": "ロール",
+    "sendInvite": "招待を送信",
+    "pending": "保留中",
+    "accepted": "承認済み",
+    "expired": "期限切れ",
+    "revoke": "取り消し",
+    "remove": "削除"
+  }
+}

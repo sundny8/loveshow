@@ -1,0 +1,292 @@
+{
+  "common": {
+    "appName": "StartFast Pro",
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "success": "Succès !",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "create": "Créer",
+    "submit": "Soumettre",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "viewAll": "Voir Tout",
+    "learnMore": "En Savoir Plus"
+  },
+  "nav": {
+    "features": "Fonctionnalités",
+    "pricing": "Tarifs",
+    "testimonials": "Témoignages",
+    "faq": "FAQ",
+    "docs": "Documentation",
+    "blog": "Blog",
+    "signIn": "Connexion",
+    "signUp": "Inscription",
+    "signOut": "Déconnexion",
+    "getStarted": "Commencer",
+    "myAccount": "Mon Compte",
+    "admin": "Panneau Admin",
+    "dashboard": "Tableau de Bord",
+    "settings": "Paramètres",
+    "billing": "Facturation"
+  },
+  "hero": {
+    "badge": "Édition Pro - Fonctionnalités Premium Incluses",
+    "title": "Lancez Votre SaaS",
+    "titleHighlight": "10x Plus Vite",
+    "description": "Un boilerplate Next.js prêt pour la production avec authentification, paiements, email, i18n, contrôle d'accès basé sur les rôles et plus encore. Arrêtez de perdre du temps sur le code répétitif.",
+    "cta": "Commencer Gratuitement",
+    "viewGithub": "Voir sur GitHub",
+    "stats": {
+      "developers": "Développeurs",
+      "projects": "Projets",
+      "satisfaction": "Satisfaction"
+    }
+  },
+  "features": {
+    "title": "Tout Ce Dont Vous Avez Besoin",
+    "subtitle": "Toutes les fonctionnalités nécessaires pour construire votre SaaS, préconfigurées et prêtes à l'emploi.",
+    "authentication": {
+      "title": "Authentification",
+      "description": "Authentification sécurisée avec Better-Auth, supportant email/mot de passe, OAuth et liens magiques."
+    },
+    "payments": {
+      "title": "Paiements",
+      "description": "Intégration Stripe pour les abonnements et paiements uniques avec gestion des webhooks."
+    },
+    "email": {
+      "title": "Email",
+      "description": "Emails transactionnels avec Resend. Modèles élégants inclus."
+    },
+    "database": {
+      "title": "Base de Données",
+      "description": "Opérations de base de données typées avec Drizzle ORM et PostgreSQL."
+    },
+    "darkMode": {
+      "title": "Mode Sombre",
+      "description": "Magnifique support du mode sombre avec next-themes. Détection automatique des préférences système."
+    },
+    "seo": {
+      "title": "SEO Optimisé",
+      "description": "Meilleures pratiques SEO intégrées avec meta tags, Open Graph et JSON-LD."
+    },
+    "i18n": {
+      "title": "Internationalisation",
+      "description": "Support intégré pour plusieurs langues avec next-intl. Facile d'ajouter de nouvelles locales."
+    },
+    "roles": {
+      "title": "Accès Basé sur les Rôles",
+      "description": "Permissions granulaires avec rôles admin, membre et lecteur. Invitations d'équipe incluses."
+    },
+    "analytics": {
+      "title": "Analytics Prêt",
+      "description": "Hooks préconfigurés pour l'analytics Posthog. Suivez facilement les événements et le comportement des utilisateurs."
+    },
+    "blog": {
+      "title": "Système de Blog",
+      "description": "Blog alimenté par MDX avec coloration syntaxique, temps de lecture et optimisation SEO."
+    },
+    "testing": {
+      "title": "Tests E2E",
+      "description": "Tests Playwright préconfigurés avec workflow CI/CD. Testez votre app en toute confiance."
+    },
+    "proUI": {
+      "title": "Kit UI Pro",
+      "description": "Composants UI premium incluant tables de données, graphiques, modales et plus."
+    }
+  },
+  "pricing": {
+    "title": "Tarifs Simples",
+    "subtitle": "Commencez gratuitement, mettez à niveau quand vous en avez besoin.",
+    "free": {
+      "name": "Gratuit",
+      "price": "0€",
+      "description": "Parfait pour commencer",
+      "features": [
+        "Projets illimités",
+        "Système d'authentification",
+        "Intégration email",
+        "Support communautaire"
+      ],
+      "cta": "Commencer"
+    },
+    "pro": {
+      "name": "Pro",
+      "price": "29€",
+      "period": "/mois",
+      "description": "Pour les entreprises en croissance",
+      "features": [
+        "Tout dans Gratuit",
+        "Support prioritaire",
+        "Analytics avancé",
+        "Domaine personnalisé",
+        "Accès API"
+      ],
+      "cta": "Démarrer l'Essai",
+      "popular": "Populaire"
+    },
+    "enterprise": {
+      "name": "Entreprise",
+      "price": "Sur Mesure",
+      "description": "Pour les grandes organisations",
+      "features": [
+        "Tout dans Pro",
+        "Support dédié",
+        "Garantie SLA",
+        "Intégrations personnalisées",
+        "Option on-premise"
+      ],
+      "cta": "Nous Contacter"
+    }
+  },
+  "testimonials": {
+    "title": "Adoré par les Développeurs",
+    "subtitle": "Rejoignez des milliers de développeurs qui livrent plus vite avec StartFast"
+  },
+  "faq": {
+    "title": "Questions Fréquentes",
+    "subtitle": "Tout ce que vous devez savoir sur StartFast",
+    "questions": {
+      "free": {
+        "question": "StartFast est-il vraiment gratuit ?",
+        "answer": "Nous proposons des versions gratuite et pro. La version gratuite inclut toutes les fonctionnalités essentielles. La version Pro ajoute l'internationalisation, l'accès basé sur les rôles, l'analytics et les composants UI premium."
+      },
+      "stack": {
+        "question": "Quelle stack technologique utilise StartFast ?",
+        "answer": "StartFast est construit avec Next.js 15, React 19, TypeScript, Tailwind CSS, Better-Auth pour l'authentification, Drizzle ORM avec PostgreSQL, Stripe pour les paiements et Resend pour les emails."
+      },
+      "typescript": {
+        "question": "Dois-je connaître TypeScript ?",
+        "answer": "Bien que la connaissance de TypeScript aide, le code est bien documenté et suit des patterns communs. Si vous connaissez JavaScript, vous pouvez travailler avec le code et apprendre TypeScript en même temps."
+      },
+      "database": {
+        "question": "Puis-je utiliser une autre base de données ?",
+        "answer": "Oui ! Bien que nous utilisions PostgreSQL par défaut avec Drizzle ORM, vous pouvez facilement passer à MySQL, SQLite ou d'autres bases de données supportées par Drizzle. Mettez simplement à jour la configuration et le schéma."
+      },
+      "deploy": {
+        "question": "Comment déployer StartFast ?",
+        "answer": "StartFast fonctionne très bien avec Vercel (recommandé), mais vous pouvez le déployer sur n'importe quelle plateforme supportant Next.js, y compris Railway, Render, AWS ou votre propre serveur."
+      },
+      "pro": {
+        "question": "Qu'est-ce qui est inclus dans la version Pro ?",
+        "answer": "Pro inclut l'internationalisation (7+ langues), le contrôle d'accès basé sur les rôles, les invitations d'équipe, l'analytics avancé avec Posthog, le système de blog, les tests Playwright, les workflows CI/CD et les composants UI premium."
+      },
+      "support": {
+        "question": "Comment obtenir du support ?",
+        "answer": "Pour les utilisateurs gratuits, nous avons une communauté GitHub Discussions où vous pouvez poser des questions. Les utilisateurs Pro ont accès au support email prioritaire et à un canal Discord privé."
+      },
+      "customize": {
+        "question": "Puis-je personnaliser le design ?",
+        "answer": "Absolument ! L'UI est construite avec Tailwind CSS, facilitant la personnalisation des couleurs, espacements et composants. Vous pouvez modifier tailwind.config.ts pour correspondre à votre marque."
+      }
+    }
+  },
+  "cta": {
+    "title": "Prêt à Livrer Plus Vite ?",
+    "subtitle": "Rejoignez des milliers de développeurs qui construisent leurs produits SaaS avec StartFast.",
+    "button": "Commencer Gratuitement"
+  },
+  "footer": {
+    "description": "Boilerplate SaaS Next.js premium avec fonctionnalités Pro.",
+    "product": "Produit",
+    "resources": "Ressources",
+    "legal": "Légal",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'Utilisation",
+    "copyright": "© {year} StartFast. Tous droits réservés."
+  },
+  "auth": {
+    "signIn": {
+      "title": "Connexion",
+      "subtitle": "Entrez vos identifiants pour accéder à votre compte",
+      "email": "Email",
+      "password": "Mot de passe",
+      "forgotPassword": "Mot de passe oublié ?",
+      "submit": "Se Connecter",
+      "submitting": "Connexion...",
+      "noAccount": "Pas de compte ?",
+      "signUp": "S'inscrire",
+      "orContinueWith": "Ou continuer avec",
+      "error": "Email ou mot de passe invalide"
+    },
+    "signUp": {
+      "title": "Inscription",
+      "subtitle": "Créez votre compte pour commencer",
+      "name": "Nom",
+      "email": "Email",
+      "password": "Mot de passe",
+      "submit": "S'inscrire",
+      "submitting": "Création du compte...",
+      "hasAccount": "Déjà un compte ?",
+      "signIn": "Se Connecter",
+      "orContinueWith": "Ou continuer avec",
+      "error": "Échec de la création du compte. Veuillez réessayer."
+    }
+  },
+  "dashboard": {
+    "title": "Mon Compte",
+    "welcome": "Bon retour, {name} !",
+    "profile": {
+      "title": "Profil",
+      "subtitle": "Gérer votre compte",
+      "email": "Email",
+      "name": "Nom",
+      "notSet": "Non défini",
+      "edit": "Modifier le Profil"
+    },
+    "billing": {
+      "title": "Facturation",
+      "subtitle": "Gérer l'abonnement",
+      "plan": "Forfait",
+      "status": "Statut",
+      "manage": "Gérer la Facturation"
+    },
+    "settings": {
+      "title": "Paramètres",
+      "subtitle": "Personnaliser les préférences",
+      "theme": "Thème",
+      "notifications": "Notifications",
+      "enabled": "Activé",
+      "edit": "Modifier les Paramètres"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Dernières actualités, mises à jour et insights",
+    "readMore": "Lire Plus",
+    "readingTime": "{minutes} min de lecture",
+    "publishedOn": "Publié le {date}",
+    "backToBlog": "Retour au Blog",
+    "relatedPosts": "Articles Connexes",
+    "categories": "Catégories",
+    "tags": "Tags",
+    "noPosts": "Aucun article trouvé"
+  },
+  "roles": {
+    "admin": "Admin",
+    "member": "Membre",
+    "viewer": "Lecteur",
+    "owner": "Propriétaire"
+  },
+  "team": {
+    "title": "Équipe",
+    "members": "Membres",
+    "invitations": "Invitations",
+    "invite": "Inviter un Membre",
+    "inviteSubtitle": "Envoyer une invitation pour rejoindre votre équipe",
+    "inviteEmail": "Adresse email",
+    "inviteRole": "Rôle",
+    "sendInvite": "Envoyer l'Invitation",
+    "pending": "En attente",
+    "accepted": "Accepté",
+    "expired": "Expiré",
+    "revoke": "Révoquer",
+    "remove": "Supprimer"
+  }
+}
