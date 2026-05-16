@@ -194,4 +194,15 @@ html {
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  /* gallery 中 memoir 卡片的 markdown 渲染样式 */
+  .gallery-memoir h1 { @apply text-base font-extrabold text-rose-600 dark:text-rose-300 mt-2 mb-2 text-center; }
+  .gallery-memoir h2 { @apply text-sm font-bold text-rose-600 dark:text-rose-300 mt-3 mb-1; }
+  .gallery-memoir h3 { @apply text-sm font-semibold text-rose-600 dark:text-rose-300 mt-2 mb-1; }
+  .gallery-memoir p { @apply my-2; }
+  .gallery-memoir blockquote { @apply border-l-4 border-rose-300 pl-3 py-1 my-2 italic text-slate-600 dark:text-slate-300 bg-rose-50/50 dark:bg-rose-500/10 rounded-r; }
+  .gallery-memoir ul { @apply list-disc pl-5 my-2; }
+  .gallery-memoir li { @apply my-1; }
+  .gallery-memoir figure { @apply my-3 text-center; }
+  .gallery-memoir img { @apply rounded-xl mx-auto max-h-48 object-cover shadow-sm; }
 }

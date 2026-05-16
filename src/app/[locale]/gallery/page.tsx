@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { Download, ZoomIn, Loader2, ImageIcon, Calendar, Tag, LayoutGrid, Play, Pause, Music, Heart, FileText, Sparkles, BookHeart, Smile, Copy, Check } from 'lucide-react';
+import { Download, ZoomIn, Loader2, ImageIcon, Calendar, Tag, LayoutGrid, Play, Pause, Music, Heart, FileText, Sparkles, BookHeart, Smile, Copy, Check, Share2 } from 'lucide-react';
 import { Link, useRouter } from '@/i18n/routing';
 import { Button } from '@/components/ui/button';
 import { PHOTO_SPECS } from '@/lib/photo/specs';
@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import { useSession } from '@/lib/auth-client';
 import { ImageModal } from '@/components/ui/image-modal';
+import { renderMemoirToHtml } from '@/lib/love-column/memoir-render';
 
 /** 通过 fetch 下载图片（解决跨域资源无法直接 download 的问题） */
 async function downloadImage(url: string, filename = 'photo.jpg') {
@@ -583,6 +584,53 @@ export default function GalleryPage() {
                             </button>
                           </>
                         )}
+                        {item.type === 'memoir' && text && (
+                          <>
+                            <button
+                              type="button"
+                              onClick={handleCopyText}
+                              title={copiedItemId === item.id ? '已复制' : '复制全文'}
+                              className={cn(
+                                'p-1.5 rounded-md transition-colors',
+                                copiedItemId === item.id
+                                  ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20'
+                                  : 'text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20'
+                              )}
+                            >
+                              {copiedItemId === item.id ? (
+                                <Check className="h-3.5 w-3.5" />
+                              ) : (
+                                <Copy className="h-3.5 w-3.5" />
+                              )}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={async () => {
+                                const url = `${window.location.origin}/m/${item.id}`;
+                                try {
+                                  await navigator.clipboard.writeText(url);
+                                  setCopiedItemId(item.id);
+                                  setTimeout(() => setCopiedItemId(null), 1500);
+                                } catch {
+                                  window.prompt('请手动复制分享链接：', url);
+                                }
+                              }}
+                              title="复制分享链接"
+                              className="p-1.5 rounded-md text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors"
+                            >
+                              <Share2 className="h-3.5 w-3.5" />
+                            </button>
+                            <a
+                              href={`/m/${item.id}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              title="打开分享页"
+                              className="p-1.5 rounded-md text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors"
+                            >
+                              <BookHeart className="h-3.5 w-3.5" />
+                            </a>
+                          </>
+                        )}
                         <span className="text-[11px] text-slate-500">{formatDate(item.createdAt)}</span>
                       </div>
                     </div>
@@ -618,14 +666,22 @@ export default function GalleryPage() {
                         </div>
                       )}
 
-                      {text && (
+                      {text && item.type === 'memoir' ? (
+                        <div
+                          className={cn(
+                            'gallery-memoir text-sm leading-relaxed text-slate-700 dark:text-slate-200',
+                            !expanded && 'max-h-64 overflow-hidden relative'
+                          )}
+                          dangerouslySetInnerHTML={{ __html: renderMemoirToHtml(text) }}
+                        />
+                      ) : text ? (
                         <div className={cn(
                           'text-sm text-slate-700 dark:text-slate-200 whitespace-pre-wrap leading-relaxed',
                           !expanded && 'line-clamp-4'
                         )}>
                           {text}
                         </div>
-                      )}
+                      ) : null}
 
                       {!firstImage && !text && (
                         <p className="text-xs text-slate-400 italic">

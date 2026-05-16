@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Loader2, BookHeart, Copy, Check } from 'lucide-react';
+import { Loader2, BookHeart, Copy, Check, Share2 } from 'lucide-react';
 import { DropzoneUploader } from '@/components/workspace/dropzone-uploader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -36,7 +36,6 @@ function MemoirRenderer({ text }: { text: string }) {
       flushPara();
       continue;
     }
-    // Image: ![alt](url)
     const imgMatch = line.match(/^!\[[^\]]*\]\(([^)]+)\)$/);
     if (imgMatch) {
       flushPara();
@@ -110,6 +109,7 @@ export function MemoirPanel({ cost, balance, onCreditsChanged }: Props) {
   const [note, setNote] = useState('');
   const [loading, setLoading] = useState(false);
   const [memoir, setMemoir] = useState('');
+  const [recordId, setRecordId] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
   const handleGenerate = async () => {
@@ -123,6 +123,7 @@ export function MemoirPanel({ cost, balance, onCreditsChanged }: Props) {
     }
     setLoading(true);
     setMemoir('');
+    setRecordId(null);
     try {
       const fd = new FormData();
       files.forEach((f) => fd.append('files', f));
@@ -140,6 +141,7 @@ export function MemoirPanel({ cost, balance, onCreditsChanged }: Props) {
         return;
       }
       setMemoir(data.memoir);
+      setRecordId(data.recordId || null);
       onCreditsChanged();
     } catch (err: any) {
       toast.error(tErr('server'), err?.message);
@@ -150,9 +152,25 @@ export function MemoirPanel({ cost, balance, onCreditsChanged }: Props) {
 
   const handleCopy = async () => {
     if (!memoir) return;
-    await navigator.clipboard.writeText(memoir);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
+    try {
+      await navigator.clipboard.writeText(memoir);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch (e) {
+      console.error('copy failed:', e);
+    }
+  };
+
+  const handleShare = async () => {
+    if (!recordId) return;
+    const url = `${window.location.origin}/m/${recordId}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success(tc('shareCopied'), url);
+    } catch {
+      // 无法访问剪贴板时降级提示
+      window.prompt(tc('shareCopyManual'), url);
+    }
   };
 
   return (
@@ -236,13 +254,30 @@ export function MemoirPanel({ cost, balance, onCreditsChanged }: Props) {
               <BookHeart className="h-3 w-3" /> {tc('result')}
             </span>
             {memoir && (
-              <button
-                type="button"
-                onClick={handleCopy}
-                className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-rose-600"
-              >
-                {copied ? <><Check className="h-3 w-3" /> {tc('copied')}</> : <><Copy className="h-3 w-3" /> {tc('copy')}</>}
-              </button>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={handleCopy}
+                  title={copied ? tc('copied') : tc('copy')}
+                  className={`p-1.5 rounded-md transition-colors ${
+                    copied
+                      ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20'
+                      : 'text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20'
+                  }`}
+                >
+                  {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                </button>
+                {recordId && (
+                  <button
+                    type="button"
+                    onClick={handleShare}
+                    title={tc('share')}
+                    className="p-1.5 rounded-md text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors"
+                  >
+                    <Share2 className="h-3.5 w-3.5" />
+                  </button>
+                )}
+              </div>
             )}
           </div>
 

@@ -9,7 +9,8 @@ export const config = {
     // - /api (API routes)
     // - /_next (Next.js internals)
     // - /static (static files)
+    // - /m (public memoir share pages, no locale prefix)
     // - /favicon.ico, /robots.txt, etc. (static files in public folder)
-    '/((?!api|_next|static|.*\\..*|favicon.ico|robots.txt).*)',
+    '/((?!api|_next|static|m/|.*\\..*|favicon.ico|robots.txt).*)',
   ],
 };
