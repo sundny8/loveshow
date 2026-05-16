@@ -7,8 +7,8 @@ export const COST_PHOTO = 10;
 export const COST_AVATAR = 10;
 export const COST_ANALYSIS = 10;
 export const COST_MEMOIR = 10;
-// Music tab is wired to existing /api/music/generate which deducts COST_PER_MUSIC (30) on its own.
-export const COST_MUSIC = 30;
+// Music tab is wired to existing /api/music/generate which deducts COST_PER_MUSIC (20) on its own.
+export const COST_MUSIC = 20;
 
 export type LoveColumnType =
   | 'copy'

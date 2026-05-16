@@ -1,5 +1,5 @@
 /** 每次 AI 音乐生成消耗积分 */
-export const COST_PER_MUSIC = 30;
+export const COST_PER_MUSIC = 20;
 
 /** Suno API 可用模型 */
 export const SUNO_MODELS = [
