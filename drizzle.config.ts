@@ -1,4 +1,3 @@
-import type { Config } from 'drizzle-kit';
 import { config } from 'dotenv';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
@@ -21,8 +20,8 @@ try {
 export default {
   schema: './src/db/schema.ts',
   out: './drizzle',
-  driver: 'postgresql',
+  dialect: 'postgresql',
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
-} satisfies Config;
+};
