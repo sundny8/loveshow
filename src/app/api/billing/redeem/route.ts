@@ -7,7 +7,8 @@ import { eq, and } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 
 const PLAN_POINTS: Record<string, number> = {
-  creator: 300,
+  starter: 140,
+  creator: 400,
   enthusiast: 700,
   studio: 1500,
 };

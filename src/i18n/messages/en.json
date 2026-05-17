@@ -974,12 +974,24 @@
         ],
         "cta": "Start Free"
       },
+      "starter": {
+        "name": "Starter",
+        "price": "$9.9",
+        "unit": "140 credits",
+        "features": [
+          "All Free Trial features",
+          "Enough for 1 custom song + 5 ID photos",
+          "Perfect for occasional use",
+          "Pay as you go, never expires"
+        ],
+        "cta": "Choose Starter"
+      },
       "creator": {
         "name": "Creator",
         "price": "$29.9",
-        "unit": "300 credits",
+        "unit": "400 credits",
         "features": [
-          "All Free Trial features",
+          "All Starter features",
           "Batch upload up to 20 photos",
           "Works retained for 30 days",
           "Priority queue, shorter average time"

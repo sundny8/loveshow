@@ -108,6 +108,7 @@ export default function BillingPage() {
 
   const plans: PlanItem[] = [
     { ...tPricing.raw('plans.trial'), key: 'trial', highlight: false } as PlanItem,
+    { ...tPricing.raw('plans.starter'), key: 'starter', highlight: false } as PlanItem,
     { ...tPricing.raw('plans.creator'), key: 'creator', highlight: false } as PlanItem,
     { ...tPricing.raw('plans.enthusiast'), key: 'enthusiast', highlight: true } as PlanItem,
     { ...tPricing.raw('plans.studio'), key: 'studio', highlight: false } as PlanItem,
@@ -145,7 +146,7 @@ export default function BillingPage() {
 
       {/* Plans Comparison */}
       <h2 className="text-xl font-bold mb-4">{t('availablePlans')}</h2>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 items-stretch">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-8 items-stretch">
         {plans.map((plan) => (
           <Card
             key={plan.key}

@@ -33,7 +33,8 @@ interface RedeemCode {
 }
 
 const PLAN_LABELS: Record<string, string> = {
-  creator: '¥29.9 / 300 积分',
+  starter: '¥9.9 / 140 积分',
+  creator: '¥29.9 / 400 积分',
   enthusiast: '¥49.9 / 700 积分',
   studio: '¥99.9 / 1500 积分',
 };
@@ -144,7 +145,8 @@ export default function RedeemCodesPage() {
                 value={selectedPlan}
                 onChange={(e) => setSelectedPlan(e.target.value)}
               >
-                <option value="creator">创作者 (¥29.9 / 300 积分)</option>
+                <option value="starter">小试牛刀 (¥9.9 / 140 积分)</option>
+                <option value="creator">创作者 (¥29.9 / 400 积分)</option>
                 <option value="enthusiast">发烧友 (¥49.9 / 700 积分)</option>
                 <option value="studio">工作室 (¥99.9 / 1500 积分)</option>
               </select>
@@ -182,6 +184,7 @@ export default function RedeemCodesPage() {
                 onChange={(e) => setFilterPlan(e.target.value)}
               >
                 <option value="all">{t('allPlans')}</option>
+                <option value="starter">小试牛刀 (¥9.9)</option>
                 <option value="creator">创作者 (¥29.9)</option>
                 <option value="enthusiast">发烧友 (¥49.9)</option>
                 <option value="studio">工作室 (¥99.9)</option>

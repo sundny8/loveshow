@@ -9,12 +9,14 @@ import crypto from 'crypto';
 
 // LoveShow pricing tiers (zh CNY)
 const PLAN_POINTS: Record<string, number> = {
-  creator: 300,
+  starter: 140,
+  creator: 400,
   enthusiast: 700,
   studio: 1500,
 };
 
 const PLAN_SALTS: Record<string, string> = {
+  starter: '¥9.9',
   creator: '¥29.9',
   enthusiast: '¥49.9',
   studio: '¥99.9',
