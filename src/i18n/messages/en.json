@@ -490,7 +490,8 @@
     "legal": {
       "title": "Legal",
       "privacy": "Privacy Policy",
-      "terms": "Terms of Service"
+      "terms": "Terms of Service",
+      "contact": "Contact Support"
     },
     "copyright": "© {year} LoveShow. All rights reserved."
   },
@@ -1103,7 +1104,7 @@
       },
       "contact": {
         "title": "6. Contact Us",
-        "content": "If you have any questions about this privacy policy, please contact us at privacy@example.com."
+        "content": "If you have any questions about this privacy policy, please contact us at support@loveshow.life."
       }
     }
   },
@@ -1143,13 +1144,29 @@
         "title": "6. Links",
         "content": "LoveShow has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by LoveShow of the site."
       },
+      "acceptableUse": {
+        "title": "7. Acceptable Use & Prohibited Content",
+        "intro": "LoveShow is an AI-powered creative platform focused on romantic expression and couple memories. To keep the platform safe for everyone, the following content is strictly prohibited when using any AI generation feature — including 520 copywriting, couple photos, couple avatars, emotional analysis, love memoir, couple music, AI portraits, and ID photos:",
+        "items": [
+          "NSFW, sexually explicit, pornographic, suggestive, nude, or adult content of any kind.",
+          "Any sexualized, exposed, or exploitative content involving minors. Such requests trigger immediate account termination.",
+          "Hate speech, discrimination, harassment, or content targeting protected groups.",
+          "Gore, extreme violence, self-harm, suicide promotion, or terrorism-related content.",
+          "Deepfakes or misleading impersonation of real people (public figures or private individuals).",
+          "Illegal activities, fraud, drugs, weapons, explosives, or other content endangering public safety.",
+          "Photos of people you do not have the legal right to use, including non-consensual face images of others.",
+          "Attempts to bypass content moderation, jailbreak our safety systems, or attack our infrastructure."
+        ],
+        "moderation": "To enforce these rules, every prompt-based generation endpoint on LoveShow is gated by the Creem Moderation API. Prompts that violate our content policy are rejected before they reach any model and never produce output. Repeated violations may result in warnings, feature restrictions, or termination of your account at our sole discretion.",
+        "report": "If you encounter abuse or prohibited content, please report it to support@loveshow.life."
+      },
       "modifications": {
-        "title": "7. Modifications",
+        "title": "8. Modifications",
         "content": "LoveShow may revise these terms of service at any time without notice. By using this website you are agreeing to be bound by the then current version of these terms of service."
       },
       "contact": {
-        "title": "8. Contact Us",
-        "content": "If you have any questions about these Terms, please contact us at legal@example.com."
+        "title": "9. Contact Us",
+        "content": "If you have any questions about these Terms, please contact us at support@loveshow.life."
       }
     }
   },

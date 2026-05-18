@@ -61,6 +61,22 @@ export default function TermsPage() {
               {t('sections.links.content')}
             </p>
 
+            <h2 className="text-2xl font-semibold mt-8 mb-4">{t('sections.acceptableUse.title')}</h2>
+            <p className="text-slate-600 dark:text-slate-300 mb-4">
+              {t('sections.acceptableUse.intro')}
+            </p>
+            <ul className="list-disc pl-6 text-slate-600 dark:text-slate-300 mb-4 space-y-2">
+              {t.raw('sections.acceptableUse.items').map((item: string, index: number) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+            <p className="text-slate-600 dark:text-slate-300 mb-4">
+              {t('sections.acceptableUse.moderation')}
+            </p>
+            <p className="text-slate-600 dark:text-slate-300 mb-4">
+              {t('sections.acceptableUse.report')}
+            </p>
+
             <h2 className="text-2xl font-semibold mt-8 mb-4">{t('sections.modifications.title')}</h2>
             <p className="text-slate-600 dark:text-slate-300 mb-4">
               {t('sections.modifications.content')}

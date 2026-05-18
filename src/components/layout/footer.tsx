@@ -1,12 +1,13 @@
 'use client';
 
 import { Link } from '@/i18n/routing';
-import { Camera, Github, Twitter } from 'lucide-react';
+import { Camera, Mail } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 export function Footer() {
   const t = useTranslations('footer');
   const currentYear = new Date().getFullYear();
+  const supportEmail = 'support@loveshow.life';
 
   return (
     <footer className="border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
@@ -23,24 +24,13 @@ export function Footer() {
             <p className="text-sm text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">
               {t('brand.description')}
             </p>
-            <div className="flex space-x-3">
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
-              >
-                <Github className="h-5 w-5" />
-              </a>
-              <a
-                href="https://x.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
-              >
-                <Twitter className="h-5 w-5" />
-              </a>
-            </div>
+            <a
+              href={`mailto:${supportEmail}`}
+              className="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
+            >
+              <Mail className="h-4 w-4" />
+              <span>{supportEmail}</span>
+            </a>
           </div>
 
           {/* Product */}
@@ -105,6 +95,14 @@ export function Footer() {
                 <Link href="/terms" className="text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
                   {t('legal.terms')}
                 </Link>
+              </li>
+              <li>
+                <a
+                  href={`mailto:${supportEmail}`}
+                  className="text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                >
+                  {t('legal.contact')}
+                </a>
               </li>
             </ul>
           </div>

@@ -14,6 +14,7 @@ import {
   updateRecordOutput,
   COST_COPY,
 } from '@/lib/love-column/credits';
+import { moderatePrompt, joinPrompts } from '@/lib/moderation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -88,6 +89,24 @@ export async function POST(req: Request) {
   }
   if (!COPY_STYLES.find((s) => s.id === style)) {
     return NextResponse.json({ error: 'invalid_style' }, { status: 400 });
+  }
+
+  // Pre-generation moderation: screen the user-supplied prompt fragments
+  // before any model is invoked. Required for Creem AI-content compliance.
+  const moderation = await moderatePrompt(
+    joinPrompts(keyword, scenario),
+    `user_${userId}:copy`
+  );
+  if (!moderation.allowed) {
+    return NextResponse.json(
+      {
+        error: 'prompt_rejected',
+        reason: moderation.reason,
+        message:
+          '您输入的内容未通过内容安全审核。请修改后重试。LoveShow 严禁生成 NSFW、未成年人相关、仇恨、暴力等违规内容。',
+      },
+      { status: 400 }
+    );
   }
 
   let recordId: string | null = null;
