@@ -45,7 +45,7 @@ export default function SignUpPage() {
 
     try {
       await signUp.email({ email, password, name });
-      router.push('/dashboard');
+      router.push('/');
     } catch (err: any) {
       setError(err.message || '创建账号失败，请稍后重试。');
     } finally {

@@ -484,6 +484,8 @@
     "resources": {
       "title": "资源",
       "gallery": "作品画廊",
+      "meaning520": "520 是什么意思",
+      "imageEditor": "AI 图片编辑器",
       "faq": "常见问题",
       "dashboard": "个人中心"
     },
@@ -1104,7 +1106,7 @@
       },
       "contact": {
         "title": "6. 联系我们",
-        "content": "如果您对本隐私政策有任何疑问，请通过 support@loveshow.life 联系我们。"
+        "content": "如果您对本隐私政策有任何疑问，请通过 noreply@loveshow.life 联系我们。"
       }
     }
   },
@@ -1158,7 +1160,7 @@
           "禁止用本平台规避内容审核或攻击/绕过我方安全措施。"
         ],
         "moderation": "为执行上述规则，我们在所有支持文本提示的生成接口上集成了实时内容审核机制（Creem Moderation API）。任何被判定违规的提示词将被立即拒绝，不会进入生成流程。重复违规账户将被警告、限制功能或终止服务，具体处置由我方根据情况裁量。",
-        "report": "如发现违规内容或滥用行为，请通过 support@loveshow.life 向我们举报。"
+        "report": "如发现违规内容或滥用行为，请通过 noreply@loveshow.life 向我们举报。"
       },
       "modifications": {
         "title": "8. 修改",
@@ -1166,7 +1168,7 @@
       },
       "contact": {
         "title": "9. 联系我们",
-        "content": "如果您对这些条款有任何疑问，请通过 support@loveshow.life 联系我们。"
+        "content": "如果您对这些条款有任何疑问，请通过 noreply@loveshow.life 联系我们。"
       }
     }
   },

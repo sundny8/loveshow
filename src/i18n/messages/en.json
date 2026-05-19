@@ -484,6 +484,8 @@
     "resources": {
       "title": "Resources",
       "gallery": "Photo Gallery",
+      "meaning520": "What Does 520 Mean",
+      "imageEditor": "AI Image Editor",
       "faq": "FAQ",
       "dashboard": "Dashboard"
     },
@@ -1104,7 +1106,7 @@
       },
       "contact": {
         "title": "6. Contact Us",
-        "content": "If you have any questions about this privacy policy, please contact us at support@loveshow.life."
+        "content": "If you have any questions about this privacy policy, please contact us at noreply@loveshow.life."
       }
     }
   },
@@ -1158,7 +1160,7 @@
           "Attempts to bypass content moderation, jailbreak our safety systems, or attack our infrastructure."
         ],
         "moderation": "To enforce these rules, every prompt-based generation endpoint on LoveShow is gated by the Creem Moderation API. Prompts that violate our content policy are rejected before they reach any model and never produce output. Repeated violations may result in warnings, feature restrictions, or termination of your account at our sole discretion.",
-        "report": "If you encounter abuse or prohibited content, please report it to support@loveshow.life."
+        "report": "If you encounter abuse or prohibited content, please report it to noreply@loveshow.life."
       },
       "modifications": {
         "title": "8. Modifications",
@@ -1166,7 +1168,7 @@
       },
       "contact": {
         "title": "9. Contact Us",
-        "content": "If you have any questions about these Terms, please contact us at support@loveshow.life."
+        "content": "If you have any questions about these Terms, please contact us at noreply@loveshow.life."
       }
     }
   },

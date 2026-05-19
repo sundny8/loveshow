@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 export function Footer() {
   const t = useTranslations('footer');
   const currentYear = new Date().getFullYear();
-  const supportEmail = 'support@loveshow.life';
+  const supportEmail = 'noreply@loveshow.life';
 
   return (
     <footer className="border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
@@ -72,6 +72,16 @@ export function Footer() {
               <li>
                 <Link href="/#faq" className="text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
                   {t('resources.faq')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/520-meaning" className="text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
+                  {t('resources.meaning520')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/ai-image-editor" className="text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
+                  {t('resources.imageEditor')}
                 </Link>
               </li>
               <li>
