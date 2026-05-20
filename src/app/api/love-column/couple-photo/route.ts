@@ -14,7 +14,6 @@ import {
   updateRecordOutput,
   COST_PHOTO,
 } from '@/lib/love-column/credits';
-import { moderatePrompt, joinPrompts } from '@/lib/moderation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 180;
@@ -42,23 +41,6 @@ export async function POST(req: Request) {
   }
   if (!PHOTO_SCENES.find((s) => s.id === scene)) {
     return NextResponse.json({ error: 'invalid_scene' }, { status: 400 });
-  }
-
-  // Pre-generation moderation: screen scene + custom note before any model runs.
-  const moderation = await moderatePrompt(
-    joinPrompts(scene, customNote),
-    `user_${userId}:couple-photo`
-  );
-  if (!moderation.allowed) {
-    return NextResponse.json(
-      {
-        error: 'prompt_rejected',
-        reason: moderation.reason,
-        message:
-          '您输入的内容未通过内容安全审核。请修改后重试。LoveShow 严禁生成 NSFW、未成年人相关、仇恨、暴力等违规内容。',
-      },
-      { status: 400 }
-    );
   }
 
   const buffer = Buffer.from(await file.arrayBuffer());

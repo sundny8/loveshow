@@ -6,7 +6,6 @@ import { eq, sql } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
 import { generateMusic } from '@/lib/suno';
 import { COST_PER_MUSIC, STYLE_EN_MAP, MOOD_EN_MAP } from '@/lib/music/constants';
-import { moderatePrompt, joinPrompts } from '@/lib/moderation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -87,24 +86,6 @@ export async function POST(req: Request) {
       return NextResponse.json(
         { error: `prompt too long, max ${maxPromptLen} characters` },
         { status: 400 },
-      );
-    }
-
-    // Pre-generation moderation: screen the user-supplied prompt + style + mood
-    // before any model is invoked.
-    const moderation = await moderatePrompt(
-      joinPrompts(trimmedPrompt, title, style, mood),
-      `user_${session.user.id}:music`
-    );
-    if (!moderation.allowed) {
-      return NextResponse.json(
-        {
-          error: 'prompt_rejected',
-          reason: moderation.reason,
-          message:
-            '您输入的内容未通过内容安全审核。请修改后重试。LoveShow 严禁生成 NSFW、未成年人相关、仇恨、暴力等违规内容。',
-        },
-        { status: 400 }
       );
     }
 

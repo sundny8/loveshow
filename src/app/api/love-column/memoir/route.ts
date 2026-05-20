@@ -14,7 +14,6 @@ import {
   updateRecordOutput,
   COST_MEMOIR,
 } from '@/lib/love-column/credits';
-import { moderatePrompt, joinPrompts } from '@/lib/moderation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -73,23 +72,6 @@ export async function POST(req: Request) {
   const timeline = parseTimeline(timelineRaw);
   if (!timeline.length) {
     return NextResponse.json({ error: 'invalid_timeline' }, { status: 400 });
-  }
-
-  // Pre-generation moderation: screen all free-text inputs.
-  const moderation = await moderatePrompt(
-    joinPrompts(title, timelineRaw, chatExcerpt, extraNote),
-    `user_${userId}:memoir`
-  );
-  if (!moderation.allowed) {
-    return NextResponse.json(
-      {
-        error: 'prompt_rejected',
-        reason: moderation.reason,
-        message:
-          '您输入的内容未通过内容安全审核。请修改后重试。LoveShow 严禁生成 NSFW、未成年人相关、仇恨、暴力等违规内容。',
-      },
-      { status: 400 }
-    );
   }
 
   // Persist photos first so we have URLs to splice into the rendered memoir.

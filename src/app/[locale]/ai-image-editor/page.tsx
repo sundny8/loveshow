@@ -20,8 +20,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? 'AI 图片编辑器（在线免费试用） · LoveShow 520'
       : 'AI Image Editor — Free to Try Online · LoveShow 520',
     description: isZh
-      ? '上传一张照片，用 LoveShow 520 的 AI 图片编辑器在线生成证件照、艺术肖像、情侣写真和情侣大头贴。基于参考图的图像编辑（image-to-image），注册免费送积分，无需信用卡即可试用。所有提示词均经过 Creem 内容审核，禁止生成 NSFW 与未成年相关内容。'
-      : 'Upload a reference photo and use LoveShow 520’s AI image editor online to create ID photos, art portraits, couple shots and couple avatars. Reference-photo (image-to-image) editing — sign up gets free credits, no credit card needed. All prompts are screened by the Creem Moderation API; NSFW and minor-related content is strictly blocked.',
+      ? '上传一张照片，用 LoveShow 520 的 AI 图片编辑器在线生成证件照、艺术肖像、情侣写真和情侣大头贴。基于参考图的图像编辑（image-to-image），注册免费送积分，无需信用卡即可试用。请遵守服务条款中的可接受使用政策。'
+      : 'Upload a reference photo and use LoveShow 520’s AI image editor online to create ID photos, art portraits, couple shots and couple avatars. Reference-photo (image-to-image) editing — sign up gets free credits, no credit card needed. Please follow the Acceptable Use Policy in our Terms.',
     alternates: {
       canonical,
       languages: {
@@ -190,20 +190,20 @@ export default async function AiImageEditorPage({ params }: Props) {
             <ul className="not-prose space-y-3 my-6">
               <SafetyItem
                 icon={ShieldCheck}
-                title={isZh ? 'Creem 内容审核' : 'Creem moderation'}
+                title={isZh ? '可接受使用政策' : 'Acceptable Use Policy'}
                 desc={
                   isZh
-                    ? '所有文本提示词在送入模型之前都会经过 Creem 内容审核 API；任何被判定违规的内容会被立即拦截。'
-                    : 'Every text prompt is screened through the Creem Moderation API before reaching any model; violating content is blocked.'
+                    ? '我们对违规账户保留警告、限制功能、终止服务的权利。详细规则见服务条款 §7。'
+                    : 'We reserve the right to warn, restrict features, or terminate violating accounts. See Terms §7 for the full Acceptable Use Policy.'
                 }
               />
               <SafetyItem
                 icon={ShieldCheck}
-                title={isZh ? '禁止 NSFW 与未成年内容' : 'NSFW & minor content blocked'}
+                title={isZh ? '禁止 NSFW 与未成年内容' : 'NSFW & minor content prohibited'}
                 desc={
                   isZh
-                    ? '严禁生成 NSFW、性暗示、未成年相关、仇恨、暴力、深度伪造或非法内容。详细规则见服务条款 §7。'
-                    : 'NSFW, sexual, minor-related, hateful, violent, deepfake or illegal content is strictly prohibited. See Terms §7 for the full Acceptable Use Policy.'
+                    ? '严禁生成 NSFW、性暗示、未成年相关、仇恨、暴力、深度伪造或非法内容。'
+                    : 'NSFW, sexual, minor-related, hateful, violent, deepfake or illegal content is strictly prohibited.'
                 }
               />
               <SafetyItem
@@ -336,7 +336,7 @@ const FAQ_ZH = [
   },
   {
     q: '为什么提示词会被拒绝？',
-    a: '所有提示词在送入模型前都会经过 Creem 内容审核接口。如果被判定为 NSFW、性暗示、未成年相关、仇恨、暴力、深度伪造或违法内容，会被立即拦截，不进入生成流程。详见服务条款的 Acceptable Use 章节。',
+    a: '生成可能因模型自身的安全策略被拒绝，或因违反服务条款中的可接受使用政策（NSFW、性暗示、未成年相关、仇恨、暴力、深度伪造或违法内容）。详见服务条款的 Acceptable Use 章节。',
   },
 ];
 
@@ -367,7 +367,7 @@ const FAQ_EN = [
   },
   {
     q: 'Why was my prompt rejected?',
-    a: 'Every prompt is screened by the Creem Moderation API before reaching any model. Prompts that fall under NSFW, sexual, minor-related, hateful, violent, deepfake or illegal content are blocked. See the Acceptable Use section of our Terms of Service for the full policy.',
+    a: 'Generation may be rejected if the underlying AI model flags the request as unsafe, or if it falls under our Acceptable Use Policy (NSFW, sexual, minor-related, hateful, violent, deepfake or illegal content). See the Acceptable Use section of our Terms of Service for the full policy.',
   },
 ];
 

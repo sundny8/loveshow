@@ -13,7 +13,6 @@ import {
   updateRecordOutput,
   COST_ANALYSIS,
 } from '@/lib/love-column/credits';
-import { moderatePrompt, joinPrompts } from '@/lib/moderation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 90;
@@ -43,23 +42,6 @@ export async function POST(req: Request) {
   }
   if (!metAt) {
     return NextResponse.json({ error: 'missing_metAt' }, { status: 400 });
-  }
-
-  // Pre-generation moderation: screen the user-supplied free-text fields.
-  const moderation = await moderatePrompt(
-    joinPrompts(metAt, extraNote),
-    `user_${userId}:analysis`
-  );
-  if (!moderation.allowed) {
-    return NextResponse.json(
-      {
-        error: 'prompt_rejected',
-        reason: moderation.reason,
-        message:
-          '您输入的内容未通过内容安全审核。请修改后重试。LoveShow 严禁生成 NSFW、未成年人相关、仇恨、暴力等违规内容。',
-      },
-      { status: 400 }
-    );
   }
 
   const buffer = Buffer.from(await file.arrayBuffer());
