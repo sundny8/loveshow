@@ -39,7 +39,7 @@ export default function BillingPage() {
   const [redeemMessage, setRedeemMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
 
-  const RECHARGE_URL = 'https://m.tb.cn/h.RYAyE4y?tk=X7Ih5IKfXJm';
+  const RECHARGE_URL = 'https://m.tb.cn/h.R3ZGx7S?tk=DjMk5ujFcNn MF278';
 
   const handleCopyLink = async () => {
     try {
