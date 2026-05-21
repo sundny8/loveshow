@@ -41,7 +41,8 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: '/icon.svg',
+    apple: '/apple-icon.png',
   },
 };
 
