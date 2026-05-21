@@ -200,12 +200,13 @@ export default function BillingPage() {
             <div className="flex flex-col items-center gap-3">
               <div className="relative p-3 bg-white rounded-2xl shadow-md border border-rose-100 dark:border-rose-900/40">
                 <Image
-                  src="/qrcode/qrcode.jpg"
+                  src="/qrcode/qrcode.jpg?v=2"
                   alt="Recharge QR Code"
                   width={200}
                   height={200}
                   className="rounded-lg object-contain"
                   priority
+                  unoptimized
                 />
               </div>
               <div className="inline-flex items-center gap-1.5 text-sm font-medium text-rose-600 dark:text-rose-400">
