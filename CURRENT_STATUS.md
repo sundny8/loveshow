@@ -48,10 +48,11 @@
 ## 📋 Known Issues
 
 ### 1. Missing Favicon
-**Issue**: `/favicon.ico` returns 404
-**Impact**: Browser console error, no site icon in browser tabs
-**Priority**: Low (cosmetic)
-**Solution**: Need to create and add favicon.ico to public directory
+**Status**: ✅ FIXED (2026-05-21)
+**Solution**: Added SVG icon, dynamic favicon generation, and Apple Touch Icon
+- Created `/public/icon.svg` with heart logo
+- Added `/src/app/icon.tsx` for dynamic favicon
+- Added `/src/app/apple-icon.tsx` for iOS devices
 
 ### 2. Browser Extension Conflicts
 **Issue**: Solana wallet extension errors in console
@@ -59,7 +60,8 @@
 **Priority**: None (not our issue)
 
 ### 3. Build Artifacts in Git
-**Status**: ✅ FIXED - Added `*.tsbuildinfo` to .gitignore
+**Status**: ✅ FIXED (2026-05-21)
+**Solution**: Added `*.tsbuildinfo` to .gitignore
 
 ## 🚀 Deployment Status
 
@@ -144,9 +146,11 @@ Key environment variables in `.env.local`:
 
 ## 🎯 Next Steps (If Needed)
 
-1. **Add Favicon** (optional, cosmetic)
-   - Create favicon.ico (16x16, 32x32, 48x48 sizes)
-   - Place in `/public/favicon.ico`
+1. **Deploy to OVH Server** ✅ Ready
+   - Pull latest code: `git pull origin main`
+   - Rebuild: `npm run build`
+   - Restart: `pm2 restart loveshow`
+   - See `DEPLOYMENT_UPDATE.md` for detailed instructions
 
 2. **Submit to Google Search Console**
    - Follow steps in SEO Checklist above
