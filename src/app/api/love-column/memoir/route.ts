@@ -14,6 +14,11 @@ import {
   updateRecordOutput,
   COST_MEMOIR,
 } from '@/lib/love-column/credits';
+import {
+  combineUserText,
+  moderatePrompt,
+  moderationErrorResponse,
+} from '@/lib/moderation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -73,6 +78,20 @@ export async function POST(req: Request) {
   if (!timeline.length) {
     return NextResponse.json({ error: 'invalid_timeline' }, { status: 400 });
   }
+
+  // Creem moderation: screen ALL user-supplied free text (title, timeline
+  // events, chat excerpt, extra note) BEFORE persisting photos, charging, or
+  // calling the text model.
+  const moderation = await moderatePrompt({
+    prompt: combineUserText([
+      title,
+      timeline.map((t) => `${t.date} ${t.event}`).join('\n'),
+      chatExcerpt,
+      extraNote,
+    ]),
+    externalId: `user_${userId}:memoir`,
+  });
+  if (!moderation.ok) return moderationErrorResponse(moderation);
 
   // Persist photos first so we have URLs to splice into the rendered memoir.
   const photoUrls: string[] = [];

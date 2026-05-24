@@ -13,6 +13,11 @@ import {
   updateRecordOutput,
   COST_ANALYSIS,
 } from '@/lib/love-column/credits';
+import {
+  combineUserText,
+  moderatePrompt,
+  moderationErrorResponse,
+} from '@/lib/moderation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 90;
@@ -43,6 +48,14 @@ export async function POST(req: Request) {
   if (!metAt) {
     return NextResponse.json({ error: 'missing_metAt' }, { status: 400 });
   }
+
+  // Creem moderation: screen user-supplied notes BEFORE charging or calling
+  // the analysis model.
+  const moderation = await moderatePrompt({
+    prompt: combineUserText([metAt, extraNote]),
+    externalId: `user_${userId}:analysis`,
+  });
+  if (!moderation.ok) return moderationErrorResponse(moderation);
 
   const buffer = Buffer.from(await file.arrayBuffer());
   const originalStored = await persistImage(buffer, 'jpg', userId);

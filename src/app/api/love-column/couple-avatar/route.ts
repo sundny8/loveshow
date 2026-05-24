@@ -14,6 +14,7 @@ import {
   updateRecordOutput,
   COST_AVATAR,
 } from '@/lib/love-column/credits';
+import { moderatePrompt, moderationErrorResponse } from '@/lib/moderation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 180;
@@ -41,6 +42,16 @@ export async function POST(req: Request) {
   }
   if (!AVATAR_STYLES.find((s) => s.id === style)) {
     return NextResponse.json({ error: 'invalid_style' }, { status: 400 });
+  }
+
+  // Creem moderation: screen user-supplied free-text note BEFORE charging or
+  // calling the image model. Empty notes pass through trivially.
+  if (customNote) {
+    const moderation = await moderatePrompt({
+      prompt: customNote,
+      externalId: `user_${userId}:couple-avatar`,
+    });
+    if (!moderation.ok) return moderationErrorResponse(moderation);
   }
 
   const buffer = Buffer.from(await file.arrayBuffer());

@@ -14,6 +14,11 @@ import {
   updateRecordOutput,
   COST_COPY,
 } from '@/lib/love-column/credits';
+import {
+  combineUserText,
+  moderatePrompt,
+  moderationErrorResponse,
+} from '@/lib/moderation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -89,6 +94,14 @@ export async function POST(req: Request) {
   if (!COPY_STYLES.find((s) => s.id === style)) {
     return NextResponse.json({ error: 'invalid_style' }, { status: 400 });
   }
+
+  // Creem moderation: screen all user-supplied free text BEFORE charging or
+  // calling the model. See https://docs.creem.io/features/moderation
+  const moderation = await moderatePrompt({
+    prompt: combineUserText([keyword, scenario]),
+    externalId: `user_${userId}:copy`,
+  });
+  if (!moderation.ok) return moderationErrorResponse(moderation);
 
   let recordId: string | null = null;
   try {

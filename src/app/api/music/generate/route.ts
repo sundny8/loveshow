@@ -6,6 +6,11 @@ import { eq, sql } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
 import { generateMusic } from '@/lib/suno';
 import { COST_PER_MUSIC, STYLE_EN_MAP, MOOD_EN_MAP } from '@/lib/music/constants';
+import {
+  combineUserText,
+  moderatePrompt,
+  moderationErrorResponse,
+} from '@/lib/moderation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -88,6 +93,20 @@ export async function POST(req: Request) {
         { status: 400 },
       );
     }
+
+    // Creem moderation: screen the user-supplied music prompt + any custom
+    // style/title/mood text BEFORE charging points or calling Suno.
+    const moderation = await moderatePrompt({
+      prompt: combineUserText([
+        trimmedPrompt,
+        typeof title === 'string' ? title : null,
+        typeof style === 'string' ? style : null,
+        typeof mood === 'string' ? mood : null,
+        typeof vocalStyle === 'string' ? vocalStyle : null,
+      ]),
+      externalId: `user_${session.user.id}:music`,
+    });
+    if (!moderation.ok) return moderationErrorResponse(moderation);
 
     const hasAdvancedOptions = !!(style || mood || vocalStyle || duration);
     const useSunoCustomMode = customMode || hasAdvancedOptions;
