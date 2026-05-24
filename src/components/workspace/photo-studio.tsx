@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState, useEffect } from 'react';
+import { Link } from '@/i18n/routing';
 import { Button } from '@/components/ui/button';
 import { SpecPicker, SpecDetails } from './spec-picker';
 import { DropzoneUploader } from './dropzone-uploader';
@@ -294,12 +295,12 @@ export function PhotoStudio() {
               <span className="text-rose-600 dark:text-rose-400 font-medium">{error}</span>
               {error === t('errors.insufficientPoints') && (
                 <div className="mt-2">
-                  <a
+                  <Link
                     href="/dashboard/billing"
                     className="inline-flex items-center gap-1 text-xs font-semibold text-violet-600 hover:text-violet-700 dark:text-violet-400 dark:hover:text-violet-300 underline"
                   >
                     {t('errors.goRecharge')}
-                  </a>
+                  </Link>
                 </div>
               )}
             </div>

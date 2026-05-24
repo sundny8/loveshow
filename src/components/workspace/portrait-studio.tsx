@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSession } from '@/lib/auth-client';
 import { useTranslations, useLocale } from 'next-intl';
+import { Link } from '@/i18n/routing';
 import { Button } from '@/components/ui/button';
 import { DropzoneUploader } from './dropzone-uploader';
 import { ImageModal } from '@/components/ui/image-modal';
@@ -300,12 +301,12 @@ export function PortraitStudio() {
               </span>
               {error === 'insufficient_points' && (
                 <div className="mt-2">
-                  <a
+                  <Link
                     href="/dashboard/billing"
                     className="inline-flex items-center gap-1 text-xs font-semibold text-orange-600 hover:text-orange-700 dark:text-orange-400 dark:hover:text-orange-300 underline"
                   >
                     {t('errors.goRecharge')}
-                  </a>
+                  </Link>
                 </div>
               )}
             </div>
