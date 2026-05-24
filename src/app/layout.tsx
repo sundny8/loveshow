@@ -40,10 +40,11 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  icons: {
-    icon: '/icon.svg',
-    apple: '/apple-icon.png',
-  },
+  // Icons are registered automatically via the file conventions:
+  //   src/app/icon.tsx       → /icon (favicon)
+  //   src/app/apple-icon.tsx → /apple-icon (iOS home screen)
+  // Do NOT add an explicit `icons` block here — it would re-target a path
+  // that Next.js already serves and trigger a public/page conflict.
 };
 
 export default function RootLayout({
