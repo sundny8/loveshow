@@ -21,10 +21,18 @@ export interface PortraitPipelineResult {
 /**
  * AI 肖像照生成流水线。
  *
- * 与证件照生成逻辑一致——一次 API 调用完成识图 + 生图：
- *   1. 拼接综合提示词（人脸保持约束 + 风格化描述）
- *   2. 调用 Gemini Imagen 一键生图
- *   3. sharp 标准化输出
+ * 一次 API 调用完成识图 + 生图：
+ *   1. 把风格提示词里的"颗粒 / 光斑 / 斑驳"等危险实词在源头删除/替换
+ *   2. 用正向"洁净肤色"指令构建一键提示词
+ *   3. 调用 Gemini Imagen 生图
+ *   4. sharp 标准化输出
+ *
+ * 设计原则（重要）：
+ *   - 文生图模型对**正向实词**（grain / freckle / 颗粒 / 光斑）的激活
+ *     远强于对**否定指令**的抑制，所以在源头删词比事后追加"不要做 X"
+ *     更可靠。
+ *   - 不做"参考图痣点清点"——会把毛孔/阴影误判为痣并放大成黑点。
+ *   - 不反复枚举 mole / freckle / 黑痣 —— 出现次数越多模型注意力权重越高。
  */
 export async function runPortraitPipeline(
   input: Buffer,
@@ -40,8 +48,7 @@ export async function runPortraitPipeline(
   const stylePrompt = style.prompts[promptKey];
   const usedGender = options.gender === 'auto' ? 'female' : options.gender;
 
-  // 把风格提示词里那些"颗粒/斑驳/光斑/反差"等容易被模型当作脸上痣点的词
-  // 重新约束作用域到背景 / 衣服 / 头发 / 整体氛围，避免误植到面部和颈部。
+  // 方案一：从风格提示词里**实词删除/替换**会被模型当作脸上痣点的关键词。
   const safeStylePrompt = sanitizeStylePromptForFace(stylePrompt);
 
   const oneShotPrompt = buildPortraitOneShotPrompt(safeStylePrompt, style);
@@ -89,163 +96,132 @@ export async function runPortraitPipeline(
 }
 
 /**
- * 把风格提示词里"颗粒 / 斑驳 / 光斑 / 反差"等容易被模型解释成脸部痣点
- * 的词，明确限定到背景 / 衣服 / 头发 / 整体光影，避免落到人物面部和颈部。
+ * 方案一：源头删除危险词。
  *
- * 这是行为层修正：与其让模型在最后一刻克制，不如从输入端就堵住歧义。
+ * 把每个风格 prompt 里那些会被扩散模型解释成脸上痣点的"实词"
+ * 在喂给模型之前**直接替换或删除**，而不是在后面追加"不要做 X"
+ * 的免责声明（追加无效——前面的正向实词已经把视觉概念注入了）。
+ *
+ * 替换原则：保留风格的"色调 / 氛围 / 镜头语言"，只剥离会被
+ * 翻译成皮肤上离散黑点的具体颗粒/斑驳词。
  */
 function sanitizeStylePromptForFace(stylePrompt: string): string {
-  return (
-    stylePrompt +
-    '\n（重要补充：上文中提到的"颗粒"、"颗粒感"、"颗粒粗糙"、"胶片颗粒"、"斑驳"、' +
-    '"光斑"、"光影斑驳"、"色偏"、"高反差"、"阴影浓重"等纹理与质感关键词，' +
-    '其作用域仅限于背景、衣服、头发、空气感与整体光影氛围，禁止把它们应用到' +
-    '人物的面部（额头、眉间、眼周、鼻梁、鼻翼、面颊、嘴周、下巴）和颈部、' +
-    '锁骨、耳廓皮肤上。面部与颈部的皮肤必须保持干净均匀，不出现任何颗粒点、' +
-    '黑点、黑痣、雀斑、斑块、色斑或局部光斑，除非参考图中本来就有。）'
-  );
+  const replacements: Array<[RegExp, string]> = [
+    // ── 中文：颗粒类 ──────────────────────────────
+    [/细腻胶片颗粒质感/g, '细腻胶片色调'],
+    [/细腻的胶片颗粒质感/g, '细腻的胶片色调'],
+    [/胶片颗粒质感/g, '胶片色调'],
+    [/胶片颗粒/g, '胶片色调'],
+    [/强颗粒感/g, '深沉色调'],
+    [/轻颗粒/g, '柔和色调'],
+    [/颗粒粗糙/g, '深沉质感'],
+    [/颗粒感/g, '色调感'],
+    [/颗粒、微模糊边缘/g, '柔焦边缘'],
+    [/颗粒、柔焦背景/g, '柔焦背景'],
+    [/颗粒/g, '色调'],
+
+    // ── 中文：斑驳 / 光斑 ────────────────────────
+    [/光影斑驳/g, '柔和光影'],
+    [/光斑点缀/g, '柔和光线点缀'],
+    [/树影斑驳/g, '树影柔和'],
+    [/斑驳/g, '柔和'],
+    [/光斑/g, '柔和高光'],
+
+    // ── 中文：胶片型号（自带"颗粒"内涵）──────────
+    [/模拟Kodak Portra 400胶片风格/g, '复古暖色调电影感'],
+    [/Kodak Portra 400/g, 'Kodak 暖色调电影感'],
+    [/Leica M Monochrom风格/g, 'Leica 黑白电影质感'],
+    [/Leica M系列拍摄效果/g, 'Leica 风格的画面质感'],
+    [/8K高清胶片质感/g, '8K 高清电影质感'],
+    [/8K高清胶片感摄影棚级画质/g, '8K 高清电影级画质'],
+    [/8K，高对比柔光质感/g, '8K，柔光质感'],
+    [/35mm胶片摄影作品/g, '35mm 电影画面'],
+    [/35mm胶片风格/g, '35mm 电影风格'],
+
+    // ── 英文：grain / spots / dappled ───────────
+    [/film grain/gi, 'cinematic tone'],
+    [/grain texture/gi, 'cinematic tone'],
+    [/grainy/gi, 'cinematic'],
+    [/grain/gi, 'tone'],
+    [/dappled light/gi, 'soft light'],
+    [/dappled/gi, 'soft'],
+    [/light spots/gi, 'soft highlights'],
+    [/freckled/gi, 'natural'],
+    [/speckled/gi, 'subtle'],
+  ];
+
+  let cleaned = stylePrompt;
+  for (const [pattern, replacement] of replacements) {
+    cleaned = cleaned.replace(pattern, replacement);
+  }
+  return cleaned;
 }
 
 /**
- * 构建肖像照一键提示词。
+ * 方案二/三/四：精简的一键提示词构建器。
  *
- * 结构（按 LLM 的重视顺序倒推）：
- *   1. 人脸身份保持约束
- *   2. 风格化描述（已 sanitize）
- *   3. 皮肤痣点忠实度约束
- *   4. 技术指令
- *   5. 末尾再用中英文重复一次"面部颈部禁止出现新痣 / 黑点 / 斑块 / 光斑"
+ * 重要原则：
+ *   - 不再要求模型做"skin-mark inventory"（避免幻觉造痣）
+ *   - 把"洁净皮肤"硬约束放在 prompt 最前面（前 token 权重最高）
+ *   - 用正向描述代替负向枚举（"clean even-toned skin" 而不是
+ *     "no mole, no freckle, no dark dot, no age spot..."）
+ *   - "痣 / mole / freckle" 等高风险词只出现一次，且在末尾
+ *   - 整体长度压到 ~25 行，让关键约束更突出
  */
 function buildPortraitOneShotPrompt(
   stylePrompt: string,
   style: PortraitStyle
 ): string {
-  return `You are a world-class portrait photographer. Your task is to analyze the reference photo and generate a stunning stylized portrait that preserves the person's identity while applying a specific artistic style.
+  return `You are a world-class portrait photographer. Generate a stunning stylized portrait that preserves the person's identity from the reference photo.
 
 ═══════════════════════════════════════
-STEP 1: ANALYZE THE REFERENCE PHOTO
+TOP PRIORITY — SKIN APPEARANCE (READ FIRST)
 ═══════════════════════════════════════
-Carefully analyze the uploaded portrait photo. Identify:
-- Gender, approximate age, ethnicity
-- Face shape, facial structure, key features
-- Skin tone, hair color and style
-- Distinctive facial characteristics that make this person unique
-- IMPORTANT — Skin & facial-mark inventory: Make a precise inventory of every
-  visible mole, beauty mark (美人痣), freckle, scar, dimple, birthmark, pimple
-  scar or pigmentation patch on the face AND neck. For each, record (a) presence,
-  (b) exact position relative to other features, (c) approximate size and color.
-  Marks NOT visible in the reference do NOT exist for this person — treat them
-  as absent on the output canvas.
+The face and neck must show CLEAN, SMOOTH, EVEN-TONED, FLAWLESS skin throughout
+the entire portrait. Render a healthy uniform complexion with soft natural pore
+texture only. The facial and neck skin surface must remain visually pure with
+no discrete dark elements of any kind.
+
+人物的面部和颈部皮肤必须干净、光滑、肤色均匀、瓷感自然，呈现健康均匀的肤质，
+只保留柔和自然的毛孔细节，不出现任何深色斑点或离散的暗色细节。
 
 ═══════════════════════════════════════
-STEP 2: GENERATE STYLIZED PORTRAIT
+IDENTITY PRESERVATION
 ═══════════════════════════════════════
-Apply the following style while PRESERVING the person's facial identity:
+- Preserve exact facial identity — the person MUST be recognizable
+- Preserve exact age — do NOT age up or age down
+- Keep original face shape, facial structure and proportions
+- Keep original eyes (eyelid type, shape, spacing) and nose unchanged
+- No beautification, no plastic-surgery look, no AI-perfected symmetry
+- No anime, cartoon, or illustration style
 
+═══════════════════════════════════════
+STYLE
+═══════════════════════════════════════
 STYLE: ${style.name} (${style.nameEn})
 ${stylePrompt}
 
 ═══════════════════════════════════════
-CRITICAL IDENTITY CONSTRAINTS
+TEXTURE ROUTING (IMPORTANT)
 ═══════════════════════════════════════
-POSITIVE — YOU MUST FOLLOW ALL:
-- Preserve exact facial identity — the person MUST be recognizable
-- Preserve exact age appearance — do NOT age up or age down
-- Keep original facial structure, face shape, and proportions
-- Do not alter eyes (preserve eyelid type, eye shape, spacing)
-- Do not alter nose (preserve bridge, width, tip shape)
-- Maintain original facial proportions (three-section ratios)
-- Minimal facial modification — identity preservation is the NUMBER ONE goal
-
-═══════════════════════════════════════
-SKIN-MARK FIDELITY — STRICT RULES
-═══════════════════════════════════════
-- The reference photo is the ONLY source of truth for moles, beauty marks,
-  freckles, scars, dimples and birthmarks. Reproduce EVERY mark visible in
-  the reference at the same position, same size, same color. A 美人痣 next to
-  the lip in the reference must remain in the output at the exact same spot.
-- ZERO TOLERANCE for invented marks: do NOT add any new mole, dark dot, black
-  dot, freckle, age spot, sunspot, blemish, acne, hyperpigmentation, melasma,
-  scar, bruise, lesion or skin patch that is not present in the reference. If
-  in doubt, omit it.
-- Do not "stylize" by sprinkling random freckles across the cheekbones, nose
-  bridge, or shoulders for an artistic effect — this is forbidden.
-- Skin texture should remain natural (visible pores, subtle tone variation),
-  but it must be CLEAN of any spot that is not in the source photo.
-
-═══════════════════════════════════════
-GRAIN / NOISE / LIGHT-SPOT ROUTING (CRITICAL)
-═══════════════════════════════════════
-Many style descriptions above mention "颗粒 / 颗粒感 / 颗粒粗糙 / 胶片颗粒
-/ film grain / 斑驳 / dappled light / 光斑 / light spots / 高反差 / high
-contrast / 阴影浓重 / heavy shadow / 色偏 / color shift". These elements
-must be ROUTED to allowed regions only:
-
-ALLOWED to receive grain / spots / dappled light / heavy shadow / color shift:
-  ✓ Background (walls, sky, foliage, street, gradient backdrop)
+Any cinematic tone, soft light variation, shadow contrast, or atmospheric
+texture mentioned in the style description must appear ONLY on:
+  ✓ Background (walls, sky, foliage, gradient backdrop)
   ✓ Hair and clothing
-  ✓ Broad ambient atmosphere and air
   ✓ Out-of-focus areas
 
-FORBIDDEN — these regions must stay clean:
-  ✗ Face skin: forehead, brows, eyelids, under-eyes, nose bridge, nose tip,
-    nostrils, cheeks, cheekbones, area around the mouth, chin
-  ✗ Neck, throat, collarbones, ear-skin
-  ✗ Shoulders if exposed
-
-Specifically:
-- Render film/digital grain as a UNIFORM, fine, low-amplitude noise overlay.
-  Never let grain coalesce into discrete dark dots on the face or neck.
-- Render dappled light / window-shadow patterns ONLY on background or
-  clothing. Do not let them paint dark spots on cheeks/forehead.
-- Render high contrast and heavy shadows as broad smooth gradients, not as
-  isolated dark blotches on the face.
+Facial skin and neck skin must stay clean and uniform — no texture artifacts,
+no isolated dark elements, no scattered specks. Render any film/cinematic feel
+as a smooth color tone, not as discrete dots on the skin.
 
 ═══════════════════════════════════════
-NEGATIVE — ANY OF THESE MEANS FAILURE
+TECHNICAL
 ═══════════════════════════════════════
-- Different person / unrecognizable face
-- Beautified face / plastic surgery look
-- Symmetrical face / AI-perfected face
-- Larger eyes / altered eye shape
-- Slim face / altered jawline
-- Anime / cartoon / illustration look
-- Over-smoothed skin / AI plastic look
-- Aging up or aging down the person
-- Removing or relocating any mole, beauty mark (美人痣), scar, dimple or
-  distinctive mark that IS present in the reference
-- Adding any new mole, dark dot, black spot, freckle, age spot, blemish,
-  acne, pigmentation patch, dark blotch, or skin discoloration on the face
-  or neck that is NOT present in the reference (this rule applies to EVERY
-  style — minimalist, fashion, dark mood, film, B&W, forest, French street,
-  studio, japanese — without exception)
-- Painting dappled light, light spots, or shadow patches on the facial skin
-  or neck skin
+- High resolution, photorealistic, sharp focus on the face
+- Natural skin with visible pores but flawless even tone on face and neck
+- Looks like a professional photograph, not AI art
+- No text, watermarks, signatures, or logos in the image
 
-═══════════════════════════════════════
-TECHNICAL REQUIREMENTS
-═══════════════════════════════════════
-- High resolution, photorealistic, sharp focus on face
-- Natural skin texture with visible pores — no over-smoothing
-- Clean, even facial and neck skin: only the marks present in the reference
-  photo may appear there
-- The generated portrait should look like a professional photograph, not AI art
-- No text, no watermarks, no signatures, no logos anywhere in the image
-
-═══════════════════════════════════════
-FINAL CHECK BEFORE OUTPUT (MANDATORY)
-═══════════════════════════════════════
-Before producing the final image, mentally re-scan the face and neck:
-1. List every dark dot / spot / patch / freckle currently on the face & neck.
-2. Compare each one against your Step-1 inventory of the reference photo.
-3. Any dark element on face or neck that is NOT in the inventory MUST be
-   removed before output. No exceptions, no "artistic license", no "grain
-   accident".
-4. 中文复述（重要）：最终图中，人物的脸部和颈部除了参考图本来就有的痣 /
-   美人痣 / 疤 / 酒窝 / 胎记之外，绝对不能出现任何黑痣、黑点、斑块、雀斑、
-   色斑、老年斑、痘印、阴影斑点或局部光斑。颗粒、斑驳光影、光斑只允许
-   出现在背景、头发、衣服上，不能落在面部和颈部皮肤上。
-
-OUTPUT: First write the Step-1 skin-mark inventory in plain text, then
-produce the generated portrait image.`;
+OUTPUT: Generate the portrait image directly. Do not output any text or
+analysis before the image.`;
 }
