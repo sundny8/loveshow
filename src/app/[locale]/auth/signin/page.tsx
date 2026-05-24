@@ -41,7 +41,9 @@ export default function SignInPage() {
       if (result?.error) {
         setError(result.error.message || '登录失败，请检查您的账号或密码。');
       } else {
-        router.push('/dashboard');
+        // 登录成功后回到网站首页，让用户立刻看到内容/创作入口；
+        // 个人中心改由顶部导航的"我的账户"按需进入。
+        router.push('/');
       }
     } catch (err: any) {
       setError(err.message || '登录失败，请检查您的账号或密码。');
