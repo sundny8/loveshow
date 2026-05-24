@@ -246,12 +246,10 @@ export default async function AiImageEditorPage({ params }: Props) {
 
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
       />
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
     </div>
@@ -376,7 +374,7 @@ function ContentZh() {
     <>
       <h2>核心能力 · 一张参考图，多种作品</h2>
       <p>
-        LoveShow 520 把"AI 图片编辑"做得更具体：上传一张清晰的自拍或合照后，你可以在不同模块里选择想要的最终形态。每一个生成都是 image-to-image，模型会尽量保留人物的身份特征（脸型、五官、肤色），同时按选择的风格改变服装、背景、光影或排版。
+        LoveShow 520 把&ldquo;AI 图片编辑&rdquo;做得更具体：上传一张清晰的自拍或合照后，你可以在不同模块里选择想要的最终形态。每一个生成都是 image-to-image，模型会尽量保留人物的身份特征（脸型、五官、肤色），同时按选择的风格改变服装、背景、光影或排版。
       </p>
       <ul>
         <li>
@@ -396,14 +394,14 @@ function ContentZh() {
         </li>
       </ul>
 
-      <h2>诚实的"免费"说明</h2>
+      <h2>诚实的&ldquo;免费&rdquo;说明</h2>
       <p>
-        在中文搜索里"AI 图像生成 免费 / AI image generator free"是高频词，但很多产品在这里夸大其词。LoveShow 的免费策略是这样的：
+        在中文搜索里&ldquo;AI 图像生成 免费 / AI image generator free&rdquo;是高频词，但很多产品在这里夸大其词。LoveShow 的免费策略是这样的：
       </p>
       <ul>
-        <li>注册账号即赠送积分（可在"账单与积分"中查看），可立刻试用所有 AI 图像功能。</li>
+        <li>注册账号即赠送积分（可在&ldquo;账单与积分&rdquo;中查看），可立刻试用所有 AI 图像功能。</li>
         <li>积分用完后，可以选择继续付费购买积分套餐，也可以使用兑换码。</li>
-        <li>不会"无限免费"——AI 模型的算力是真实成本，需要靠付费用户分摊。</li>
+        <li>不会&ldquo;无限免费&rdquo;——AI 模型的算力是真实成本，需要靠付费用户分摊。</li>
         <li>无需绑定信用卡即可试用。</li>
       </ul>
     </>

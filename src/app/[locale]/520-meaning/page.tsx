@@ -174,12 +174,10 @@ export default async function FiveTwentyMeaningPage({ params }: Props) {
 
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}
       />
     </div>
@@ -288,16 +286,16 @@ function ContentZh() {
         </li>
       </ul>
       <p>
-        这是中文世界最广为人知的数字情书：从短信时代、QQ 时代延续到今天的微信、微博、抖音、小红书。在中文社交平台上，如果你看到一句"520"，几乎可以默认它就是"我爱你"。
+        这是中文世界最广为人知的数字情书：从短信时代、QQ 时代延续到今天的微信、微博、抖音、小红书。在中文社交平台上，如果你看到一句&ldquo;520&rdquo;，几乎可以默认它就是&ldquo;我爱你&rdquo;。
       </p>
 
       <h2>5 月 20 日 — 网络情人节的诞生</h2>
       <p>
-        因为日期格式 <strong>5/20</strong> 正好对应"520"，所以 <strong>5 月 20 日</strong>被中文网友自发命名为"<strong>网络情人节</strong>"或"<strong>表白日</strong>"。每年到了这天：
+        因为日期格式 <strong>5/20</strong> 正好对应&ldquo;520&rdquo;，所以 <strong>5 月 20 日</strong>被中文网友自发命名为&ldquo;<strong>网络情人节</strong>&rdquo;或&ldquo;<strong>表白日</strong>&rdquo;。每年到了这天：
       </p>
       <ul>
-        <li>情侣发 5.20 元 / 13.14 元 / 52.0 元 / 520.0 元等"谐音红包"。</li>
-        <li>电商围绕 520 做大型促销，被称作"520 大促"。</li>
+        <li>情侣发 5.20 元 / 13.14 元 / 52.0 元 / 520.0 元等&ldquo;谐音红包&rdquo;。</li>
+        <li>电商围绕 520 做大型促销，被称作&ldquo;520 大促&rdquo;。</li>
         <li>许多人选择在这天告白、求婚、注册结婚或纪念恋爱周年。</li>
         <li>品牌、媒体、明星会在 520 当天发情人节相关 campaign。</li>
       </ul>
@@ -309,7 +307,7 @@ function ContentZh() {
       </p>
       <ul>
         <li>
-          <strong>521</strong> = 我愿意（用作对 520 的回应，"我也爱你 / 我愿意"）
+          <strong>521</strong> = 我愿意（用作对 520 的回应，&ldquo;我也爱你 / 我愿意&rdquo;）
         </li>
         <li>
           <strong>1314</strong> = 一生一世
@@ -331,7 +329,7 @@ function ContentZh() {
 
       <h2>520 该怎么过？让 AI 帮你做点不一样的</h2>
       <p>
-        每年 520 大家都在发红包、发朋友圈、买礼物——但真正能被对方收藏的"礼物"，往往是有专属感的。<strong>LoveShow 520</strong> 围绕这个意图，做了一整套 AI 创作能力，把"520 = 我爱你"延伸成可以保存、分享、打印的作品：
+        每年 520 大家都在发红包、发朋友圈、买礼物——但真正能被对方收藏的&ldquo;礼物&rdquo;，往往是有专属感的。<strong>LoveShow 520</strong> 围绕这个意图，做了一整套 AI 创作能力，把&ldquo;520 = 我爱你&rdquo;延伸成可以保存、分享、打印的作品：
       </p>
     </>
   );
@@ -340,7 +338,7 @@ function ContentZh() {
 function ContentEn() {
   return (
     <>
-      <h2>520 = "I Love You" — The Three-Digit Love Code</h2>
+      <h2>520 = &ldquo;I Love You&rdquo; — The Three-Digit Love Code</h2>
       <p>
         On the Chinese-language internet, <strong>520</strong> is shorthand for the phrase &ldquo;
         <strong>I love you</strong>&rdquo;. It works because the numbers sound very similar to the Chinese
