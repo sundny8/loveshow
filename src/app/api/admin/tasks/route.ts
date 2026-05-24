@@ -35,7 +35,6 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const page = parseInt(searchParams.get('page') || '1');
   const limit = parseInt(searchParams.get('limit') || '10');
-  const search = searchParams.get('search') || '';
   const status = searchParams.get('status') || 'all';
   // 'photo' (证件照) | 'portrait' (肖像) | 'music' | 'love-column' (520专栏) | 'all'
   const taskType = searchParams.get('type') || 'all';

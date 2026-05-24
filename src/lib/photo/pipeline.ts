@@ -4,7 +4,6 @@ import { analyzeFace } from './face-analyze';
 import { buildAnalyzePrompt, buildGeneratePrompt, buildOneShotPrompt } from './prompt';
 import { generatePhoto } from './photo-generate';
 import { generateIdPhotoOneShot } from './gemini-imagen';
-import { smartCrop, type FaceBox } from './crop';
 
 export interface PipelineOptions {
   specId?: string;

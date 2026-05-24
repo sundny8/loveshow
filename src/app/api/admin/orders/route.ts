@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 import { db } from '@/db';
-import { users, orders, pointTransactions, redeemCodes } from '@/db/schema';
-import { eq, desc, count, like, or } from 'drizzle-orm';
+import { users, orders, pointTransactions } from '@/db/schema';
+import { eq, desc, count } from 'drizzle-orm';
 
 async function checkAdmin() {
   const session = await auth.api.getSession({
@@ -39,7 +39,7 @@ export async function GET(request: Request) {
 
   try {
     // Build where clause for pointTransactions of type 'redeem'
-    let whereClause = eq(pointTransactions.type, 'redeem');
+    const whereClause = eq(pointTransactions.type, 'redeem');
 
     // Get total count of redeem transactions
     const totalResult = await db
@@ -127,10 +127,6 @@ export async function GET(request: Request) {
     });
 
     // Stats
-    const totalPointsResult = await db
-      .select({ total: count(users.id) }) // any table
-      .from(pointTransactions)
-      .where(eq(pointTransactions.type, 'redeem'));
     const totalAmount = txList.reduce((acc, tx) => acc + tx.amount, 0);
 
     // Today's stats

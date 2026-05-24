@@ -2,9 +2,8 @@ import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 import { db } from '@/db';
-import { users, pointTransactions } from '@/db/schema';
-import { eq, sql, count, or, ilike, like } from 'drizzle-orm';
-import { randomBytes, scrypt } from 'crypto';
+import { users } from '@/db/schema';
+import { eq, sql, count, or, ilike } from 'drizzle-orm';
 
 async function checkAdmin() {
   const session = await auth.api.getSession({
@@ -26,24 +25,6 @@ async function checkAdmin() {
   }
 
   return { session, userId: session.user.id };
-}
-
-function generateKey(password: string, salt: string): Promise<Buffer> {
-  return new Promise((resolve, reject) => {
-    scrypt(
-      password.normalize('NFKC'),
-      salt,
-      64,
-      { N: 16384, r: 16, p: 1, maxmem: 128 * 16384 * 16 * 2 },
-      (err, key) => err ? reject(err) : resolve(key)
-    );
-  });
-}
-
-async function hashPassword(password: string) {
-  const salt = randomBytes(16).toString('hex');
-  const key = await generateKey(password, salt);
-  return `${salt}:${key.toString('hex')}`;
 }
 
 // GET /api/admin/users - List users with pagination and search

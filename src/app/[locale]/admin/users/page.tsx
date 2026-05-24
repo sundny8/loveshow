@@ -286,7 +286,7 @@ export default function AdminUsersPage() {
         method: 'POST',
       });
       if (res.ok) {
-        const data = await res.json();
+        await res.json();
         alert(t('passwordResetSuccess'));
       } else {
         const error = await res.json();

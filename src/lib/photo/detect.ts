@@ -112,7 +112,7 @@ async function detectWithMediaPipe(
   const vision: any = await import('@mediapipe/tasks-vision').catch(() => null);
   if (!vision) return null;
 
-  const { FilesetResolver, FaceDetector, ImageSegmenter } = vision;
+  const { FilesetResolver, FaceDetector } = vision;
   if (!FilesetResolver || !FaceDetector) return null;
 
   const fileset = await FilesetResolver.forVisionTasks(

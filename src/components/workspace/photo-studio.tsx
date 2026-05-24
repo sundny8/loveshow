@@ -5,7 +5,7 @@ import { Link } from '@/i18n/routing';
 import { Button } from '@/components/ui/button';
 import { SpecPicker, SpecDetails } from './spec-picker';
 import { DropzoneUploader } from './dropzone-uploader';
-import { PHOTO_SPECS, getSpec, COST_PER_PHOTO } from '@/lib/photo/specs';
+import { getSpec, COST_PER_PHOTO } from '@/lib/photo/specs';
 import {
   Loader2,
   Sparkles,
@@ -38,7 +38,7 @@ export function PhotoStudio() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [userPoints, setUserPoints] = useState<number | null>(null);
-  const [loadingPoints, setLoadingPoints] = useState(false);
+  const [, setLoadingPoints] = useState(false);
   const [results, setResults] = useState<GeneratedResult[]>([]);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 

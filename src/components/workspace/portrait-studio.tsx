@@ -16,13 +16,9 @@ import {
   Sparkles,
   Image as ImageIcon,
   Download,
-  RefreshCw,
   Users,
   AlertCircle,
   CheckCircle2,
-  ChevronDown,
-  ChevronUp,
-  X,
   Search,
 } from 'lucide-react';
 
@@ -344,7 +340,7 @@ export function PortraitStudio() {
           <div>
             {/* Results grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {results.map((result, index) => (
+              {results.map((result) => (
               <div
                 key={result.styleId}
                 className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 overflow-hidden rounded-xl border-2 border-slate-200 dark:border-slate-700 relative group cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-all duration-200"

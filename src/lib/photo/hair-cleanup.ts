@@ -143,8 +143,6 @@ async function lockFaceRegion(
 // ─────────────────────────────────────────
 
 async function cleanWithGemini(source: Buffer, prompt: string): Promise<Buffer> {
-  const { GoogleGenerativeAI } = await import('@google/generative-ai');
-
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error('gemini_disabled');
 
