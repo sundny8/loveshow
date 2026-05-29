@@ -8,6 +8,10 @@ import {
   completePhotoTask,
   failPhotoTask,
 } from '@/lib/services/photo-tasks';
+import {
+  moderatePrompt,
+  moderationErrorResponse,
+} from '@/lib/moderation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -46,6 +50,16 @@ export async function POST(req: Request) {
     const skipAI = String(form.get('skipAI') || '') === '1';
 
     console.log('[photo/generate] params', { specId, bgColor, suit, skipAI, fileSize: file.size });
+
+    // Creem moderation: screen the generation intent BEFORE any billing or
+    // model invocation. Although inputs are enum-based (no free-text), Creem
+    // requires moderation on every image generation path.
+    const moderationPrompt = `Generate ID photo: spec=${specId}, background=${bgColor || 'default'}, suit=${suit || 'none'}`;
+    const moderation = await moderatePrompt({
+      prompt: moderationPrompt,
+      externalId: `user_${session.user.id}:photo`,
+    });
+    if (!moderation.ok) return moderationErrorResponse(moderation);
 
     const buffer = Buffer.from(await file.arrayBuffer());
 

@@ -3,12 +3,16 @@ import { headers } from 'next/headers';
 import { auth } from '@/lib/auth';
 import { persistImage } from '@/lib/photo/storage';
 import { runPortraitPipeline } from '@/lib/photo/portrait-pipeline';
-import { COST_PER_PORTRAIT } from '@/lib/photo/portrait-styles';
+import { COST_PER_PORTRAIT, getPortraitStyle } from '@/lib/photo/portrait-styles';
 import {
   createPhotoTask,
   completePhotoTask,
   failPhotoTask,
 } from '@/lib/services/photo-tasks';
+import {
+  moderatePrompt,
+  moderationErrorResponse,
+} from '@/lib/moderation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -51,6 +55,18 @@ export async function POST(req: Request) {
       | 'auto';
 
     console.log('[portrait/generate] params', { styleId, gender, fileSize: file.size });
+
+    // Creem moderation: screen the generation intent BEFORE any billing or
+    // model invocation. Although inputs are enum-based (no free-text), Creem
+    // requires moderation on every image generation path.
+    const style = getPortraitStyle(styleId);
+    const styleName = style?.name || styleId;
+    const moderationPrompt = `Generate AI portrait photo: style=${styleName}, gender=${gender}`;
+    const moderation = await moderatePrompt({
+      prompt: moderationPrompt,
+      externalId: `user_${session.user.id}:portrait`,
+    });
+    if (!moderation.ok) return moderationErrorResponse(moderation);
 
     const buffer = Buffer.from(await file.arrayBuffer());
 

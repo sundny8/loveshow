@@ -9,6 +9,10 @@ import {
   completePhotoTask,
   failPhotoTask,
 } from '@/lib/services/photo-tasks';
+import {
+  moderatePrompt,
+  moderationErrorResponse,
+} from '@/lib/moderation';
 
 export const runtime = 'nodejs';
 export const maxDuration = 180;
@@ -41,6 +45,15 @@ export async function POST(req: Request) {
   const bgColor = form.get('bgColor') ? String(form.get('bgColor')) : undefined;
   const suit = form.get('suit') ? (String(form.get('suit')) as any) : undefined;
   const skipAI = String(form.get('skipAI') || '') === '1';
+
+  // Creem moderation: screen the batch generation intent BEFORE any billing or
+  // model invocation. Creem requires moderation on every image generation path.
+  const moderationPrompt = `Generate batch ID photos (${files.length} images): spec=${specId}, background=${bgColor || 'default'}, suit=${suit || 'none'}`;
+  const moderation = await moderatePrompt({
+    prompt: moderationPrompt,
+    externalId: `user_${session.user.id}:photo-batch`,
+  });
+  if (!moderation.ok) return moderationErrorResponse(moderation);
 
   const batchId = uuidv4();
   const userId = session.user.id;

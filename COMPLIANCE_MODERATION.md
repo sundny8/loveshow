@@ -1,8 +1,8 @@
 # Content Moderation Compliance — LoveShow 520
 
 This document confirms that **Creem's Content Moderation API** is integrated
-across **every prompt-based generation endpoint** on this platform, in
-accordance with Creem's Content Safety & Moderation Requirements:
+across **every generation endpoint** on this platform, in accordance with
+Creem's Content Safety & Moderation Requirements:
 
 - https://docs.creem.io/features/moderation
 - https://docs.creem.io/merchant-of-record/account-reviews/account-reviews#content-safety-&-moderation-requirements
@@ -10,14 +10,18 @@ accordance with Creem's Content Safety & Moderation Requirements:
 ## Where moderation runs
 
 A single shared client lives at `src/lib/moderation.ts`. It calls
-`POST https://api.creem.io/v1/moderation/prompt` with the user-supplied free
-text and an `external_id` of the form `user_<userId>:<kind>` for auditing.
+`POST https://api.creem.io/v1/moderation/prompt` with a screening payload
+and an `external_id` of the form `user_<userId>:<kind>` for auditing.
 
-The client is invoked **before any billing or model call** in every endpoint
-where a user-supplied prompt is forwarded to an AI generation model:
+The client is invoked **before any billing or model call** in **every**
+generation endpoint — including endpoints where the prompt is server-constructed
+from enum-based configuration parameters:
 
-| Endpoint | Path | Type | User text screened |
+| Endpoint | Path | Type | Text screened |
 |---|---|---|---|
+| ID photo (single) | `src/app/api/photo/generate/route.ts` | Image → image | Generation intent: spec, background, suit |
+| ID photo (batch) | `src/app/api/photo/batch/route.ts` | Image → image | Generation intent: spec, background, suit, count |
+| Single-person portrait | `src/app/api/portrait/generate/route.ts` | Image → image | Generation intent: style name, gender |
 | Love copywriting | `src/app/api/love-column/copy/route.ts` | Text → text | `keyword`, `scenario` |
 | Relationship analysis | `src/app/api/love-column/analysis/route.ts` | Image + text → text | `metAt`, `note` |
 | Couple photo | `src/app/api/love-column/couple-photo/route.ts` | Image + text → image | `note` |
@@ -25,23 +29,9 @@ where a user-supplied prompt is forwarded to an AI generation model:
 | Love memoir | `src/app/api/love-column/memoir/route.ts` | Image + text → text | `title`, `timeline`, `chat`, `note` |
 | Music generation | `src/app/api/music/generate/route.ts` | Text → audio | `prompt`, `title`, `style`, `mood`, `vocalStyle` |
 
-### Endpoints that intentionally do not call moderation
-
-The following endpoints do **not** accept any user-supplied free-text prompt —
-they only accept a reference image plus an enum value selected from a fixed
-list (e.g. `styleId=studio_portrait`). All textual prompts are server-side,
-hard-coded, and reviewable in the repository:
-
-| Endpoint | Path | Inputs |
-|---|---|---|
-| Single-person portrait | `src/app/api/portrait/generate/route.ts` | image + `styleId` (enum) |
-| ID photo (single) | `src/app/api/photo/generate/route.ts` | image + `specId`/`bgColor`/`suit` (enum) |
-| ID photo (batch) | `src/app/api/photo/batch/route.ts` | images + `specId`/`bgColor`/`suit` (enum) |
-
-Because the user cannot inject any free-text prompt into these endpoints,
-there is no user-supplied text for the Moderation API to screen. The fixed
-server-side prompts are checked-in to the repository and shown in the public
-landing pages for transparency.
+**Every single AI generation code path calls the Moderation API.** There is no
+way to reach any generation model without a preceding, successful moderation
+call returning `decision: "allow"`.
 
 ## Behavior contract
 
@@ -63,6 +53,20 @@ Creem's documentation:
 
 The check is idempotent and stateless — repeated retries with the same
 prompt make repeated screening calls.
+
+## External ID patterns
+
+| Kind | Pattern | Endpoint |
+|---|---|---|
+| `photo` | `user_<uid>:photo` | Single ID photo |
+| `photo-batch` | `user_<uid>:photo-batch` | Batch ID photo |
+| `portrait` | `user_<uid>:portrait` | Portrait photo |
+| `music` | `user_<uid>:music` | Music generation |
+| `copy` | `user_<uid>:copy` | Love copywriting |
+| `couple-photo` | `user_<uid>:couple-photo` | Couple photo |
+| `couple-avatar` | `user_<uid>:couple-avatar` | Couple avatar |
+| `analysis` | `user_<uid>:analysis` | Relationship analysis |
+| `memoir` | `user_<uid>:memoir` | Love memoir |
 
 ## Source-side controls
 
@@ -94,14 +98,15 @@ CREEM_API_KEY=creem_xxxxxxxxxxxxxxxxxx
 
 ## How to verify
 
-A submission to any of the above endpoints with an obviously policy-violating
-prompt (e.g. NSFW request) will:
+A submission to any of the above endpoints will:
 
-1. Be sent to `POST /v1/moderation/prompt` with the user's text.
-2. Receive a `deny` (or `flag`) decision.
-3. Return HTTP 400 with `{"error":"prompt_rejected", ...}`.
-4. **Never** be forwarded to the underlying generation model.
-5. **Never** charge the user any points.
+1. Trigger a `POST /v1/moderation/prompt` call to Creem with the screening text.
+2. Receive a decision (`allow`, `flag`, or `deny`).
+3. On `deny` or `flag`: return HTTP 400 with `{"error":"prompt_rejected", ...}`.
+   **Never** forward to the underlying generation model. **Never** charge points.
+4. On `allow`: proceed with the normal generation flow.
+5. On network failure / timeout / 5xx: return HTTP 503 with
+   `{"error":"moderation_unavailable", ...}` and never reach the model.
 
-A network failure to the Moderation API will instead return HTTP 503 with
-`{"error":"moderation_unavailable", ...}` and likewise never reach the model.
+All 9 generation endpoints produce moderation calls visible in Creem's
+dashboard under the merchant's API key.
