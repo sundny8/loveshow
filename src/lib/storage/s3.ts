@@ -1,5 +1,4 @@
-import { S3Client, PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { TosClient, TosClientError, TosServerError } from "@volcengine/tos-sdk";
 
 // 支持多种存储服务：AWS S3, Cloudflare R2, 火山引擎 TOS
@@ -78,62 +77,6 @@ const getS3Client = () => {
 };
 
 export const s3Client = getS3Client();
-
-/**
- * 生成上传预签名 URL
- * - TOS：使用官方 SDK 生成（签名兼容）
- * - S3/R2：使用 AWS SDK 生成
- */
-export async function getUploadPresignedUrl(key: string, contentType: string) {
-  if (storageType === "tos") {
-    const client = getTosClient();
-    const bucket = process.env.AWS_S3_BUCKET || "";
-    const signedUrl = client.getPreSignedUrl({
-      bucket,
-      key,
-      method: "PUT",
-      expires: 3600,
-    });
-    return signedUrl;
-  }
-
-  // 非 TOS：走 AWS SDK
-  const command = new PutObjectCommand({
-    Bucket: process.env.AWS_S3_BUCKET,
-    Key: key,
-    ContentType: contentType,
-  });
-  const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
-  return url;
-}
-
-/**
- * 生成下载预签名 URL
- * - TOS：使用官方 SDK 生成
- * - S3/R2：使用 AWS SDK 生成
- */
-export async function getDownloadPresignedUrl(key: string) {
-  if (storageType === "tos") {
-    const client = getTosClient();
-    const bucket = process.env.AWS_S3_BUCKET || "";
-    const signedUrl = client.getPreSignedUrl({
-      bucket,
-      key,
-      method: "GET",
-      expires: 3600,
-    });
-    console.log("[TOS] Generated presigned URL for key:", key);
-    return signedUrl;
-  }
-
-  const command = new GetObjectCommand({
-    Bucket: process.env.AWS_S3_BUCKET || "",
-    Key: key,
-  });
-  const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
-  console.log("[S3] Generated presigned URL for key:", key);
-  return url;
-}
 
 /**
  * 获取公开访问 URL（如果桶配置为公开读取）

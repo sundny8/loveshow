@@ -4,7 +4,7 @@ import { auth } from '@/lib/auth';
 import { db, musicTasks } from '@/db';
 import { eq, and } from 'drizzle-orm';
 import { getTaskStatus, getTimestampedLyrics } from '@/lib/suno';
-import { uploadToStorage } from '@/lib/storage/s3';
+import { persistFile } from '@/lib/photo/storage';
 import { nanoid } from 'nanoid';
 
 export const runtime = 'nodejs';
@@ -13,7 +13,7 @@ export const maxDuration = 120;
 /**
  * GET /api/music/task?taskId=xxx
  * 查询音乐生成任务详情，若状态为 GENERATING 则主动向 Suno 同步最新状态。
- * 当 Suno 返回 SUCCESS 时：提取歌词 → 下载音频 → 上传 TOS → 更新数据库。
+ * 当 Suno 返回 SUCCESS 时：提取歌词 → 下载音频/封面 → 按存储模式上传（tos/r2/local）→ 更新数据库。
  */
 export async function GET(req: NextRequest) {
   console.log('[music/task] ← request received');
@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
         const detail = await getTaskStatus(task.sunoTaskId);
 
         if (detail.status === 'SUCCESS' && detail.response?.sunoData) {
-          console.log('[music/task] Suno SUCCESS, processing audio upload to TOS');
+          console.log('[music/task] Suno SUCCESS, persisting audio & cover to storage');
 
           const sunoData = detail.response.sunoData;
 
@@ -90,7 +90,7 @@ export async function GET(req: NextRequest) {
             }
           }
 
-          // 2. 仅处理第一首歌曲：下载音频并上传到 TOS
+          // 2. 仅处理第一首歌曲：下载音频并按存储模式持久化（tos/r2/local）
           const tosAudioUrls: string[] = [];
           if (sunoData.length > 0) {
             const audio = sunoData[0];
@@ -105,15 +105,45 @@ export async function GET(req: NextRequest) {
                   console.error(`[music/task] download failed:`, audioRes.status);
                 } else {
                   const audioBuffer = Buffer.from(await audioRes.arrayBuffer());
-                  const key = `loveshow/music/${session.user.id}/${taskId}_0_${nanoid(6)}.mp3`;
+                  const fileName = `${taskId}_0_${nanoid(6)}.mp3`;
 
-                  console.log(`[music/task] uploading to TOS: ${key}, size=${audioBuffer.length}`);
-                  const tosUrl = await uploadToStorage(key, audioBuffer, 'audio/mpeg');
-                  tosAudioUrls.push(tosUrl);
-                  console.log(`[music/task] TOS upload done: ${tosUrl}`);
+                  console.log(`[music/task] persisting audio: ${fileName}, size=${audioBuffer.length}`);
+                  const stored = await persistFile(
+                    audioBuffer,
+                    fileName,
+                    'audio/mpeg',
+                    session.user.id,
+                    'music'
+                  );
+                  tosAudioUrls.push(stored.url);
+                  console.log(`[music/task] audio persisted: ${stored.url}`);
                 }
               } catch (uploadErr: any) {
-                console.error(`[music/task] TOS upload failed:`, uploadErr.message);
+                console.error(`[music/task] audio persist failed:`, uploadErr.message);
+              }
+            }
+
+            // 封面同样持久化，避免依赖 Suno 外链；成功后覆写 resultData 中的 imageUrl
+            if (audio.imageUrl) {
+              try {
+                const coverRes = await fetch(audio.imageUrl, {
+                  signal: AbortSignal.timeout(30_000),
+                });
+                if (coverRes.ok) {
+                  const coverBuffer = Buffer.from(await coverRes.arrayBuffer());
+                  const coverStored = await persistFile(
+                    coverBuffer,
+                    `${taskId}_cover_${nanoid(6)}.jpg`,
+                    'image/jpeg',
+                    session.user.id,
+                    'music'
+                  );
+                  (updateData.resultData as any).sunoData[0].imageUrl = coverStored.url;
+                  console.log(`[music/task] cover persisted: ${coverStored.url}`);
+                }
+              } catch (coverErr: any) {
+                // 封面失败不致命，保留 Suno 原始外链
+                console.warn(`[music/task] cover persist failed:`, coverErr.message);
               }
             }
           }
