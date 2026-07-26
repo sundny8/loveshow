@@ -40,8 +40,10 @@ export function HeroSection() {
             {t('badge')}
           </div>
 
-          {/* Heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.15] mb-6 font-display">
+          {/* Heading — Noto Serif SC has tall glyph metrics (~1.45em). Tailwind's
+              sm:text-5xl / md:text-6xl ship with line-height:1 and override a bare
+              leading-* utility, so the leading must be repeated per breakpoint. */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.35] sm:leading-[1.35] md:leading-[1.35] mb-6 font-display">
             {t('title.part1')}{' '}
             <span className="text-gradient">{t('title.highlight')}</span>
           </h1>
