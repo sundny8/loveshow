@@ -8,7 +8,9 @@ export const routing = defineRouting({
   locales,
   defaultLocale: 'en',
   localePrefix: 'always',
-  localeDetection: true,
+  // Disabled so every first visit lands on English regardless of the
+  // browser's Accept-Language; users can still switch via the locale toggle.
+  localeDetection: false,
 });
 
 export const { Link, redirect, usePathname, useRouter } = createNavigation(routing);

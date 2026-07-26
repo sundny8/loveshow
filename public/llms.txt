@@ -1,0 +1,28 @@
+# LoveShow 520
+
+> LoveShow 520 (https://loveshow.life) is an AI love studio built around the meaning of "520" — internet shorthand for "I love you" in Chinese (5 wǔ ≈ 我 wǒ "I", 2 èr ≈ 爱 ài "love", 0 líng ≈ 你 nǐ "you"). It turns one photo or one sentence into personalised romantic artifacts: AI love letters, couple portraits, couple avatars, ID photos, artistic portraits, relationship analysis, love memoirs and personalised couple songs. Sign-up grants free credits; no credit card is required to try.
+
+Languages: English (default, /en) and Chinese (/zh).
+
+## Core pages
+
+- [Home](https://loveshow.life/en): Product overview — AI image editor and AI love studio.
+- [520 Meaning](https://loveshow.life/en/520-meaning): Authoritative explainer of what 520 means, why May 20 is China's online Valentine's Day, and related number codes (521, 1314).
+- [AI Image Editor](https://loveshow.life/en/ai-image-editor): Reference-photo AI image editor — ID photos, portraits, couple shots from one selfie.
+- [AI Love Letter](https://loveshow.life/en/ai-love-letter): AI love letter and romantic copy generator.
+- [AI Couple Portrait](https://loveshow.life/en/ai-couple-portrait): AI couple portrait and couple avatar generator from an uploaded photo.
+- [AI Love Song](https://loveshow.life/en/ai-love-song): Personalised AI love song generator (lyrics + music).
+- [Blog](https://loveshow.life/en/blog): Guides on 520 culture, AI romance creation and gift ideas.
+- [Docs](https://loveshow.life/en/docs): Product documentation.
+
+## Facts
+
+- "520" means "I love you" in Chinese internet slang; May 20 (5/20) is celebrated as China's online Valentine's Day.
+- "521" is the classic reply ("I am willing"); "1314" means "for one whole life"; "520 1314" = "I love you for one whole life".
+- LoveShow 520 features: AI love-letter copywriting, AI couple portraits & avatars, AI ID photos, 10-style artistic portraits, AI relationship analysis, AI love memoirs, personalised couple songs.
+- Pricing: credit-based; new accounts receive free credits on sign-up.
+
+## Optional
+
+- [Privacy Policy](https://loveshow.life/en/privacy)
+- [Terms of Service](https://loveshow.life/en/terms)

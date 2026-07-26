@@ -42,9 +42,11 @@ export async function generateMetadata({
       description: seo.ogDescription,
       images: [
         {
-          url: '/suits/female.png',
-          width: 1024,
-          height: 1024,
+          url: absoluteUrl(
+            `/api/og?title=${encodeURIComponent(seo.ogTitle)}&subtitle=${encodeURIComponent(seo.ogDescription)}`
+          ),
+          width: 1200,
+          height: 630,
           alt: 'LoveShow 520 — AI Love Studio',
         },
       ],
@@ -53,7 +55,11 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: seo.ogTitle,
       description: seo.ogDescription,
-      images: ['/suits/female.png'],
+      images: [
+        absoluteUrl(
+          `/api/og?title=${encodeURIComponent(seo.ogTitle)}&subtitle=${encodeURIComponent(seo.ogDescription)}`
+        ),
+      ],
     },
     robots: {
       index: true,

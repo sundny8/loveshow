@@ -4,6 +4,7 @@ import { headers } from 'next/headers';
 import { db } from '@/db';
 import { users, blogPosts } from '@/db/schema';
 import { eq } from 'drizzle-orm';
+import { pingIndexNow } from '@/lib/indexnow';
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -133,6 +134,12 @@ export async function PUT(request: Request, { params }: RouteParams) {
 
     if (!updatedPost.length) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });
+    }
+
+    // Notify Bing/Yandex (IndexNow) when a live post changes or goes live.
+    if (updatedPost[0].published) {
+      const locale = updatedPost[0].locale || 'en';
+      void pingIndexNow([`/${locale}/blog/${updatedPost[0].slug}`, `/${locale}/blog`]);
     }
 
     return NextResponse.json({

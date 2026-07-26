@@ -5,6 +5,7 @@ import { db } from '@/db';
 import { users, blogPosts } from '@/db/schema';
 import { eq, like, or, and, desc, count } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
+import { pingIndexNow } from '@/lib/indexnow';
 
 export async function GET(request: Request) {
   try {
@@ -186,6 +187,12 @@ export async function POST(request: Request) {
         updatedAt: now,
       })
       .returning();
+
+    // Notify Bing/Yandex (IndexNow) so the new post gets crawled immediately.
+    if (newPost[0]?.published) {
+      const locale = newPost[0].locale || 'en';
+      void pingIndexNow([`/${locale}/blog/${newPost[0].slug}`, `/${locale}/blog`]);
+    }
 
     return NextResponse.json({
       message: 'Post created successfully',

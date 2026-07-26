@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Badge } from '@/components/ui/badge';
@@ -7,6 +8,8 @@ import { Calendar, Clock, User, Share2, Bookmark } from 'lucide-react';
 import { db } from '@/db';
 import { blogPosts, users } from '@/db/schema';
 import { eq, and } from 'drizzle-orm';
+import { absoluteUrl } from '@/lib/seo';
+import { JsonLd, articleLd } from '@/components/seo/json-ld';
 
 interface Props {
   params: Promise<{ slug: string; locale: string }>;
@@ -43,27 +46,60 @@ async function getPost(slug: string) {
   }
 }
 
-export async function generateMetadata({ params }: Props) {
-  const { slug } = await params;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug, locale } = await params;
   const post = await getPost(slug);
-  
+
   if (!post) {
     return { title: 'Post Not Found' };
   }
 
+  const canonical = absoluteUrl(`/${locale}/blog/${slug}`);
+  const title = post.metaTitle || post.title;
+  const description = post.metaDescription || post.excerpt || undefined;
+  // Cover image if set, otherwise a branded dynamic OG card with the title.
+  const ogImage =
+    post.coverImage || absoluteUrl(`/api/og?title=${encodeURIComponent(post.title)}`);
+
   return {
-    title: post.metaTitle || post.title,
-    description: post.metaDescription || post.excerpt,
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      type: 'article',
+      url: canonical,
+      title,
+      description,
+      ...(post.publishedAt ? { publishedTime: new Date(post.publishedAt).toISOString() } : {}),
+      images: [{ url: ogImage, alt: post.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
   };
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const post = await getPost(slug);
 
   if (!post) {
     notFound();
   }
+
+  // Article schema — gives Google/AI engines author, dates and image context.
+  const postLd = articleLd({
+    headline: post.title,
+    description: post.metaDescription || post.excerpt || undefined,
+    path: `/${locale}/blog/${post.slug}`,
+    locale: post.locale || locale,
+    image: post.coverImage || undefined,
+    datePublished: post.publishedAt,
+    authorName: post.authorName,
+  });
 
   // Simple markdown-like content rendering
   const renderContent = (content: string) => {
@@ -244,7 +280,7 @@ export default async function BlogPostPage({ params }: Props) {
                       )}
                     </div>
                     <div>
-                      <p className="font-medium text-white">{post.authorName || 'StartFast Team'}</p>
+                      <p className="font-medium text-white">{post.authorName || 'LoveShow Team'}</p>
                       <p className="text-sm text-white/70">Author</p>
                     </div>
                   </div>
@@ -324,10 +360,10 @@ export default async function BlogPostPage({ params }: Props) {
                 <div>
                   <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Written by</p>
                   <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
-                    {post.authorName || 'StartFast Team'}
+                    {post.authorName || 'LoveShow Team'}
                   </h4>
                   <p className="text-slate-600 dark:text-slate-300 text-sm">
-                    Building the best SaaS boilerplate for developers. Ship your product faster with StartFast Pro.
+                    Turning “520 = I love you” into AI-crafted love letters, couple portraits and songs at LoveShow 520.
                   </p>
                 </div>
               </div>
@@ -336,6 +372,7 @@ export default async function BlogPostPage({ params }: Props) {
         </article>
       </main>
       <Footer />
+      <JsonLd data={postLd} />
     </div>
   );
 }
