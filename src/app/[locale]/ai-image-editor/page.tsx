@@ -158,7 +158,7 @@ export default async function AiImageEditorPage({ params }: Props) {
                 }
               />
               <FeatureCard
-                href="/blog"
+                href="/love-column"
                 icon={Heart}
                 title={isZh ? '情侣写真' : 'Couple Photo'}
                 desc={
@@ -168,7 +168,7 @@ export default async function AiImageEditorPage({ params }: Props) {
                 }
               />
               <FeatureCard
-                href="/blog"
+                href="/love-column"
                 icon={Smile}
                 title={isZh ? '情侣大头贴' : 'Couple Avatar'}
                 desc={

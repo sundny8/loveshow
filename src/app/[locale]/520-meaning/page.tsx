@@ -108,31 +108,31 @@ export default async function FiveTwentyMeaningPage({ params }: Props) {
             <h2>{isZh ? '把 520 变成 AI 作品' : 'Turn 520 Into AI-Crafted Love'}</h2>
             <div className="not-prose grid sm:grid-cols-2 gap-3 my-6">
               <FeatureCard
-                href="/blog"
+                href="/love-column"
                 icon={FileText}
                 title={isZh ? '520 文案' : '520 Love Letter'}
                 desc={isZh ? '一句关键词，AI 写一段属于你们的告白' : 'AI-written love letters anchored on your story'}
               />
               <FeatureCard
-                href="/blog"
+                href="/love-column"
                 icon={ImageIcon}
                 title={isZh ? '情侣写真' : 'Couple Portrait'}
                 desc={isZh ? '上传合照，生成多场景情侣艺术写真' : 'AI couple portraits across romantic scenes'}
               />
               <FeatureCard
-                href="/blog"
+                href="/love-column"
                 icon={Sparkles}
                 title={isZh ? '情感分析' : 'Relationship Insight'}
                 desc={isZh ? '关键词 + 时间，AI 分析你们的感情' : 'AI relationship analysis based on your story'}
               />
               <FeatureCard
-                href="/blog"
+                href="/love-column"
                 icon={Music}
                 title={isZh ? '情侣音乐' : 'Couple Song'}
                 desc={isZh ? '把文案变成一首甜歌，专属于 520' : 'Turn your story into a personalised song'}
               />
               <FeatureCard
-                href="/blog"
+                href="/love-column"
                 icon={BookHeart}
                 title={isZh ? '恋爱回忆录' : 'Love Memoir'}
                 desc={isZh ? '上传时间线 + 聊天，AI 帮你写回忆录' : 'AI-crafted memoirs from your timeline & chats'}
@@ -146,7 +146,7 @@ export default async function FiveTwentyMeaningPage({ params }: Props) {
             </div>
 
             <div className="not-prose flex flex-col sm:flex-row gap-3 mt-8">
-              <Link href="/blog">
+              <Link href="/love-column">
                 <Button className="btn-gradient bg-gradient-to-r from-rose-500 to-pink-600 text-white border-0 w-full sm:w-auto">
                   {isZh ? '进入 520 专栏' : 'Open 520 Studio'}
                 </Button>

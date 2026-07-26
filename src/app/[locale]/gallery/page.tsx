@@ -722,7 +722,7 @@ export default function GalleryPage() {
                 <p className="font-semibold">还没有 520 专栏作品</p>
                 <p className="text-sm text-slate-500 mt-1">前往 520 专栏，记录你们的故事</p>
               </div>
-              <Link href="/blog">
+              <Link href="/love-column">
                 <Button className="btn-gradient text-white border-0 mt-2">进入 520 专栏</Button>
               </Link>
             </div>

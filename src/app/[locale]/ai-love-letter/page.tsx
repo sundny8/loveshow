@@ -175,7 +175,7 @@ export default async function AiLoveLetterPage({ params }: Props) {
             </div>
 
             <div className="not-prose flex flex-col sm:flex-row gap-3 mt-8">
-              <Link href="/blog">
+              <Link href="/love-column">
                 <Button className="btn-gradient bg-gradient-to-r from-rose-500 to-pink-600 text-white border-0 w-full sm:w-auto">
                   {isZh ? '免费生成我的情书' : 'Generate My Love Letter Free'}
                 </Button>

@@ -58,7 +58,7 @@ export function HeroSection() {
             <Button
               size="lg"
               className="btn-gradient group text-white border-0"
-              onClick={() => handleNavigate('/blog')}
+              onClick={() => handleNavigate('/love-column')}
             >
               <Heart className="mr-2 h-4 w-4 fill-current" />
               {t('cta.column520')}

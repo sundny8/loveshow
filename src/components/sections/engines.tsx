@@ -25,7 +25,7 @@ export function EnginesSection() {
       router.push('/auth/signin');
       return;
     }
-    router.push('/blog');
+    router.push('/love-column');
   };
 
   return (
