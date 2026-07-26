@@ -28,7 +28,8 @@ export async function GET(request: Request, { params }: RouteParams) {
       .where(eq(users.id, session.user.id))
       .limit(1);
 
-    if (!currentUser.length || (currentUser[0].role !== 'admin' && currentUser[0].role !== 'owner')) {
+    const role = (currentUser[0]?.role || '').toLowerCase();
+    if (!currentUser.length || (role !== 'admin' && role !== 'owner')) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
@@ -96,7 +97,8 @@ export async function PUT(request: Request, { params }: RouteParams) {
       .where(eq(users.id, session.user.id))
       .limit(1);
 
-    if (!currentUser.length || (currentUser[0].role !== 'admin' && currentUser[0].role !== 'owner')) {
+    const role = (currentUser[0]?.role || '').toLowerCase();
+    if (!currentUser.length || (role !== 'admin' && role !== 'owner')) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
@@ -170,7 +172,8 @@ export async function DELETE(request: Request, { params }: RouteParams) {
       .where(eq(users.id, session.user.id))
       .limit(1);
 
-    if (!currentUser.length || (currentUser[0].role !== 'admin' && currentUser[0].role !== 'owner')) {
+    const role = (currentUser[0]?.role || '').toLowerCase();
+    if (!currentUser.length || (role !== 'admin' && role !== 'owner')) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 

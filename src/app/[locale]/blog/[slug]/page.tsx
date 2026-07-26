@@ -9,7 +9,7 @@ import { db } from '@/db';
 import { blogPosts, users } from '@/db/schema';
 import { eq, and } from 'drizzle-orm';
 import { absoluteUrl } from '@/lib/seo';
-import { JsonLd, articleLd } from '@/components/seo/json-ld';
+import { JsonLd, articleLd, faqPageLd, type FaqItem } from '@/components/seo/json-ld';
 
 interface Props {
   params: Promise<{ slug: string; locale: string }>;
@@ -82,6 +82,75 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+// Inline markdown → React nodes: [text](url), **bold**, `code`.
+// Internal links stay same-tab; external links open in a new tab.
+function renderInline(text: string): React.ReactNode[] {
+  const parts = text.split(/(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|`[^`]+`)/g);
+  return parts.map((part, i) => {
+    const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (link) {
+      const external = /^https?:\/\//.test(link[2]);
+      return (
+        <a
+          key={i}
+          href={link[2]}
+          {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          className="text-primary-600 dark:text-primary-400 underline underline-offset-2 hover:text-primary-700"
+        >
+          {link[1]}
+        </a>
+      );
+    }
+    if (/^\*\*[^*]+\*\*$/.test(part)) {
+      return (
+        <strong key={i} className="font-semibold text-slate-800 dark:text-slate-100">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    if (/^`[^`]+`$/.test(part)) {
+      return (
+        <code key={i} className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-sm font-mono">
+          {part.slice(1, -1)}
+        </code>
+      );
+    }
+    return part;
+  });
+}
+
+// Strip markdown syntax for plain-text contexts (JSON-LD answers).
+function stripInline(text: string): string {
+  return text
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/`([^`]+)`/g, '$1');
+}
+
+// Extract Q&A pairs from a trailing "## FAQ" section (### question + answer
+// paragraphs) so every post automatically emits FAQPage JSON-LD (GEO).
+function extractFaq(content: string): FaqItem[] {
+  const blocks = content.split('\n\n');
+  const start = blocks.findIndex(
+    (b) => /^## (faq|frequently asked questions|常见问题)/i.test(b.trim())
+  );
+  if (start === -1) return [];
+  const items: FaqItem[] = [];
+  let current: FaqItem | null = null;
+  for (const block of blocks.slice(start + 1)) {
+    const trimmed = block.trim();
+    if (/^## /.test(trimmed)) break; // FAQ section ended
+    if (trimmed.startsWith('### ')) {
+      if (current) items.push(current);
+      current = { q: stripInline(trimmed.slice(4).trim()), a: '' };
+    } else if (current && trimmed) {
+      current.a = current.a ? `${current.a} ${stripInline(trimmed)}` : stripInline(trimmed);
+    }
+  }
+  if (current && current.a) items.push(current);
+  return items.filter((item) => item.a);
+}
+
 export default async function BlogPostPage({ params }: Props) {
   const { slug, locale } = await params;
   const post = await getPost(slug);
@@ -101,6 +170,12 @@ export default async function BlogPostPage({ params }: Props) {
     authorName: post.authorName,
   });
 
+  // Normalize CRLF so paragraph splitting works regardless of how content was saved.
+  const content = post.content.replace(/\r\n/g, '\n');
+
+  // FAQ rich results + AI-engine citations, derived from the post's FAQ section.
+  const faqItems = extractFaq(content);
+
   // Simple markdown-like content rendering
   const renderContent = (content: string) => {
     return content
@@ -116,10 +191,10 @@ export default async function BlogPostPage({ params }: Props) {
           return <h1 key={index} className="text-3xl font-bold mt-12 mb-6 text-slate-900 dark:text-white">{paragraph.slice(2)}</h1>;
         }
         if (paragraph.startsWith('## ')) {
-          return <h2 key={index} className="text-2xl font-bold mt-10 mb-4 text-slate-900 dark:text-white">{paragraph.slice(3)}</h2>;
+          return <h2 key={index} className="text-2xl font-bold mt-10 mb-4 text-slate-900 dark:text-white">{renderInline(paragraph.slice(3))}</h2>;
         }
         if (paragraph.startsWith('### ')) {
-          return <h3 key={index} className="text-xl font-semibold mt-8 mb-3 text-slate-900 dark:text-white">{paragraph.slice(4)}</h3>;
+          return <h3 key={index} className="text-xl font-semibold mt-8 mb-3 text-slate-900 dark:text-white">{renderInline(paragraph.slice(4))}</h3>;
         }
         
         // Code blocks
@@ -151,7 +226,7 @@ export default async function BlogPostPage({ params }: Props) {
                   <tr className="bg-slate-50 dark:bg-slate-800">
                     {rows[0]?.split('|').filter(Boolean).map((cell, i) => (
                       <th key={i} className="px-4 py-3 text-left text-sm font-semibold text-slate-700 dark:text-slate-200">
-                        {cell.trim()}
+                        {renderInline(cell.trim())}
                       </th>
                     ))}
                   </tr>
@@ -161,7 +236,7 @@ export default async function BlogPostPage({ params }: Props) {
                     <tr key={rowIndex} className="border-t border-slate-200 dark:border-slate-700">
                       {row.split('|').filter(Boolean).map((cell, cellIndex) => (
                         <td key={cellIndex} className="px-4 py-3 text-sm text-slate-600 dark:text-slate-300">
-                          {cell.trim()}
+                          {renderInline(cell.trim())}
                         </td>
                       ))}
                     </tr>
@@ -179,7 +254,7 @@ export default async function BlogPostPage({ params }: Props) {
             <ul key={index} className="my-6 space-y-2 pl-6">
               {items.map((item, i) => (
                 <li key={i} className="text-slate-600 dark:text-slate-300 leading-relaxed relative before:content-[''] before:absolute before:-left-4 before:top-2.5 before:w-1.5 before:h-1.5 before:bg-primary-500 before:rounded-full">
-                  {item.replace(/^[-*] /, '')}
+                  {renderInline(item.replace(/^[-*] /, ''))}
                 </li>
               ))}
             </ul>
@@ -193,7 +268,7 @@ export default async function BlogPostPage({ params }: Props) {
             <ol key={index} className="my-6 space-y-2 pl-6 list-decimal">
               {items.map((item, i) => (
                 <li key={i} className="text-slate-600 dark:text-slate-300 leading-relaxed pl-2">
-                  {item.replace(/^\d+\. /, '')}
+                  {renderInline(item.replace(/^\d+\. /, ''))}
                 </li>
               ))}
             </ol>
@@ -203,7 +278,7 @@ export default async function BlogPostPage({ params }: Props) {
         // Regular paragraphs
         return (
           <p key={index} className="text-slate-600 dark:text-slate-300 my-5 leading-relaxed text-lg">
-            {paragraph}
+            {renderInline(paragraph)}
           </p>
         );
       });
@@ -324,7 +399,7 @@ export default async function BlogPostPage({ params }: Props) {
 
             {/* Content */}
             <div className="prose-lg">
-              {renderContent(post.content)}
+              {renderContent(content)}
             </div>
 
             {/* Tags Footer */}
@@ -373,6 +448,7 @@ export default async function BlogPostPage({ params }: Props) {
       </main>
       <Footer />
       <JsonLd data={postLd} />
+      {faqItems.length > 0 && <JsonLd data={faqPageLd(faqItems)} />}
     </div>
   );
 }
