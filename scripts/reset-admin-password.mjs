@@ -1,4 +1,7 @@
-/** One-off: reset local admin@123.com password hash to the expected dev password. */
+/**
+ * Reset an admin account's password hash using Better-Auth's exact scrypt params.
+ * Usage: NEW_PASSWORD='...' [ADMIN_EMAIL='admin@123.com'] node scripts/reset-admin-password.mjs
+ */
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -10,7 +13,8 @@ const env = readFileSync(join(__dirname, '..', '.env.local'), 'utf-8');
 const m = env.match(/^DATABASE_URL=(.+)$/m);
 const sql = postgres(m[1].trim());
 
-const PASSWORD = '*Asdf9527';
+const PASSWORD = process.env.NEW_PASSWORD || '*Asdf9527';
+const EMAIL = process.env.ADMIN_EMAIL || 'admin@123.com';
 
 function generateKey(password, salt) {
   return new Promise((resolve, reject) => {
@@ -30,8 +34,8 @@ const hashed = `${salt}:${key.toString('hex')}`;
 
 const result = await sql`
   update accounts set password = ${hashed}, updated_at = now()
-  where account_id = 'admin@123.com' and provider_id = 'credential'
+  where account_id = ${EMAIL} and provider_id = 'credential'
   returning account_id`;
 
-console.log(result.length ? `✅ Password reset for ${result[0].account_id}` : '❌ No matching account row');
+console.log(result.length ? `✅ Password reset for ${result[0].account_id}` : `❌ No credential account found for ${EMAIL}`);
 await sql.end();

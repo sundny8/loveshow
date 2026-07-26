@@ -1,4 +1,7 @@
-/** One-off: verify the stored scrypt hash actually matches the expected password. */
+/**
+ * Verify a stored scrypt hash matches an expected password (Better-Auth params).
+ * Usage: CHECK_PASSWORD='...' node scripts/verify-admin-password.mjs
+ */
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
