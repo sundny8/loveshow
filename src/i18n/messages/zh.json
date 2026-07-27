@@ -521,6 +521,8 @@
       "time": "时间",
       "category": "类别",
       "allSpecs": "全部规格",
+      "byUser": "按用户筛选:",
+      "allUsers": "所有用户",
       "timeOptions": {
         "all": "全部",
         "today": "今天",
@@ -537,6 +539,42 @@
       "title": "当前筛选没有结果",
       "description": "换个时间范围或规格类别试试。",
       "clearFilters": "清除筛选"
+    },
+    "loveColumn": {
+      "tab": "520 专栏",
+      "types": {
+        "copy": "520 文案",
+        "couple-photo": "情侣写真",
+        "couple-avatar": "情侣大头贴",
+        "analysis": "情感分析",
+        "memoir": "恋爱回忆录",
+        "music": "情侣音乐"
+      },
+      "copied": "已复制",
+      "copyText": "复制文案",
+      "copyFull": "复制全文",
+      "downloadTxt": "下载为 TXT",
+      "copyShareLink": "复制分享链接",
+      "sharePrompt": "请手动复制分享链接：",
+      "openSharePage": "打开分享页",
+      "legacyNotPersisted": "(此条记录由旧版本生成，输出内容未持久化)",
+      "expand": "展开全文",
+      "collapse": "收起",
+      "creditsUsed": "{count} 积分",
+      "userLabel": "用户: {name}",
+      "emptyTitle": "还没有 520 专栏作品",
+      "emptyDesc": "前往 520 专栏，记录你们的故事",
+      "goToColumn": "进入 520 专栏"
+    },
+    "music": {
+      "untitled": "未命名歌曲",
+      "downloadShort": "下载",
+      "emptyDesc": "还没有音频作品，前往音乐工作台创作您的第一首歌曲",
+      "goToStudio": "去音乐工作台"
+    },
+    "portrait": {
+      "emptyDesc": "还没有肖像作品，前往肖像工作台创作您的第一张肖像",
+      "goToStudio": "去肖像工作台"
     }
   },
   "photoStudio": {

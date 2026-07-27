@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { PHOTO_SPECS } from '@/lib/photo/specs';
 import { PORTRAIT_STYLES } from '@/lib/photo/portrait-styles';
 import { cn } from '@/lib/utils';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useSession } from '@/lib/auth-client';
 import { ImageModal } from '@/components/ui/image-modal';
 import { renderMemoirToHtml } from '@/lib/love-column/memoir-render';
@@ -106,17 +106,19 @@ function isInRange(date: Date, range: TimeRange): boolean {
   return true;
 }
 
-const LOVE_COLUMN_TYPE_META: Record<LoveColumnItem['type'], { label: string; icon: any; color: string }> = {
-  copy: { label: '520 文案', icon: FileText, color: 'rose' },
-  'couple-photo': { label: '情侣写真', icon: ImageIcon, color: 'pink' },
-  'couple-avatar': { label: '情侣大头贴', icon: Smile, color: 'fuchsia' },
-  analysis: { label: '情感分析', icon: Sparkles, color: 'purple' },
-  memoir: { label: '恋爱回忆录', icon: BookHeart, color: 'rose' },
-  music: { label: '情侣音乐', icon: Music, color: 'pink' },
+const LOVE_COLUMN_TYPE_META: Record<LoveColumnItem['type'], { icon: any; color: string }> = {
+  copy: { icon: FileText, color: 'rose' },
+  'couple-photo': { icon: ImageIcon, color: 'pink' },
+  'couple-avatar': { icon: Smile, color: 'fuchsia' },
+  analysis: { icon: Sparkles, color: 'purple' },
+  memoir: { icon: BookHeart, color: 'rose' },
+  music: { icon: Music, color: 'pink' },
 };
 
 export default function GalleryPage() {
   const t = useTranslations('gallery');
+  const tSpecs = useTranslations('photoSpecs');
+  const locale = useLocale();
   const router = useRouter();
   const { data: session, isPending } = useSession();
   const [images, setImages] = useState<ImageRow[]>([]);
@@ -309,7 +311,7 @@ export default function GalleryPage() {
   const formatDate = (dateStr: string | Date) => {
     const date = new Date(dateStr);
     return date
-      .toLocaleString('zh-CN', {
+      .toLocaleString(locale, {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
@@ -339,7 +341,9 @@ export default function GalleryPage() {
 
   function specLabel(specId: string | null | undefined) {
     if (!specId) return t('general');
-    return PHOTO_SPECS.find((s) => s.id === specId)?.label ?? specId;
+    // Use the localized spec label; fall back to the raw id for unknown specs.
+    const spec = PHOTO_SPECS.find((s) => s.id === specId);
+    return spec ? tSpecs(`${spec.id}.label`) : specId;
   }
 
   const usedSpecIds = useMemo(() => {
@@ -395,7 +399,7 @@ export default function GalleryPage() {
       <div className="flex flex-wrap items-center gap-4 mb-6">
         <div className="flex gap-1 p-1 rounded-xl bg-slate-100 dark:bg-slate-800/50 w-fit">
           {([
-            { id: 'loveColumn' as const, label: '520 专栏' },
+            { id: 'loveColumn' as const, label: t('loveColumn.tab') },
             { id: 'idPhoto' as const, label: t('tabs.idPhoto') },
             { id: 'portrait' as const, label: t('tabs.portrait') },
             { id: 'music' as const, label: t('tabs.music') },
@@ -418,13 +422,13 @@ export default function GalleryPage() {
         {/* Admin user filter */}
         {isAdmin && (
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-slate-600 dark:text-slate-300">按用户筛选:</span>
+            <span className="text-sm font-medium text-slate-600 dark:text-slate-300">{t('filters.byUser')}</span>
             <select
               value={userFilter}
               onChange={(e) => setUserFilter(e.target.value)}
               className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500"
             >
-              <option value="all">所有用户</option>
+              <option value="all">{t('filters.allUsers')}</option>
               {availableUsers.map((user) => (
                 <option key={user.id} value={user.id}>
                   {user.name}
@@ -507,6 +511,7 @@ export default function GalleryPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredLoveItems.map((item) => {
                 const meta = LOVE_COLUMN_TYPE_META[item.type];
+                const typeLabel = t(`loveColumn.types.${item.type}`);
                 const Icon = meta.icon;
                 const expanded = expandedItem === item.id;
                 const firstImage = item.imageUrls?.[0] || (item.output?.imageUrl as string) || (item.output?.photos as string[])?.[0];
@@ -552,7 +557,7 @@ export default function GalleryPage() {
                     )}>
                       <div className="flex items-center gap-2 min-w-0">
                         <Icon className={`h-4 w-4 text-${meta.color}-500 flex-shrink-0`} />
-                        <span className="text-sm font-semibold truncate">{meta.label}</span>
+                        <span className="text-sm font-semibold truncate">{typeLabel}</span>
                       </div>
                       <div className="flex items-center gap-2 flex-shrink-0">
                         {item.type === 'copy' && text && (
@@ -560,7 +565,7 @@ export default function GalleryPage() {
                             <button
                               type="button"
                               onClick={handleCopyText}
-                              title={copiedItemId === item.id ? '已复制' : '复制文案'}
+                              title={copiedItemId === item.id ? t('loveColumn.copied') : t('loveColumn.copyText')}
                               className={cn(
                                 'p-1.5 rounded-md transition-colors',
                                 copiedItemId === item.id
@@ -577,7 +582,7 @@ export default function GalleryPage() {
                             <button
                               type="button"
                               onClick={handleDownloadText}
-                              title="下载为 TXT"
+                              title={t('loveColumn.downloadTxt')}
                               className="p-1.5 rounded-md text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors"
                             >
                               <Download className="h-3.5 w-3.5" />
@@ -589,7 +594,7 @@ export default function GalleryPage() {
                             <button
                               type="button"
                               onClick={handleCopyText}
-                              title={copiedItemId === item.id ? '已复制' : '复制全文'}
+                              title={copiedItemId === item.id ? t('loveColumn.copied') : t('loveColumn.copyFull')}
                               className={cn(
                                 'p-1.5 rounded-md transition-colors',
                                 copiedItemId === item.id
@@ -612,10 +617,10 @@ export default function GalleryPage() {
                                   setCopiedItemId(item.id);
                                   setTimeout(() => setCopiedItemId(null), 1500);
                                 } catch {
-                                  window.prompt('请手动复制分享链接：', url);
+                                  window.prompt(t('loveColumn.sharePrompt'), url);
                                 }
                               }}
-                              title="复制分享链接"
+                              title={t('loveColumn.copyShareLink')}
                               className="p-1.5 rounded-md text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors"
                             >
                               <Share2 className="h-3.5 w-3.5" />
@@ -624,7 +629,7 @@ export default function GalleryPage() {
                               href={`/m/${item.id}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              title="打开分享页"
+                              title={t('loveColumn.openSharePage')}
                               className="p-1.5 rounded-md text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors"
                             >
                               <BookHeart className="h-3.5 w-3.5" />
@@ -642,7 +647,7 @@ export default function GalleryPage() {
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={firstImage}
-                            alt={meta.label}
+                            alt={typeLabel}
                             className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                           />
                           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
@@ -685,7 +690,7 @@ export default function GalleryPage() {
 
                       {!firstImage && !text && (
                         <p className="text-xs text-slate-400 italic">
-                          (此条记录由旧版本生成，输出内容未持久化)
+                          {t('loveColumn.legacyNotPersisted')}
                         </p>
                       )}
 
@@ -694,7 +699,7 @@ export default function GalleryPage() {
                           onClick={() => setExpandedItem(expanded ? null : item.id)}
                           className="text-xs font-medium text-rose-600 hover:underline"
                         >
-                          {expanded ? '收起' : '展开全文'}
+                          {expanded ? t('loveColumn.collapse') : t('loveColumn.expand')}
                         </button>
                       )}
                     </div>
@@ -703,10 +708,10 @@ export default function GalleryPage() {
                     <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
                       <span className="flex items-center gap-1">
                         <Heart className="h-3 w-3 text-rose-500" />
-                        {item.creditsUsed} 积分
+                        {t('loveColumn.creditsUsed', { count: item.creditsUsed })}
                       </span>
                       {isAdmin && (
-                        <span className="truncate ml-2">用户: {item.userName}</span>
+                        <span className="truncate ml-2">{t('loveColumn.userLabel', { name: item.userName })}</span>
                       )}
                     </div>
                   </div>
@@ -719,11 +724,11 @@ export default function GalleryPage() {
                 <Heart className="h-10 w-10 text-rose-400" />
               </div>
               <div className="text-center">
-                <p className="font-semibold">还没有 520 专栏作品</p>
-                <p className="text-sm text-slate-500 mt-1">前往 520 专栏，记录你们的故事</p>
+                <p className="font-semibold">{t('loveColumn.emptyTitle')}</p>
+                <p className="text-sm text-slate-500 mt-1">{t('loveColumn.emptyDesc')}</p>
               </div>
               <Link href="/love-column">
-                <Button className="btn-gradient text-white border-0 mt-2">进入 520 专栏</Button>
+                <Button className="btn-gradient text-white border-0 mt-2">{t('loveColumn.goToColumn')}</Button>
               </Link>
             </div>
           )}
@@ -749,7 +754,7 @@ export default function GalleryPage() {
               {filteredMusicTasks.map((task) => {
                 const audioUrl = task.tosAudioUrls?.[0] || task.sunoData?.streamAudioUrl || task.sunoData?.audioUrl;
                 const imageUrl = task.sunoData?.imageUrl;
-                const title = task.title || task.sunoData?.title || '未命名歌曲';
+                const title = task.title || task.sunoData?.title || t('music.untitled');
                 const duration = task.sunoData?.duration || 0;
 
                 return (
@@ -792,7 +797,7 @@ export default function GalleryPage() {
                         className="shrink-0 px-4 py-2 rounded-lg bg-violet-100 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300 hover:bg-violet-200 dark:hover:bg-violet-900/30 transition-colors flex items-center gap-2 text-sm font-medium"
                       >
                         <Download className="h-4 w-4" />
-                        下载
+                        {t('music.downloadShort')}
                       </button>
                     )}
                   </div>
@@ -806,10 +811,10 @@ export default function GalleryPage() {
               </div>
               <div className="text-center">
                 <p className="font-semibold">{t('empty.title')}</p>
-                <p className="text-sm text-slate-500 mt-1">还没有音频作品，前往音乐工作台创作您的第一首歌曲</p>
+                <p className="text-sm text-slate-500 mt-1">{t('music.emptyDesc')}</p>
               </div>
               <Link href="/music">
-                <Button className="btn-gradient text-white border-0 mt-2">去音乐工作台</Button>
+                <Button className="btn-gradient text-white border-0 mt-2">{t('music.goToStudio')}</Button>
               </Link>
             </div>
           )}
@@ -828,8 +833,10 @@ export default function GalleryPage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {portraitTasks.map((task) => {
                 const styleId = task.promptPayload?.styleId;
-                const styleName = PORTRAIT_STYLES.find((s) => s.id === styleId)?.name || '肖像照';
-                const dateStr = new Date(task.createdAt).toLocaleDateString('zh-CN', {
+                const style = PORTRAIT_STYLES.find((s) => s.id === styleId);
+                const styleName =
+                  (locale === 'zh' ? style?.name : style?.nameEn) || t('tabs.portrait');
+                const dateStr = new Date(task.createdAt).toLocaleDateString(locale, {
                   year: 'numeric',
                   month: 'short',
                   day: 'numeric',
@@ -883,10 +890,10 @@ export default function GalleryPage() {
               </div>
               <div className="text-center">
                 <p className="font-semibold">{t('empty.title')}</p>
-                <p className="text-sm text-slate-500 mt-1">还没有肖像作品，前往肖像工作台创作您的第一张肖像</p>
+                <p className="text-sm text-slate-500 mt-1">{t('portrait.emptyDesc')}</p>
               </div>
               <Link href="/portrait">
-                <Button className="btn-gradient text-white border-0 mt-2">去肖像工作台</Button>
+                <Button className="btn-gradient text-white border-0 mt-2">{t('portrait.goToStudio')}</Button>
               </Link>
             </div>
           )}
@@ -940,7 +947,7 @@ export default function GalleryPage() {
                       </span>
                       <p className="text-[11px] text-slate-400 flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
-                        {date.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                        {date.toLocaleDateString(locale, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                       </p>
                     </div>
                   </div>
