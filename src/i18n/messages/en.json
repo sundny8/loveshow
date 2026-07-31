@@ -1109,42 +1109,118 @@
     "title": "Privacy Policy",
     "lastUpdated": "Last updated",
     "sections": {
-      "intro": {
-        "title": "1. Introduction",
-        "content": "Welcome to LoveShow. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you about how we look after your personal data and tell you about your privacy rights."
+      "controller": {
+        "title": "1. Data Controller",
+        "content": "The data controller for this Service is:\n- Name: LoveShow (individual/sole trader)\n- Privacy Contact Email: noreply@loveshow.life\n- Data Protection Officer: Not applicable"
       },
       "dataCollection": {
-        "title": "2. Data We Collect",
-        "intro": "We may collect, use, store and transfer different kinds of personal data about you:",
+        "title": "2. Personal Information We Collect",
+        "intro": "We collect the following types of personal information:",
         "items": [
-          "Identity Data: name, username",
-          "Contact Data: email address",
-          "Technical Data: IP address, browser type, device information",
-          "Usage Data: information about how you use our website and services"
+          "Account Information: name, email address, password (encrypted storage), phone number (optional), WeChat ID (optional), profile image.",
+          "Payment Information: transaction amount, payment status, Stripe customer ID, subscription information, points balance and transaction history. We do not store complete card numbers — card data is processed by our payment processor (see Section 5).",
+          "AI Generation Data: prompts, uploaded images, AI-generated images and audio, lyrics, couple photo inputs and outputs, emotional analysis data, love memoir content.",
+          "Communication Records: emails, tickets, and feedback you send to customer support.",
+          "Device and Network: IP address, device model, operating system, browser type, timezone, User-Agent.",
+          "Usage Behavior: page visits, feature usage, operation logs, session duration.",
+          "Session Data: session tokens, IP addresses, and User-Agent information for active sessions (7-day validity).",
+          "Third-Party Login: basic profile information obtained when logging in via WeChat OAuth."
         ]
       },
       "dataUsage": {
-        "title": "3. How We Use Your Data",
-        "intro": "We use your personal data to:",
+        "title": "3. How We Use Your Information",
+        "intro": "We use your personal information for the following purposes:",
         "items": [
-          "Provide and maintain our service",
-          "Notify you about changes to our service",
-          "Provide customer support",
-          "Monitor the usage of our service",
-          "Detect, prevent and address technical issues"
+          "Providing and maintaining the Service (Legal basis: Contract performance)",
+          "Billing and payment processing (Legal basis: Contract performance)",
+          "Customer support (Legal basis: Contract performance / Legitimate interest)",
+          "Service notifications — billing, security, policy updates (Legal basis: Legitimate interest)",
+          "Security and fraud prevention (Legal basis: Legitimate interest)",
+          "Product optimization and analytics (Legal basis: Legitimate interest)",
+          "Legal compliance (Legal basis: Legal obligation)",
+          "Content moderation — scanning prompts and generated content for prohibited material (Legal basis: Legitimate interest)"
+        ]
+      },
+      "cookies": {
+        "title": "4. Cookies and Tracking Technologies",
+        "intro": "We use the following types of cookies and tracking technologies:",
+        "items": [
+          "Strictly Necessary: maintaining login sessions and core functionality. Cannot be disabled.",
+          "Functional: language preferences and personalized settings. Can be disabled via browser settings.",
+          "Analytics: anonymous usage statistics and product optimization via PostHog (https://posthog.com/privacy). Can be disabled via browser settings."
+        ]
+      },
+      "sharing": {
+        "title": "5. Sharing and Disclosure of Information",
+        "content": "We do not sell your personal information, including as defined by applicable laws such as the CCPA. We only share your information in the following circumstances:",
+        "items": [
+          "Service Providers: cloud computing, payment, customer support, and analytics vendors, all bound by confidentiality agreements. Payment card data is exclusively processed by our PCI-DSS compliant payment processor, Waffo Pancake, and is not stored on our servers.",
+          "AI Model Providers: OpenAI, Google Gemini, Suno, and Creem process user prompts and generation requests to provide AI features. These providers have their own privacy policies governing data handling.",
+          "Storage Providers: Cloudflare R2 and Volcano Engine TOS store user-uploaded and AI-generated content.",
+          "Legal and Regulatory Requirements: as required by law, court order, or lawful request from competent authorities.",
+          "Business Transactions: in the event of a merger, acquisition, or similar transaction, with advance notice and continued protection obligations.",
+          "With Your Consent: for other purposes with your explicit prior consent."
         ]
       },
       "dataSecurity": {
-        "title": "4. Data Security",
-        "content": "We have implemented appropriate security measures to prevent your personal data from being accidentally lost, used, or accessed in an unauthorized way. We limit access to your personal data to those employees and partners who have a business need to know."
+        "title": "6. Data Security Measures",
+        "content": "We implement the following security measures to protect your personal information:",
+        "items": [
+          "Transmission Encryption: TLS/HTTPS for all data in transit.",
+          "Storage Security: passwords and sensitive data are encrypted or hashed (scrypt).",
+          "Access Control: principle of least privilege; employees bound by confidentiality agreements.",
+          "Content Moderation: all AI generation prompts are scanned before processing using Creem Content Moderation API. The system operates in fail-closed mode — if the moderation service is unavailable, generation is blocked."
+        ]
       },
-      "rights": {
-        "title": "5. Your Rights",
-        "content": "Under certain circumstances, you have rights under data protection laws in relation to your personal data, including the right to access, correct, erase, restrict, or object to processing of your personal data."
+      "dataRetention": {
+        "title": "7. Data Retention Periods",
+        "intro": "We retain personal information for the following periods:",
+        "items": [
+          "Account Information: during account validity; deleted or anonymized within 90 days after account deletion.",
+          "Transaction Records: retained for 5 years as required by tax and accounting regulations, then deleted or archived.",
+          "AI Generation Data (images, audio, prompts): retained for the duration of account validity; deleted upon account deletion.",
+          "Session Data: active sessions retained for 7 days; expired sessions automatically deleted.",
+          "Content Moderation Logs: retained for 12 months for security audit purposes, then securely deleted.",
+          "Customer Support Records: retained for 2 years, then securely deleted."
+        ]
+      },
+      "dataRights": {
+        "title": "8. Your Data Rights",
+        "intro": "To exercise any of the following rights, please contact us. We will respond within 30 calendar days.",
+        "items": [
+          "Right to Know: understand what data we collect and how we use it.",
+          "Right of Access: obtain a copy of your personal information.",
+          "Right to Correction: correct inaccurate or incomplete information.",
+          "Right to Deletion: request deletion of your data under certain conditions.",
+          "Right to Restrict Processing: pause data processing in specific circumstances.",
+          "Right to Data Portability: obtain your data in a machine-readable format.",
+          "Right to Object: object to processing based on legitimate interest or marketing.",
+          "Right to Withdraw Consent: withdraw consent for processing based on consent."
+        ]
+      },
+      "marketing": {
+        "title": "9. Marketing Communications and Opt-Out",
+        "content": "With your consent, we may send marketing information related to new features, promotions, and service updates via email or in-app notifications. You may opt out at any time by clicking the \"unsubscribe\" link in emails, disabling marketing notifications in account settings, or contacting us. Opting out does not affect service-essential notifications such as billing and security alerts."
+      },
+      "international": {
+        "title": "10. International Data Transfers",
+        "content": "Our servers and service providers may be located in China, the United States (Cloudflare), and other jurisdictions. When transferring data across borders, we ensure data security through the following measures: signing data processing agreements incorporating EU Standard Contractual Clauses (SCCs); transferring only to recipients with equivalent levels of protection; and complying with applicable data transfer regulations."
+      },
+      "children": {
+        "title": "11. Children's Privacy",
+        "content": "The Service is intended for users aged 18 and above. We do not knowingly collect information from children under 18. If you believe your child has provided us with information, please contact us immediately and we will delete it as soon as possible."
+      },
+      "thirdParty": {
+        "title": "12. Third-Party Links and Services",
+        "content": "The Service may contain links to third-party websites or integrate with third-party services. This policy applies only to information we collect directly. We are not responsible for the data practices of third parties and recommend reviewing their policies before use."
+      },
+      "policyChanges": {
+        "title": "13. Changes to This Policy",
+        "content": "If material changes are made, we will notify you at least 15 days in advance through platform announcements or your registered email, and update the \"Last updated\" date at the top of this page. Continued use after the effective date constitutes acceptance."
       },
       "contact": {
-        "title": "6. Contact Us",
-        "content": "If you have any questions about this privacy policy, please contact us at noreply@loveshow.life."
+        "title": "14. Contact Us",
+        "content": "- Privacy Contact Email: noreply@loveshow.life\n- Customer Support Email: noreply@loveshow.life\n- Service Hours: Monday to Friday, 09:00–18:00 UTC+8\n\nThis Privacy Policy is for reference only and does not constitute legal advice. We recommend having it reviewed by qualified legal professionals in your target market before formal publication.\n\nLoveShow · https://loveshow.life"
       }
     }
   },
@@ -1152,41 +1228,53 @@
     "title": "Terms of Service",
     "lastUpdated": "Last updated",
     "sections": {
-      "agreement": {
-        "title": "1. Agreement to Terms",
-        "content": "By accessing or using LoveShow, you agree to be bound by these Terms of Service. If you disagree with any part of the terms, you may not access the service."
+      "acceptance": {
+        "title": "1. Acceptance of Terms",
+        "content": "Welcome to LoveShow (\"LoveShow\", \"we\", \"us\", or \"our\"). We are an individual/sole trader operating under the laws of China. These Terms of Service (\"Terms\") govern your access to and use of our AI-powered creative services, including AI ID photos, AI portraits, AI music generation, 520 Column features, and AI image editing, available at https://loveshow.life (the \"Service\").\n\nBy creating an account, purchasing credits, or otherwise using the Service, you confirm that you: (a) are at least 18 years of age; (b) have read, understood, and agree to be bound by these Terms; (c) agree to our Privacy Policy; and (d) are authorized to enter into this agreement on behalf of yourself or any organization you represent.\n\n⚠️ Important: If you do not agree to these Terms, you may not use the Service. Continued use after any update constitutes acceptance of the revised Terms."
       },
-      "license": {
-        "title": "2. Use License",
-        "intro": "Permission is granted to temporarily download one copy of the materials on LoveShow for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title.",
-        "intro2": "Under this license you may not:",
+      "services": {
+        "title": "2. Service Description",
+        "content": "2.1 What We Provide\nLoveShow provides an AI technology-powered platform that enables users to create AI ID photos, AI portraits, AI couple photos, AI love songs, romantic copywriting, emotional analysis, love memoirs, and AI image editing. The Service is a digital Software-as-a-Service (SaaS) product delivered over the internet.\n\n2.2 Nature of Service\nThe Service is a digital intangible product. Access to the Service is granted immediately upon payment confirmation. Due to the instant delivery nature of digital services, refunds are subject to specific limitations as detailed in Section 7.\n\n2.3 Third-Party AI Model Dependency\nThe Service uses third-party AI model providers, including OpenAI (gpt-image), Google Gemini, Suno, and Creem. The performance and availability of the Service may be affected by the operational status of these providers. Major disruptions will be communicated to users promptly."
+      },
+      "account": {
+        "title": "3. Account Registration",
+        "content": "3.1 Account Creation\nUsing the Service requires creating an account with accurate and complete information. You are responsible for maintaining the confidentiality of your login credentials and for all activities under your account.\n\n3.2 Account Security\n- If you discover unauthorized use, contact noreply@loveshow.life immediately.\n- Do not share your login credentials with any third party.\n- Ensure your billing email address remains valid.\n\n3.3 Organization Accounts\nIf you register on behalf of a company or organization, you represent that you are authorized to sign this agreement on behalf of that entity."
+      },
+      "credits": {
+        "title": "4. Credits and Recharge Plans",
+        "content": "The Service operates on a credits-based system. Users can purchase credit packages at any time. Credits are used to access Service features such as AI photo generation, AI music creation, and 520 Column features. Current available credit packages and pricing can be found at https://loveshow.life.\n\nWe reserve the right to modify plan features or introduce new plans at any time."
+      },
+      "billing": {
+        "title": "5. Billing and Payment",
+        "content": "5.1 One-Time Recharge Authorization\nEach recharge is a one-time transaction. By completing a purchase, you authorize LoveShow to charge your payment method for the amount displayed at checkout.\n\n5.2 Taxes\nUnless otherwise stated, listed prices do not include applicable taxes. Where required by law, relevant taxes will be collected at checkout."
+      },
+      "creditExpiry": {
+        "title": "6. Credit Validity and Account Termination",
+        "content": "6.1 Credit Validity\nPurchased credits are valid for 12 months from the date of purchase unless otherwise stated at the time of purchase. We will send reminder notifications before credits expire.\n\n6.2 Account Termination\nIf an account is terminated (by you or by us), unused credits will be retained for 30 days after termination. After that period, unused credits will expire and will not be refunded unless required by applicable law."
+      },
+      "refunds": {
+        "title": "7. Refund Policy",
+        "content": "Consumed credits are generally non-refundable. The following exceptions apply:",
         "items": [
-          "Modify or copy the materials",
-          "Use the materials for any commercial purpose",
-          "Attempt to decompile or reverse engineer any software",
-          "Remove any copyright or other proprietary notations",
-          "Transfer the materials to another person"
+          "Unused credits within 7 days of purchase: Full refund available if credits have not been used within 7 days of purchase.",
+          "Duplicate charges: Full refund for duplicate charges caused by billing errors.",
+          "Statutory rights (EU/UK/Australia): The 14-day withdrawal right for first-time purchasers is preserved and no longer applies after first use."
         ]
       },
-      "disclaimer": {
-        "title": "3. Disclaimer",
-        "content": "The materials on LoveShow are provided on an 'as is' basis. LoveShow makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights."
+      "billingDisputes": {
+        "title": "8. Billing Disputes",
+        "content": "If you believe a charge is incorrect, please email noreply@loveshow.life before filing a dispute with your bank. We commit to responding within 2 business days and resolving confirmed billing errors within 5 business days."
       },
-      "limitations": {
-        "title": "4. Limitations",
-        "content": "In no event shall LoveShow or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on LoveShow."
-      },
-      "accuracy": {
-        "title": "5. Accuracy of Materials",
-        "content": "The materials appearing on LoveShow could include technical, typographical, or photographic errors. LoveShow does not warrant that any of the materials on its website are accurate, complete, or current."
-      },
-      "links": {
-        "title": "6. Links",
-        "content": "LoveShow has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by LoveShow of the site."
+      "aiContent": {
+        "title": "9. AI Content and Intellectual Property",
+        "content": "9.1 Output Ownership\nSubject to these Terms, AI-generated content created from your inputs (\"Output\") belongs to you. You may use Output for any lawful purpose within the scope permitted by Section 10.\n\n9.2 Input License\nBy submitting content to the Service (\"Input\"), you grant LoveShow a limited, non-exclusive license solely to provide the Service to you. Without your explicit consent, we will not use your Input to train AI models.\n\n9.3 Third-Party AI Model Dependency\nThe Service uses third-party AI model providers, including OpenAI, Google Gemini, and Suno. Output may be influenced by these providers' models. We do not guarantee specific output quality and are not responsible for content generated by third-party models.\n\n9.4 AI Output Accuracy",
+        "items": [
+          "AI-generated content may contain errors or inaccuracies. You are responsible for reviewing and verifying Output before relying on it."
+        ]
       },
       "acceptableUse": {
-        "title": "7. Acceptable Use & Prohibited Content",
-        "intro": "LoveShow is an AI-powered creative platform focused on romantic expression and couple memories. To keep the platform safe for everyone, the following content is strictly prohibited when using any AI generation feature — including 520 copywriting, couple photos, couple avatars, emotional analysis, love memoir, couple music, AI portraits, and ID photos:",
+        "title": "10. Acceptable Use Policy",
+        "intro": "LoveShow is an AI-powered creative platform focused on romantic expression and couple memories. To keep the platform safe for everyone, the following content is strictly prohibited when using any AI generation feature:",
         "items": [
           "NSFW, sexually explicit, pornographic, suggestive, nude, or adult content of any kind.",
           "Any sexualized, exposed, or exploitative content involving minors. Such requests trigger immediate account termination.",
@@ -1200,13 +1288,37 @@
         "moderation": "To enforce these rules, we reserve the right to warn, restrict features, or terminate the accounts of users who violate our content policy, at our sole discretion.",
         "report": "If you encounter abuse or prohibited content, please report it to noreply@loveshow.life."
       },
-      "modifications": {
-        "title": "8. Modifications",
-        "content": "LoveShow may revise these terms of service at any time without notice. By using this website you are agreeing to be bound by the then current version of these terms of service."
+      "dataPrivacy": {
+        "title": "11. Data, Privacy and Security",
+        "content": "Your use of the Service is governed by our Privacy Policy, published at https://loveshow.life/privacy. Payment card data is exclusively processed by our PCI-DSS compliant payment processor, Waffo Pancake, and is not stored on our servers. Account data is retained for 90 days after cancellation, after which it is deleted."
+      },
+      "disclaimer": {
+        "title": "12. Disclaimers and Limitation of Liability",
+        "content": "12.1 Disclaimer\nThe Service is provided on an \"as is\" and \"as available\" basis, without any express or implied warranties, including merchantability, fitness for a particular purpose, or AI output accuracy.\n\n12.2 AI-Generated Content Disclaimer\n⚠️ AI-generated content may be inaccurate, incomplete, or outdated. Do not use it for legal, medical, financial, or other professional advice. Always verify with qualified professionals before acting on AI-generated content.\n\n12.3 Limitation of Liability\nTo the maximum extent permitted by applicable law, LoveShow shall not be liable for any indirect, incidental, consequential, or punitive damages. Our total liability is limited to the amount you paid us in the 12 months preceding the claim event."
+      },
+      "termination": {
+        "title": "13. Term and Termination",
+        "content": "These Terms remain in effect while you use the Service. We may suspend or terminate your account if you materially breach these Terms, engage in fraudulent activity, or as required by law. If we terminate the Service for reasons other than your breach, we will refund the unused portion of prepaid fees on a pro-rata basis. You may delete your account at any time by contacting noreply@loveshow.life."
+      },
+      "governingLaw": {
+        "title": "14. Governing Law and Dispute Resolution",
+        "content": "These Terms are governed by the laws of China. Before initiating formal proceedings, please email noreply@loveshow.life to attempt informal resolution."
+      },
+      "generalTerms": {
+        "title": "15. General Provisions",
+        "content": "We may update these Terms at any time. Material changes will be notified via email at least 14 days before the effective date. Continued use constitutes acceptance. If any provision is found invalid, the remaining provisions remain in full effect. These Terms and the Privacy Policy together constitute the entire agreement between you and LoveShow."
       },
       "contact": {
-        "title": "9. Contact Us",
-        "content": "If you have any questions about these Terms, please contact us at noreply@loveshow.life."
+        "title": "16. Contact Information",
+        "intro": "If you have any questions about these Terms or billing, please contact us:",
+        "items": [
+          "General Support: noreply@loveshow.life",
+          "Billing Inquiries: noreply@loveshow.life",
+          "Refund Requests: noreply@loveshow.life",
+          "Subscription Cancellation: noreply@loveshow.life or Account Settings",
+          "Legal and Privacy: noreply@loveshow.life",
+          "Security Issues: noreply@loveshow.life"
+        ]
       }
     }
   },

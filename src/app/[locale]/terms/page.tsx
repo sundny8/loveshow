@@ -1,92 +1,78 @@
-import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
-import { useTranslations, useNow } from 'next-intl';
+import { useTranslations } from "next-intl";
+import { useNow } from "next-intl";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+
+const sectionKeys = [
+  "acceptance",
+  "services",
+  "account",
+  "credits",
+  "billing",
+  "creditExpiry",
+  "refunds",
+  "billingDisputes",
+  "aiContent",
+  "acceptableUse",
+  "dataPrivacy",
+  "disclaimer",
+  "termination",
+  "governingLaw",
+  "generalTerms",
+  "contact",
+] as const;
 
 export default function TermsPage() {
-  const t = useTranslations('terms');
+  const t = useTranslations("terms");
   const now = useNow();
-
-  const formattedDate = now.toLocaleDateString(undefined, { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
-  });
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 bg-white dark:bg-slate-900">
-        <div className="container mx-auto px-4 py-16 max-w-3xl">
-          <h1 className="text-4xl font-bold mb-8">{t('title')}</h1>
-          <div className="prose dark:prose-invert max-w-none">
-            <p className="text-slate-600 dark:text-slate-300 mb-6">
-              {t('lastUpdated')}: {formattedDate}
-            </p>
-
-            <h2 className="text-2xl font-semibold mt-8 mb-4">{t('sections.agreement.title')}</h2>
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
-              {t('sections.agreement.content')}
-            </p>
-
-            <h2 className="text-2xl font-semibold mt-8 mb-4">{t('sections.license.title')}</h2>
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
-              {t('sections.license.intro')}
-            </p>
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
-              {t('sections.license.intro2')}
-            </p>
-            <ul className="list-disc pl-6 text-slate-600 dark:text-slate-300 mb-4 space-y-2">
-              {t.raw('sections.license.items').map((item: string, index: number) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-
-            <h2 className="text-2xl font-semibold mt-8 mb-4">{t('sections.disclaimer.title')}</h2>
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
-              {t('sections.disclaimer.content')}
-            </p>
-
-            <h2 className="text-2xl font-semibold mt-8 mb-4">{t('sections.limitations.title')}</h2>
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
-              {t('sections.limitations.content')}
-            </p>
-
-            <h2 className="text-2xl font-semibold mt-8 mb-4">{t('sections.accuracy.title')}</h2>
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
-              {t('sections.accuracy.content')}
-            </p>
-
-            <h2 className="text-2xl font-semibold mt-8 mb-4">{t('sections.links.title')}</h2>
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
-              {t('sections.links.content')}
-            </p>
-
-            <h2 className="text-2xl font-semibold mt-8 mb-4">{t('sections.acceptableUse.title')}</h2>
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
-              {t('sections.acceptableUse.intro')}
-            </p>
-            <ul className="list-disc pl-6 text-slate-600 dark:text-slate-300 mb-4 space-y-2">
-              {t.raw('sections.acceptableUse.items').map((item: string, index: number) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
-              {t('sections.acceptableUse.moderation')}
-            </p>
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
-              {t('sections.acceptableUse.report')}
-            </p>
-
-            <h2 className="text-2xl font-semibold mt-8 mb-4">{t('sections.modifications.title')}</h2>
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
-              {t('sections.modifications.content')}
-            </p>
-
-            <h2 className="text-2xl font-semibold mt-8 mb-4">{t('sections.contact.title')}</h2>
-            <p className="text-slate-600 dark:text-slate-300 mb-4">
-              {t('sections.contact.content')}
-            </p>
-          </div>
+      <main className="flex-1 container mx-auto px-4 py-16 max-w-3xl">
+        <h1 className="text-3xl font-bold mb-2">{t("title")}</h1>
+        <p className="text-sm text-slate-500 dark:text-slate-400 mb-8">
+          {t("lastUpdated")}: {now.toLocaleDateString()}
+        </p>
+        <div className="prose dark:prose-invert max-w-none space-y-8">
+          {sectionKeys.map((key) => {
+            const section = t.raw(`sections.${key}`) as Record<string, unknown>;
+            if (!section) return null;
+            return (
+              <section key={key}>
+                <h2 className="text-xl font-semibold mb-3">
+                  {String(section.title)}
+                </h2>
+                {typeof section.content === "string" && (
+                  <p className="text-slate-600 dark:text-slate-300 mb-2 whitespace-pre-line">
+                    {section.content}
+                  </p>
+                )}
+                {typeof section.intro === "string" && (
+                  <p className="text-slate-600 dark:text-slate-300 mb-2">
+                    {section.intro}
+                  </p>
+                )}
+                {Array.isArray(section.items) && (
+                  <ul className="list-disc pl-6 space-y-1 text-slate-600 dark:text-slate-300">
+                    {(section.items as string[]).map((item, i) => (
+                      <li key={i}>{item}</li>
+                    ))}
+                  </ul>
+                )}
+                {typeof section.moderation === "string" && (
+                  <p className="text-slate-600 dark:text-slate-300 mt-2">
+                    {section.moderation}
+                  </p>
+                )}
+                {typeof section.report === "string" && (
+                  <p className="text-slate-600 dark:text-slate-300 mt-2">
+                    {section.report}
+                  </p>
+                )}
+              </section>
+            );
+          })}
         </div>
       </main>
       <Footer />
