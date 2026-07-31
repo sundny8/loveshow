@@ -1283,10 +1283,12 @@
           "Deepfakes or misleading impersonation of real people (public figures or private individuals).",
           "Illegal activities, fraud, drugs, weapons, explosives, or other content endangering public safety.",
           "Photos of people you do not have the legal right to use, including non-consensual face images of others.",
-          "Attempts to bypass content moderation, jailbreak our safety systems, or attack our infrastructure."
+          "Attempts to bypass content moderation, jailbreak our safety systems, or attack our infrastructure.",
+          "Generating content that infringes on any third party's intellectual property rights, including copyrights, trademarks, patents, or trade secrets."
         ],
         "moderation": "To enforce these rules, we reserve the right to warn, restrict features, or terminate the accounts of users who violate our content policy, at our sole discretion.",
-        "report": "If you encounter abuse or prohibited content, please report it to noreply@loveshow.life."
+        "report": "If you encounter abuse or prohibited content, please report it to noreply@loveshow.life.",
+        "moderationProcess": "We employ a multi-layered content moderation system combining automated scanning and human review. All AI generation prompts are scanned in real-time using the Creem Content Moderation API before processing. Generated outputs are also reviewed for policy compliance. Content flagged by our automated systems is blocked from generation. Users who repeatedly violate our content policy may face warnings, feature restrictions, or account termination. We maintain audit logs of moderation actions for compliance purposes."
       },
       "dataPrivacy": {
         "title": "11. Data, Privacy and Security",

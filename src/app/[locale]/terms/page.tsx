@@ -70,6 +70,11 @@ export default function TermsPage() {
                     {section.report}
                   </p>
                 )}
+                {typeof section.moderationProcess === "string" && (
+                  <p className="text-slate-600 dark:text-slate-300 mt-2">
+                    {section.moderationProcess}
+                  </p>
+                )}
               </section>
             );
           })}
