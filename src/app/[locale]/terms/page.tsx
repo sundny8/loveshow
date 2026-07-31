@@ -60,6 +60,30 @@ export default function TermsPage() {
                     ))}
                   </ul>
                 )}
+                {Array.isArray(section.subsections) &&
+                  (
+                    section.subsections as Array<{
+                      title: string;
+                      intro?: string;
+                      items?: string[];
+                    }>
+                  ).map((sub, i) => (
+                    <div key={i} className="mt-4">
+                      <h3 className="text-lg font-semibold mb-2">{sub.title}</h3>
+                      {sub.intro && (
+                        <p className="text-slate-600 dark:text-slate-300 mb-2">
+                          {sub.intro}
+                        </p>
+                      )}
+                      {Array.isArray(sub.items) && (
+                        <ul className="list-disc pl-6 space-y-1 text-slate-600 dark:text-slate-300">
+                          {sub.items.map((item, j) => (
+                            <li key={j}>{item}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  ))}
                 {typeof section.moderation === "string" && (
                   <p className="text-slate-600 dark:text-slate-300 mt-2">
                     {section.moderation}
