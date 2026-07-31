@@ -1274,17 +1274,16 @@
       },
       "acceptableUse": {
         "title": "10. Acceptable Use Policy",
-        "intro": "LoveShow is an AI-powered creative platform focused on romantic expression and couple memories. To keep the platform safe for everyone, the following content is strictly prohibited when using any AI generation feature:",
+        "intro": "LoveShow is an AI-powered creative platform focused on romantic expression and couple memories. To keep the platform safe for everyone, the following eight categories of content are strictly prohibited when using any AI generation feature:",
         "items": [
-          "NSFW, sexually explicit, pornographic, suggestive, nude, or adult content of any kind.",
-          "Any sexualized, exposed, or exploitative content involving minors. Such requests trigger immediate account termination.",
-          "Hate speech, discrimination, harassment, or content targeting protected groups.",
-          "Gore, extreme violence, self-harm, suicide promotion, or terrorism-related content.",
-          "Deepfakes or misleading impersonation of real people (public figures or private individuals).",
-          "Illegal activities, fraud, drugs, weapons, explosives, or other content endangering public safety.",
-          "Photos of people you do not have the legal right to use, including non-consensual face images of others.",
-          "Attempts to bypass content moderation, jailbreak our safety systems, or attack our infrastructure.",
-          "Generating content that infringes on any third party's intellectual property rights, including copyrights, trademarks, patents, or trade secrets."
+          "Pornography / NSFW Content: NSFW, sexually explicit, pornographic, suggestive, nude, or adult content of any kind.",
+          "Violence / Gore: Gore, extreme violence, self-harm, suicide promotion, or terrorism-related content.",
+          "Hate Speech: Hate speech, discrimination, harassment, or content targeting protected groups.",
+          "Child Safety (CSAM): Any sexualized, exposed, or exploitative content involving minors. Such requests trigger immediate account termination and will be reported to authorities.",
+          "Deepfakes / Impersonation: Deepfakes or misleading impersonation of real people (public figures or private individuals), including non-consensual face images of others.",
+          "Copyright / Trademark Infringement: Generating content that infringes on any third party's intellectual property rights, including unauthorized use of copyrighted works, trademarks, patents, or trade secrets.",
+          "Illegal Activities: Fraud, drugs, weapons, explosives, or other content endangering public safety.",
+          "Security Violations: Attempts to bypass content moderation, jailbreak our safety systems, or attack our infrastructure."
         ],
         "moderation": "To enforce these rules, we reserve the right to warn, restrict features, or terminate the accounts of users who violate our content policy, at our sole discretion.",
         "report": "If you encounter abuse or prohibited content, please report it to noreply@loveshow.life.",
