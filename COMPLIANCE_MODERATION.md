@@ -1,112 +1,94 @@
-# Content Moderation Compliance — LoveShow 520
+# Waffo Content Safety Integration
 
-This document confirms that **Creem's Content Moderation API** is integrated
-across **every generation endpoint** on this platform, in accordance with
-Creem's Content Safety & Moderation Requirements:
+LoveShow scans every user prompt or textual AI-generation intent before credit
+deduction and before invoking an image, text, or music model.
 
-- https://docs.creem.io/features/moderation
-- https://docs.creem.io/merchant-of-record/account-reviews/account-reviews#content-safety-&-moderation-requirements
+Official endpoint:
 
-## Where moderation runs
+- `POST https://api.waffo.ai/v1/actions/verification/scan-prompt`
+- Documentation: https://docs.waffo.ai/zh/api-reference/endpoints/content-safety/scan-prompt
 
-A single shared client lives at `src/lib/moderation.ts`. It calls
-`POST https://api.creem.io/v1/moderation/prompt` with a screening payload
-and an `external_id` of the form `user_<userId>:<kind>` for auditing.
+## Authentication
 
-The client is invoked **before any billing or model call** in **every**
-generation endpoint — including endpoints where the prompt is server-constructed
-from enum-based configuration parameters:
+`src/lib/moderation.ts` implements Waffo's documented RSA-SHA256 API Key
+authentication with these headers:
 
-| Endpoint | Path | Type | Text screened |
-|---|---|---|---|
-| ID photo (single) | `src/app/api/photo/generate/route.ts` | Image → image | Generation intent: spec, background, suit |
-| ID photo (batch) | `src/app/api/photo/batch/route.ts` | Image → image | Generation intent: spec, background, suit, count |
-| Single-person portrait | `src/app/api/portrait/generate/route.ts` | Image → image | Generation intent: style name, gender |
-| Love copywriting | `src/app/api/love-column/copy/route.ts` | Text → text | `keyword`, `scenario` |
-| Relationship analysis | `src/app/api/love-column/analysis/route.ts` | Image + text → text | `metAt`, `note` |
-| Couple photo | `src/app/api/love-column/couple-photo/route.ts` | Image + text → image | `note` |
-| Couple avatar | `src/app/api/love-column/couple-avatar/route.ts` | Image + text → image | `note` |
-| Love memoir | `src/app/api/love-column/memoir/route.ts` | Image + text → text | `title`, `timeline`, `chat`, `note` |
-| Music generation | `src/app/api/music/generate/route.ts` | Text → audio | `prompt`, `title`, `style`, `mood`, `vocalStyle` |
+- `X-Merchant-Id`
+- `X-Timestamp`
+- `X-Signature`
+- `Content-Type: application/json`
 
-**Every single AI generation code path calls the Moderation API.** There is no
-way to reach any generation model without a preceding, successful moderation
-call returning `decision: "allow"`.
+The signature covers the method, exact path, Unix timestamp, and base64 SHA-256
+hash of the exact JSON body sent to Waffo. The private key remains server-side.
 
-## Behavior contract
+## Decision handling
 
-All moderation calls in this platform follow the contract specified in
-Creem's documentation:
+The integration uses `semantic: "enforce"` by default and follows a strict
+fail-closed contract:
 
-1. **Pre-flight**: moderation runs after parameter validation but **before**
-   point deduction, record creation, or any model invocation.
-2. **`deny` blocks**: the user receives a 400 with `error: 'prompt_rejected'`.
-3. **`flag` blocks**: treated identically to `deny`, per Creem's recommendation
-   ("We recommend treating `flag` exactly like `deny`").
-4. **Fail closed**: any non-2xx, network error, timeout (5s), missing API key
-   in production, or unknown decision value returns 503 with
-   `error: 'moderation_unavailable'`. Generation never proceeds in those cases.
-5. **Forward-compat**: unknown extra fields in the response body are ignored;
-   only the documented `decision` enum is consumed.
-6. **Audit trail**: every call sends `external_id = user_<userId>:<kind>`.
-   Server logs include the returned moderation result `id` on every block.
+- `allow`: continue to credit deduction and model invocation.
+- `review`: stop generation and return a retryable response.
+- `block`: stop generation and return a policy rejection.
+- Missing credentials, timeout, 4xx authentication/configuration errors,
+  exhausted 5xx retries, malformed JSON, or unknown action: stop generation.
 
-The check is idempotent and stateless — repeated retries with the same
-prompt make repeated screening calls.
+Waffo 5xx/network failures are retried up to three times after the initial
+attempt, with 5s, 10s, and 20s delays. Prompts over Waffo's 10,000-character
+limit are rejected locally without truncation.
 
-## External ID patterns
+Waffo documents that prompt scanning is stateless and does not retain the
+original prompt after returning a verdict. Local logs contain correlation IDs,
+verdict metadata, and Waffo request IDs, but never the prompt text.
 
-| Kind | Pattern | Endpoint |
-|---|---|---|
-| `photo` | `user_<uid>:photo` | Single ID photo |
-| `photo-batch` | `user_<uid>:photo-batch` | Batch ID photo |
-| `portrait` | `user_<uid>:portrait` | Portrait photo |
-| `music` | `user_<uid>:music` | Music generation |
-| `copy` | `user_<uid>:copy` | Love copywriting |
-| `couple-photo` | `user_<uid>:couple-photo` | Couple photo |
-| `couple-avatar` | `user_<uid>:couple-avatar` | Couple avatar |
-| `analysis` | `user_<uid>:analysis` | Relationship analysis |
-| `memoir` | `user_<uid>:memoir` | Love memoir |
+## Covered generation routes
 
-## Source-side controls
+The following routes call `moderatePrompt()` before generation or charging:
 
-Beyond the per-request screening, the platform also enforces:
+1. `/api/photo/generate`
+2. `/api/photo/batch`
+3. `/api/portrait/generate`
+4. `/api/music/generate`
+5. `/api/love-column/analysis`
+6. `/api/love-column/copy`
+7. `/api/love-column/memoir`
+8. `/api/love-column/couple-photo`
+9. `/api/love-column/couple-avatar`
+10. `/api/tasks/generate`
 
-- **Acceptable Use Policy** (Section 7 of `src/app/[locale]/terms/page.tsx`):
-  explicit prohibition of NSFW, sexually explicit, illegal, hateful, or
-  harmful content generation.
-- **Server-side prompt construction**: image-generation prompts are built on
-  the server (`src/lib/photo/portrait-pipeline.ts`,
-  `src/lib/love-column/prompts/*`). Users cannot bypass the prompt template
-  to inject arbitrary instructions into the model.
-- **Reference-image use only for likeness**: image inputs are used only as
-  visual reference for the subject, never as a vehicle for arbitrary
-  instructions.
+Image-only flows construct a textual generation intent from their selected
+style/specification so the request still passes through Waffo before the model.
 
-## Configuration
+## Production configuration
 
-Production deployment must set `CREEM_API_KEY`. See `.env.example` for the
-documented variable name. Production environments without a key fail closed
-(503 to all generation endpoints).
+Create a Production API Key in Waffo Dashboard → API & Development → API Keys,
+then configure:
 
 ```env
-# .env.local (production)
-CREEM_API_KEY=creem_xxxxxxxxxxxxxxxxxx
-# Optional override; defaults to https://api.creem.io
-# CREEM_API_BASE=https://api.creem.io
+WAFFO_MERCHANT_ID=MER_xxxxxxxxxxxxxxxxxx
+WAFFO_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----"
+WAFFO_CONTENT_SAFETY_SEMANTIC=enforce
 ```
 
-## How to verify
+Optional API base override:
 
-A submission to any of the above endpoints will:
+```env
+WAFFO_API_BASE=https://api.waffo.ai
+```
 
-1. Trigger a `POST /v1/moderation/prompt` call to Creem with the screening text.
-2. Receive a decision (`allow`, `flag`, or `deny`).
-3. On `deny` or `flag`: return HTTP 400 with `{"error":"prompt_rejected", ...}`.
-   **Never** forward to the underlying generation model. **Never** charge points.
-4. On `allow`: proceed with the normal generation flow.
-5. On network failure / timeout / 5xx: return HTTP 503 with
-   `{"error":"moderation_unavailable", ...}` and never reach the model.
+Production does not permit a missing-key bypass. Non-production environments
+may bypass only when credentials are absent so local UI development remains
+possible.
 
-All 9 generation endpoints produce moderation calls visible in Creem's
-dashboard under the merchant's API key.
+## Verification
+
+Before deploying:
+
+1. Confirm the Waffo production API key is active and the server clock uses NTP.
+2. Submit a benign prompt and verify generation proceeds only after `allow`.
+3. Submit a prohibited prompt and verify no credits are charged and no model is called.
+4. Temporarily use an invalid key and verify the API returns 503 without generation.
+5. Save Waffo `requestId` values for support and appeals without logging prompts.
+
+This integration covers the required pre-generation prompt scan. Generated
+outputs remain subject to the safety controls of the underlying model providers
+and LoveShow's separate output-policy review described in the AUP.

@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { createGenerationTask } from "@/lib/services/ai-pipeline";
+import {
+  combineUserText,
+  moderatePrompt,
+  moderationErrorResponse,
+} from "@/lib/moderation";
 
 export async function POST(req: Request) {
   try {
@@ -20,7 +25,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Source image is required" }, { status: 400 });
     }
 
-    // 1. Create task and deduct points
+    const moderation = await moderatePrompt({
+      prompt: combineUserText([
+        `Generate marketplace image for platform=${
+          typeof platform === "string" ? platform : "TEMU"
+        }`,
+        typeof prompt === "string" ? prompt : undefined,
+      ]),
+      externalId: `user_${session.user.id}:task`,
+    });
+    if (!moderation.ok) return moderationErrorResponse(moderation);
+
+    // Waffo has explicitly allowed the request; task creation may now charge.
     try {
       const taskId = await createGenerationTask({
         userId: session.user.id,

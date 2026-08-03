@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useSession } from '@/lib/auth-client';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,8 +11,10 @@ import { CreditCard, Check, Zap, Download, Ticket, Loader2, QrCode, Copy, Smartp
 import Link from 'next/link';
 import Image from 'next/image';
 
+type PaidPlanKey = 'starter' | 'creator' | 'enthusiast' | 'studio';
+
 interface PlanItem {
-  key: string;
+  key: PaidPlanKey | 'trial';
   name: string;
   price: string;
   unit: string;
@@ -29,6 +31,7 @@ const invoices = [
 
 export default function BillingPage() {
   const { data: session, isPending } = useSession();
+  const locale = useLocale();
   const t = useTranslations('dashboard.billing');
   // Reuse homepage pricing copy so the plans stay in sync with the landing page
   const tPricing = useTranslations('pricing');
@@ -38,6 +41,12 @@ export default function BillingPage() {
   const [isRedeeming, setIsRedeeming] = useState(false);
   const [redeemMessage, setRedeemMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
+  const [checkoutPlan, setCheckoutPlan] = useState<PaidPlanKey | null>(null);
+  const [checkoutMessage, setCheckoutMessage] = useState<{
+    type: 'success' | 'error';
+    text: string;
+    checkoutUrl?: string;
+  } | null>(null);
 
   const RECHARGE_URL = 'https://m.tb.cn/h.R3ZGx7S?tk=DjMk5ujFcNn MF278';
 
@@ -81,6 +90,40 @@ export default function BillingPage() {
       setRedeemMessage({ type: 'error', text: '兑换失败，请重试' });
     } finally {
       setIsRedeeming(false);
+    }
+  };
+
+  const handleCheckout = async (planKey: PaidPlanKey) => {
+    setCheckoutPlan(planKey);
+    setCheckoutMessage(null);
+
+    try {
+      const res = await fetch('/api/billing/recharge', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planKey, locale }),
+      });
+      const data = await res.json();
+
+      if (!res.ok || !data.checkoutUrl) {
+        throw new Error(data.error || 'Unable to start checkout');
+      }
+
+      const checkoutWindow = window.open(data.checkoutUrl, '_blank', 'noopener,noreferrer');
+      setCheckoutMessage({
+        type: 'success',
+        text: checkoutWindow
+          ? 'Checkout opened in a new tab.'
+          : 'Checkout is ready. Open it with the link below.',
+        checkoutUrl: checkoutWindow ? undefined : data.checkoutUrl,
+      });
+    } catch (error) {
+      setCheckoutMessage({
+        type: 'error',
+        text: error instanceof Error ? error.message : 'Unable to start checkout',
+      });
+    } finally {
+      setCheckoutPlan(null);
     }
   };
 
@@ -176,14 +219,45 @@ export default function BillingPage() {
               <Button
                 className="w-full mt-auto"
                 variant={plan.highlight ? 'primary' : 'outline'}
-                disabled={plan.key === 'trial'}
+                disabled={plan.key === 'trial' || checkoutPlan !== null}
+                onClick={() => plan.key !== 'trial' && handleCheckout(plan.key)}
               >
-                {plan.key === 'trial' ? t('trialIncluded') : plan.cta}
+                {checkoutPlan === plan.key ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    Opening...
+                  </>
+                ) : plan.key === 'trial' ? (
+                  t('trialIncluded')
+                ) : (
+                  plan.cta
+                )}
               </Button>
             </CardContent>
           </Card>
         ))}
       </div>
+      {checkoutMessage && (
+        <div
+          className={`mb-8 rounded-lg border px-4 py-3 text-sm ${
+            checkoutMessage.type === 'success'
+              ? 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/30 dark:text-emerald-300'
+              : 'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300'
+          }`}
+        >
+          <p>{checkoutMessage.text}</p>
+          {checkoutMessage.checkoutUrl && (
+            <a
+              href={checkoutMessage.checkoutUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex underline underline-offset-4"
+            >
+              Open Waffo checkout
+            </a>
+          )}
+        </div>
+      )}
 
       {/* QR Code Recharge */}
       <Card className="mb-8 border-rose-200 dark:border-rose-800">

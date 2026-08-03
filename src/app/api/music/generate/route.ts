@@ -94,7 +94,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // Creem moderation: screen the user-supplied music prompt + any custom
+    // Waffo scan-prompt: screen the user-supplied music prompt + any custom
     // style/title/mood text BEFORE charging points or calling Suno.
     const moderation = await moderatePrompt({
       prompt: combineUserText([

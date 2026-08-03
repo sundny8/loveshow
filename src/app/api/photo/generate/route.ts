@@ -51,9 +51,7 @@ export async function POST(req: Request) {
 
     console.log('[photo/generate] params', { specId, bgColor, suit, skipAI, fileSize: file.size });
 
-    // Creem moderation: screen the generation intent BEFORE any billing or
-    // model invocation. Although inputs are enum-based (no free-text), Creem
-    // requires moderation on every image generation path.
+    // Waffo scan-prompt: screen the generation intent before billing/model use.
     const moderationPrompt = `Generate ID photo: spec=${specId}, background=${bgColor || 'default'}, suit=${suit || 'none'}`;
     const moderation = await moderatePrompt({
       prompt: moderationPrompt,

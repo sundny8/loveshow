@@ -44,7 +44,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'invalid_style' }, { status: 400 });
   }
 
-  // Creem moderation: screen user-supplied free-text note BEFORE charging or
+  // Waffo scan-prompt: screen the user note before charging or model use.
   // calling the image model. Empty notes pass through trivially.
   if (customNote) {
     const moderation = await moderatePrompt({

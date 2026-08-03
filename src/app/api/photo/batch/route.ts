@@ -46,8 +46,7 @@ export async function POST(req: Request) {
   const suit = form.get('suit') ? (String(form.get('suit')) as any) : undefined;
   const skipAI = String(form.get('skipAI') || '') === '1';
 
-  // Creem moderation: screen the batch generation intent BEFORE any billing or
-  // model invocation. Creem requires moderation on every image generation path.
+  // Waffo scan-prompt: screen the batch intent before billing/model use.
   const moderationPrompt = `Generate batch ID photos (${files.length} images): spec=${specId}, background=${bgColor || 'default'}, suit=${suit || 'none'}`;
   const moderation = await moderatePrompt({
     prompt: moderationPrompt,

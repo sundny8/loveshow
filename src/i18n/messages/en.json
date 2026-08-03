@@ -1156,7 +1156,7 @@
         "content": "We do not sell your personal information, including as defined by applicable laws such as the CCPA. We only share your information in the following circumstances:",
         "items": [
           "Service Providers: cloud computing, payment, customer support, and analytics vendors, all bound by confidentiality agreements. Payment card data is exclusively processed by our PCI-DSS compliant payment processor, Waffo Pancake, and is not stored on our servers.",
-          "AI Model Providers: OpenAI, Google Gemini, Suno, and Creem process user prompts and generation requests to provide AI features. These providers have their own privacy policies governing data handling.",
+          "AI Model and Safety Providers: OpenAI, Google Gemini, Suno, and Waffo Pancake process prompts and generation requests to provide AI features and pre-generation content-safety checks. Waffo's prompt scan is stateless and does not retain the original prompt after returning a verdict; each provider's own privacy policy also governs its processing.",
           "Storage Providers: Cloudflare R2 and Volcano Engine TOS store user-uploaded and AI-generated content.",
           "Legal and Regulatory Requirements: as required by law, court order, or lawful request from competent authorities.",
           "Business Transactions: in the event of a merger, acquisition, or similar transaction, with advance notice and continued protection obligations.",
@@ -1170,7 +1170,7 @@
           "Transmission Encryption: TLS/HTTPS for all data in transit.",
           "Storage Security: passwords and sensitive data are encrypted or hashed (scrypt).",
           "Access Control: principle of least privilege; employees bound by confidentiality agreements.",
-          "Content Moderation: all AI generation prompts are scanned before processing using Creem Content Moderation API. The system operates in fail-closed mode — if the moderation service is unavailable, generation is blocked."
+          "Content Moderation: all AI generation prompts and textual generation intents are scanned before processing with the Waffo Pancake Content Safety scan-prompt API. Generation proceeds only after an explicit allow verdict; review, block, or an unavailable moderation service prevents generation."
         ]
       },
       "dataRetention": {
@@ -1278,7 +1278,7 @@
           {
             "title": "3.1 Automated Review (Real Time)",
             "items": [
-              "Input screening: before a generation model is called, the Creem Content Moderation API scans user prompts, instructions, and generation intent for semantic and safety risks. Requests that are denied or flagged do not proceed to generation.",
+              "Input screening: before a generation model is called, the Waffo Pancake Content Safety scan-prompt API scans prompts, instructions, and generation intent for keyword, semantic, and safety risks. Only an explicit allow verdict proceeds; review and block verdicts are stopped.",
               "Output screening: generated outputs are subject to the safety controls of our underlying mainstream model providers, including OpenAI gpt-image, Google Gemini, and Suno, and to LoveShow's content rules. Outputs detected or flagged as non-compliant are blocked, withheld, or access-restricted.",
               "Abuse-pattern analysis: moderation outcomes and associated request identifiers are logged to identify repeat violations, automated abuse, and attempts to evade safety measures.",
               "If the safety service is unavailable, production uses fail-closed protection: the request is blocked instead of bypassing moderation."
@@ -1350,7 +1350,7 @@
       },
       "services": {
         "title": "2. Service Description",
-        "content": "2.1 What We Provide\nLoveShow provides an AI technology-powered platform that enables users to create AI ID photos, AI portraits, AI couple photos, AI love songs, romantic copywriting, emotional analysis, love memoirs, and AI image editing. The Service is a digital Software-as-a-Service (SaaS) product delivered over the internet.\n\n2.2 Nature of Service\nThe Service is a digital intangible product. Access to the Service is granted immediately upon payment confirmation. Due to the instant delivery nature of digital services, refunds are subject to specific limitations as detailed in Section 7.\n\n2.3 Third-Party AI Model Dependency\nThe Service uses third-party AI model providers, including OpenAI (gpt-image), Google Gemini, Suno, and Creem. The performance and availability of the Service may be affected by the operational status of these providers. Major disruptions will be communicated to users promptly."
+        "content": "2.1 What We Provide\nLoveShow provides an AI technology-powered platform that enables users to create AI ID photos, AI portraits, AI couple photos, AI love songs, romantic copywriting, emotional analysis, love memoirs, and AI image editing. The Service is a digital Software-as-a-Service (SaaS) product delivered over the internet.\n\n2.2 Nature of Service\nThe Service is a digital intangible product. Access to the Service is granted immediately upon payment confirmation. Due to the instant delivery nature of digital services, refunds are subject to specific limitations as detailed in Section 7.\n\n2.3 Third-Party AI and Safety Services\nThe Service uses third-party AI models and content-safety services, including OpenAI (gpt-image), Google Gemini, Suno, and Waffo Pancake Content Safety. Service performance and availability may be affected by the operational status of these providers. Major disruptions will be communicated to users promptly."
       },
       "account": {
         "title": "3. Account Registration",
@@ -1415,7 +1415,7 @@
             "title": "Platform Content Moderation Process (Summary)",
             "intro": "We enforce this policy through a multi-layered moderation system that combines automated review and human review:",
             "items": [
-              "Automated review (real time): before generation, the Creem Content Moderation API scans prompts, instructions, and generation intent. Outputs are also subject to the safety controls of our underlying model providers and LoveShow's content rules. Denied or flagged requests and outputs are blocked, withheld, or access-restricted.",
+              "Automated review (real time): before generation, the Waffo Pancake Content Safety scan-prompt API scans prompts, instructions, and generation intent; only action=allow proceeds. action=review, action=block, service degradation, or request failure is blocked by fail-closed protection. Outputs are also subject to the safety controls of our underlying model providers and LoveShow's content rules.",
               "Human review: staff assess high-risk requests flagged by automated systems, user reports, intellectual-property complaints, and suspicious account activity, including relevant inputs and outputs, context, request records, and evidence of rights.",
               "Periodic sampling: at least monthly, we sample moderation records and resolved cases to evaluate accuracy and improve rules, filters, and enforcement procedures. See the separate AUP page for the complete workflow, severity levels, response times, and appeals process."
             ]

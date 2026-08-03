@@ -30,7 +30,7 @@
 ### 4. Compliance & Content Safety
 - ✅ Real support email: noreply@loveshow.life
 - ✅ Acceptable Use Policy with NSFW prohibition
-- ✅ Creem moderation integration (later removed per user request)
+- ✅ Waffo Pancake scan-prompt integration before every AI generation flow
 - ✅ Admin user management endpoint
 
 ### 5. SEO Optimization

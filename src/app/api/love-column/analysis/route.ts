@@ -49,7 +49,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'missing_metAt' }, { status: 400 });
   }
 
-  // Creem moderation: screen user-supplied notes BEFORE charging or calling
+  // Waffo scan-prompt: screen user-supplied notes before charging or calling
   // the analysis model.
   const moderation = await moderatePrompt({
     prompt: combineUserText([metAt, extraNote]),

@@ -79,7 +79,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'invalid_timeline' }, { status: 400 });
   }
 
-  // Creem moderation: screen ALL user-supplied free text (title, timeline
+  // Waffo scan-prompt: screen all user-supplied free text (title, timeline
   // events, chat excerpt, extra note) BEFORE persisting photos, charging, or
   // calling the text model.
   const moderation = await moderatePrompt({

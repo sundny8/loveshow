@@ -1,190 +1,359 @@
 /**
- * Creem Content Moderation API integration.
+ * Waffo Pancake Content Safety integration.
  *
- * Required by Creem for all AI image/video/audio generation platforms.
- * Every user-supplied prompt routed to a generation model must be screened
- * BEFORE the model runs. See:
- *   https://docs.creem.io/features/moderation
- *   https://docs.creem.io/api-reference/endpoint/screen-prompt
+ * Every prompt or textual generation intent must be scanned before billing or
+ * model invocation. Only an explicit `allow` verdict may continue. `review`,
+ * `block`, malformed responses, timeouts, and configuration errors fail closed.
  *
- * Behavior contract (per Creem guidelines):
- *   - Call before any billing or model invocation
- *   - Treat both `deny` and `flag` as block
- *   - Fail closed on network / 5xx / timeout (do NOT generate)
- *   - 5s timeout
- *   - external_id pattern: `user_<userId>:<kind>` for auditing
+ * Docs:
+ * https://docs.waffo.ai/zh/api-reference/endpoints/content-safety/scan-prompt
  */
 
+import { createHash, sign } from 'node:crypto';
 import { NextResponse } from 'next/server';
 
-const CREEM_API_BASE = process.env.CREEM_API_BASE || 'https://api.creem.io';
-const CREEM_API_KEY = process.env.CREEM_API_KEY;
+const WAFFO_API_BASE = process.env.WAFFO_API_BASE || 'https://api.waffo.ai';
+const WAFFO_SCAN_PATH = '/v1/actions/verification/scan-prompt';
+const WAFFO_MERCHANT_ID = process.env.WAFFO_MERCHANT_ID;
+const WAFFO_PRIVATE_KEY = process.env.WAFFO_PRIVATE_KEY?.replace(/\\n/g, '\n');
+const WAFFO_SEMANTIC_MODE = parseSemanticMode(
+  process.env.WAFFO_CONTENT_SAFETY_SEMANTIC
+);
 
-// Allow dev-time bypass so local development without a Creem key still works.
-// In production a missing key MUST fail closed (treat as moderation outage).
+const MAX_PROMPT_LENGTH = 10_000;
+const REQUEST_TIMEOUT_MS = 5_000;
+const MAX_ATTEMPTS = 4;
+const RETRY_DELAYS_MS = [5_000, 10_000, 20_000] as const;
+
+// Local development remains usable without production credentials. Production
+// always fails closed when Waffo credentials are missing or invalid.
 const ALLOW_DEV_BYPASS = process.env.NODE_ENV !== 'production';
 
-export type ModerationDecision = 'allow' | 'deny' | 'flag';
+export type ModerationDecision = 'allow' | 'review' | 'block';
+export type ModerationErrorCode =
+  | 'prompt_rejected'
+  | 'prompt_too_long'
+  | 'moderation_review'
+  | 'moderation_unavailable';
+
+type WaffoSemanticMode = 'off' | 'shadow' | 'enforce';
+type WaffoLocale = 'ja' | 'en' | 'zh';
+
+interface WaffoVerdict {
+  action?: ModerationDecision;
+  reasonCode?: string;
+  matchedCategories?: string[];
+  requestId?: string;
+  semanticStatus?: string;
+}
+
+interface WaffoApiResponse {
+  data?: WaffoVerdict | null;
+  errors?: Array<{ message?: string }>;
+}
 
 export interface ModerationResult {
-  /** true means it's safe for the caller to proceed with generation. */
+  /** true means Waffo explicitly returned action=allow. */
   ok: boolean;
-  /** Raw decision from Creem; null when the call did not complete. */
   decision: ModerationDecision | null;
-  /** Failure mode for the caller to map to an HTTP response. */
-  errorCode?: 'prompt_rejected' | 'moderation_unavailable';
-  /** Echoed external_id, useful for support correlation. */
+  errorCode?: ModerationErrorCode;
   externalId?: string;
-  /** Creem moderation result id, useful for support correlation. */
+  /** Waffo request id, retained under the old field name for API compatibility. */
   moderationId?: string;
+  requestId?: string;
+  reasonCode?: string;
+  matchedCategories?: string[];
+  semanticStatus?: string;
 }
 
 export interface ModeratePromptInput {
-  /** The full user-supplied text to screen. Empty/whitespace is treated as ok. */
+  /** User text or a textual description of an image/audio generation intent. */
   prompt: string;
-  /** Identifier for auditing, e.g. `user_${userId}:copy`. */
+  /** Local correlation id used in logs; Waffo does not receive this value. */
   externalId?: string;
+  /** Optional language hint supported by Waffo. */
+  locale?: WaffoLocale;
+}
+
+function parseSemanticMode(value?: string): WaffoSemanticMode {
+  if (value === 'off' || value === 'shadow' || value === 'enforce') {
+    return value;
+  }
+  return 'enforce';
+}
+
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function signedHeaders(body: string) {
+  if (!WAFFO_MERCHANT_ID || !WAFFO_PRIVATE_KEY) {
+    throw new Error('waffo_credentials_missing');
+  }
+
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const bodyHash = createHash('sha256').update(body).digest('base64');
+  const canonicalRequest = [
+    'POST',
+    WAFFO_SCAN_PATH,
+    timestamp,
+    bodyHash,
+  ].join('\n');
+  const signature = sign(
+    'sha256',
+    Buffer.from(canonicalRequest),
+    WAFFO_PRIVATE_KEY
+  ).toString('base64');
+
+  return {
+    'Content-Type': 'application/json',
+    'X-Merchant-Id': WAFFO_MERCHANT_ID,
+    'X-Timestamp': timestamp,
+    'X-Signature': signature,
+  };
+}
+
+function unavailableResult(externalId?: string): ModerationResult {
+  return {
+    ok: false,
+    decision: null,
+    errorCode: 'moderation_unavailable',
+    externalId,
+  };
 }
 
 /**
- * Screen a user prompt against Creem's content policies.
- *
- * @returns A ModerationResult — caller must check `ok` and route accordingly.
- *          On `ok=false`, use `moderationErrorResponse()` to build the reply.
+ * Scan a prompt with Waffo before any generation or credit deduction.
  */
 export async function moderatePrompt({
   prompt,
   externalId,
+  locale,
 }: ModeratePromptInput): Promise<ModerationResult> {
   const trimmed = (prompt ?? '').trim();
+
+  // There is no user-controlled text to send. Image-only routes supply a
+  // non-empty textual generation intent, so they still pass through Waffo.
   if (!trimmed) {
-    // No user-supplied free text to screen → trivially safe.
-    return { ok: true, decision: null, externalId };
+    return { ok: true, decision: 'allow', externalId, reasonCode: 'empty_input' };
   }
 
-  if (!CREEM_API_KEY) {
+  if (trimmed.length > MAX_PROMPT_LENGTH) {
+    return {
+      ok: false,
+      decision: null,
+      errorCode: 'prompt_too_long',
+      externalId,
+      reasonCode: 'prompt_too_long',
+    };
+  }
+
+  if (!WAFFO_MERCHANT_ID || !WAFFO_PRIVATE_KEY) {
     if (ALLOW_DEV_BYPASS) {
       console.warn(
-        '[moderation] CREEM_API_KEY missing — bypassing in non-production. ' +
-          'Set CREEM_API_KEY in your environment before deploying.'
+        '[moderation] Waffo credentials missing; bypassing only in non-production'
       );
-      return { ok: true, decision: null, externalId };
-    }
-    console.error('[moderation] CREEM_API_KEY missing in production — failing closed');
-    return {
-      ok: false,
-      decision: null,
-      errorCode: 'moderation_unavailable',
-      externalId,
-    };
-  }
-
-  try {
-    const res = await fetch(`${CREEM_API_BASE}/v1/moderation/prompt`, {
-      method: 'POST',
-      headers: {
-        'x-api-key': CREEM_API_KEY,
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        prompt: trimmed,
-        external_id: externalId,
-      }),
-      signal: AbortSignal.timeout(5_000),
-    });
-
-    if (!res.ok) {
-      console.error('[moderation] non-2xx from Creem:', res.status);
       return {
-        ok: false,
-        decision: null,
-        errorCode: 'moderation_unavailable',
+        ok: true,
+        decision: 'allow',
         externalId,
+        reasonCode: 'development_bypass',
       };
     }
 
-    const data = (await res.json()) as {
-      id?: string;
-      decision?: ModerationDecision;
-    };
-    const decision = data?.decision;
-    const moderationId = data?.id;
-
-    if (decision === 'allow') {
-      return { ok: true, decision: 'allow', externalId, moderationId };
-    }
-    if (decision === 'deny' || decision === 'flag') {
-      console.warn('[moderation] blocked', { decision, externalId, moderationId });
-      return {
-        ok: false,
-        decision,
-        errorCode: 'prompt_rejected',
-        externalId,
-        moderationId,
-      };
-    }
-
-    // Unknown / missing decision → fail closed. Per Creem docs we should
-    // ignore unknown FIELDS (forward-compat) but unknown DECISION VALUES
-    // should be treated as not-allowed.
-    console.warn('[moderation] unknown decision value', { decision, externalId });
-    return {
-      ok: false,
-      decision: null,
-      errorCode: 'moderation_unavailable',
-      externalId,
-      moderationId,
-    };
-  } catch (err: any) {
-    // Timeout, abort, network — fail closed.
-    console.error('[moderation] call failed:', err?.message || err);
-    return {
-      ok: false,
-      decision: null,
-      errorCode: 'moderation_unavailable',
-      externalId,
-    };
+    console.error('[moderation] Waffo credentials missing in production');
+    return unavailableResult(externalId);
   }
+
+  const payload: {
+    prompt: string;
+    semantic: WaffoSemanticMode;
+    locale?: WaffoLocale;
+  } = {
+    prompt: trimmed,
+    semantic: WAFFO_SEMANTIC_MODE,
+  };
+  if (locale) payload.locale = locale;
+  const body = JSON.stringify(payload);
+
+  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt += 1) {
+    let headers: ReturnType<typeof signedHeaders>;
+    try {
+      headers = signedHeaders(body);
+    } catch (error) {
+      console.error('[moderation] Waffo request signing failed', {
+        externalId,
+        message: error instanceof Error ? error.message : String(error),
+      });
+      return unavailableResult(externalId);
+    }
+
+    try {
+      const response = await fetch(`${WAFFO_API_BASE}${WAFFO_SCAN_PATH}`, {
+        method: 'POST',
+        headers,
+        body,
+        signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+        cache: 'no-store',
+      });
+
+      if (response.status >= 500 && attempt < MAX_ATTEMPTS - 1) {
+        console.warn('[moderation] Waffo 5xx; retrying', {
+          status: response.status,
+          attempt: attempt + 1,
+          externalId,
+        });
+        await delay(RETRY_DELAYS_MS[attempt]);
+        continue;
+      }
+
+      if (!response.ok) {
+        // Waffo specifies no retry for 4xx. Authentication and malformed
+        // responses fail closed so no prompt reaches a generation model.
+        console.error('[moderation] Waffo non-2xx response', {
+          status: response.status,
+          externalId,
+        });
+        return unavailableResult(externalId);
+      }
+
+      const result = (await response.json()) as WaffoApiResponse;
+      const verdict = result.data;
+      const decision = verdict?.action;
+      const requestId = verdict?.requestId;
+      const common = {
+        externalId,
+        moderationId: requestId,
+        requestId,
+        reasonCode: verdict?.reasonCode,
+        matchedCategories: verdict?.matchedCategories,
+        semanticStatus: verdict?.semanticStatus,
+      };
+
+      if (decision === 'allow') {
+        return { ok: true, decision, ...common };
+      }
+
+      if (decision === 'block') {
+        console.warn('[moderation] Waffo blocked generation', {
+          externalId,
+          requestId,
+          reasonCode: verdict?.reasonCode,
+          matchedCategories: verdict?.matchedCategories,
+        });
+        return {
+          ok: false,
+          decision,
+          errorCode: 'prompt_rejected',
+          ...common,
+        };
+      }
+
+      if (decision === 'review') {
+        console.warn('[moderation] Waffo requires review', {
+          externalId,
+          requestId,
+          reasonCode: verdict?.reasonCode,
+        });
+        return {
+          ok: false,
+          decision,
+          errorCode: 'moderation_review',
+          ...common,
+        };
+      }
+
+      console.error('[moderation] Waffo returned an unknown verdict', {
+        externalId,
+        responseErrors: result.errors?.map((error) => error.message),
+      });
+      return unavailableResult(externalId);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+
+      if (attempt < MAX_ATTEMPTS - 1) {
+        console.warn('[moderation] Waffo request failed; retrying', {
+          attempt: attempt + 1,
+          externalId,
+          message,
+        });
+        await delay(RETRY_DELAYS_MS[attempt]);
+        continue;
+      }
+
+      console.error('[moderation] Waffo request failed closed', {
+        externalId,
+        message,
+      });
+      return unavailableResult(externalId);
+    }
+  }
+
+  return unavailableResult(externalId);
 }
 
-/**
- * Concatenate multiple user-supplied fields into a single screening payload.
- * Empty / null / undefined parts are dropped.
- */
+/** Concatenate user-controlled text fields into one Waffo scan payload. */
 export function combineUserText(
   parts: Array<string | null | undefined>
 ): string {
   return parts
-    .filter((p): p is string => typeof p === 'string')
-    .map((p) => p.trim())
+    .filter((part): part is string => typeof part === 'string')
+    .map((part) => part.trim())
     .filter(Boolean)
     .join('\n\n');
 }
 
-/**
- * Build a NextResponse for a non-ok moderation result.
- * Caller does:
- *   if (!result.ok) return moderationErrorResponse(result);
- */
+/** Build the fail-closed API response consumed by generation routes. */
 export function moderationErrorResponse(result: ModerationResult): NextResponse {
   if (result.errorCode === 'prompt_rejected') {
     return NextResponse.json(
       {
         error: 'prompt_rejected',
         message:
-          '您的输入未通过内容安全审核，请修改后重试。Your input was rejected by our content safety screening. Please revise and try again.',
+          '您的输入未通过内容安全审核，请修改后重试。Your input did not pass content safety screening. Please revise it and try again.',
+        requestId: result.requestId,
         moderationId: result.moderationId,
       },
       { status: 400 }
     );
   }
-  // moderation_unavailable (network / 5xx / timeout / missing key in prod)
+
+  if (result.errorCode === 'prompt_too_long') {
+    return NextResponse.json(
+      {
+        error: 'prompt_too_long',
+        message:
+          '提示词不能超过 10,000 个字符。The prompt cannot exceed 10,000 characters.',
+      },
+      { status: 400 }
+    );
+  }
+
+  if (result.errorCode === 'moderation_review') {
+    return NextResponse.json(
+      {
+        error: 'moderation_review',
+        message:
+          '该请求需要进一步审核，请稍后重试。This request requires additional review. Please try again later.',
+        requestId: result.requestId,
+        moderationId: result.moderationId,
+      },
+      {
+        status: 503,
+        headers: { 'Retry-After': '3600' },
+      }
+    );
+  }
+
   return NextResponse.json(
     {
       error: 'moderation_unavailable',
       message:
-        '内容安全服务暂时不可用，请稍后重试。Content safety service is temporarily unavailable. Please try again in a moment.',
+        '内容安全服务暂时不可用，请稍后重试。Content safety service is temporarily unavailable. Please try again later.',
     },
-    { status: 503 }
+    {
+      status: 503,
+      headers: { 'Retry-After': '30' },
+    }
   );
 }

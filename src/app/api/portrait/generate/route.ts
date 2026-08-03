@@ -56,9 +56,7 @@ export async function POST(req: Request) {
 
     console.log('[portrait/generate] params', { styleId, gender, fileSize: file.size });
 
-    // Creem moderation: screen the generation intent BEFORE any billing or
-    // model invocation. Although inputs are enum-based (no free-text), Creem
-    // requires moderation on every image generation path.
+    // Waffo scan-prompt: screen the generation intent before billing/model use.
     const style = getPortraitStyle(styleId);
     const styleName = style?.name || styleId;
     const moderationPrompt = `Generate AI portrait photo: style=${styleName}, gender=${gender}`;
