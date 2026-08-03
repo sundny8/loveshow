@@ -3,11 +3,21 @@
 import { Link } from '@/i18n/routing';
 import { Camera, Mail } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+import { LegalText } from '@/components/legal/legal-text';
+
+const SUPPORT_EMAIL = ['noreply', 'loveshow.life'].join('@');
 
 export function Footer() {
   const t = useTranslations('footer');
   const currentYear = new Date().getFullYear();
-  const supportEmail = 'noreply@loveshow.life';
+  const [supportHref, setSupportHref] = useState<string>();
+
+  useEffect(() => {
+    // Add the mailto target after hydration so Cloudflare cannot rewrite it
+    // before compliance crawlers read the server-rendered page.
+    setSupportHref(`mailto:${SUPPORT_EMAIL}`);
+  }, []);
 
   return (
     <footer className="border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
@@ -25,11 +35,13 @@ export function Footer() {
               {t('brand.description')}
             </p>
             <a
-              href={`mailto:${supportEmail}`}
+              href={supportHref}
               className="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
             >
               <Mail className="h-4 w-4" />
-              <span>{supportEmail}</span>
+              <span>
+                <LegalText>{SUPPORT_EMAIL}</LegalText>
+              </span>
             </a>
           </div>
 
@@ -113,7 +125,7 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href={`mailto:${supportEmail}`}
+                  href={supportHref}
                   className="text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
                 >
                   {t('legal.contact')}

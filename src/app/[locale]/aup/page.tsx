@@ -1,5 +1,6 @@
 import { Footer } from '@/components/layout/footer';
 import { Header } from '@/components/layout/header';
+import { LegalText } from '@/components/legal/legal-text';
 import type { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
@@ -54,14 +55,16 @@ export default function AcceptableUsePolicyPage() {
                   key={paragraphIndex}
                   className="text-slate-600 dark:text-slate-300 mb-2 whitespace-pre-line"
                 >
-                  {paragraph}
+                  <LegalText>{paragraph}</LegalText>
                 </p>
               ))}
 
               {section.items && (
                 <ol className="list-decimal pl-6 space-y-2 text-slate-600 dark:text-slate-300">
                   {section.items.map((item, itemIndex) => (
-                    <li key={itemIndex}>{item}</li>
+                    <li key={itemIndex}>
+                      <LegalText>{item}</LegalText>
+                    </li>
                   ))}
                 </ol>
               )}
@@ -76,13 +79,15 @@ export default function AcceptableUsePolicyPage() {
                       key={paragraphIndex}
                       className="text-slate-600 dark:text-slate-300 mb-2 whitespace-pre-line"
                     >
-                      {paragraph}
+                      <LegalText>{paragraph}</LegalText>
                     </p>
                   ))}
                   {subsection.items && (
                     <ul className="list-disc pl-6 space-y-2 text-slate-600 dark:text-slate-300">
                       {subsection.items.map((item, itemIndex) => (
-                        <li key={itemIndex}>{item}</li>
+                        <li key={itemIndex}>
+                          <LegalText>{item}</LegalText>
+                        </li>
                       ))}
                     </ul>
                   )}

@@ -3,6 +3,7 @@ import { useNow } from "next-intl";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Link } from "@/i18n/routing";
+import { LegalText } from "@/components/legal/legal-text";
 
 const sectionKeys = [
   "acceptance",
@@ -55,18 +56,20 @@ export default function TermsPage() {
                 </h2>
                 {typeof section.content === "string" && (
                   <p className="text-slate-600 dark:text-slate-300 mb-2 whitespace-pre-line">
-                    {section.content}
+                    <LegalText>{section.content}</LegalText>
                   </p>
                 )}
                 {typeof section.intro === "string" && (
                   <p className="text-slate-600 dark:text-slate-300 mb-2">
-                    {section.intro}
+                    <LegalText>{section.intro}</LegalText>
                   </p>
                 )}
                 {Array.isArray(section.items) && (
                   <ul className="list-disc pl-6 space-y-1 text-slate-600 dark:text-slate-300">
                     {(section.items as string[]).map((item, i) => (
-                      <li key={i}>{item}</li>
+                      <li key={i}>
+                        <LegalText>{item}</LegalText>
+                      </li>
                     ))}
                   </ul>
                 )}
@@ -82,13 +85,15 @@ export default function TermsPage() {
                       <h3 className="text-lg font-semibold mb-2">{sub.title}</h3>
                       {sub.intro && (
                         <p className="text-slate-600 dark:text-slate-300 mb-2">
-                          {sub.intro}
+                          <LegalText>{sub.intro}</LegalText>
                         </p>
                       )}
                       {Array.isArray(sub.items) && (
                         <ul className="list-disc pl-6 space-y-1 text-slate-600 dark:text-slate-300">
                           {sub.items.map((item, j) => (
-                            <li key={j}>{item}</li>
+                            <li key={j}>
+                              <LegalText>{item}</LegalText>
+                            </li>
                           ))}
                         </ul>
                       )}
@@ -96,17 +101,17 @@ export default function TermsPage() {
                   ))}
                 {typeof section.moderation === "string" && (
                   <p className="text-slate-600 dark:text-slate-300 mt-2">
-                    {section.moderation}
+                    <LegalText>{section.moderation}</LegalText>
                   </p>
                 )}
                 {typeof section.report === "string" && (
                   <p className="text-slate-600 dark:text-slate-300 mt-2">
-                    {section.report}
+                    <LegalText>{section.report}</LegalText>
                   </p>
                 )}
                 {typeof section.moderationProcess === "string" && (
                   <p className="text-slate-600 dark:text-slate-300 mt-2">
-                    {section.moderationProcess}
+                    <LegalText>{section.moderationProcess}</LegalText>
                   </p>
                 )}
               </section>
