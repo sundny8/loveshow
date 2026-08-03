@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { useNow } from "next-intl";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { Link } from "@/i18n/routing";
 
 const sectionKeys = [
   "acceptance",
@@ -34,6 +35,15 @@ export default function TermsPage() {
         <p className="text-sm text-slate-500 dark:text-slate-400 mb-8">
           {t("lastUpdated")}: {now.toLocaleDateString()}
         </p>
+        <aside className="mb-8 rounded-lg border border-violet-200 bg-violet-50 px-4 py-3 text-sm text-slate-700 dark:border-violet-900 dark:bg-violet-950/30 dark:text-slate-200">
+          {t("aupNotice")}{" "}
+          <Link
+            href="/aup"
+            className="font-medium text-violet-700 underline underline-offset-2 dark:text-violet-300"
+          >
+            {t("aupLink")}
+          </Link>
+        </aside>
         <div className="prose dark:prose-invert max-w-none space-y-8">
           {sectionKeys.map((key) => {
             const section = t.raw(`sections.${key}`) as Record<string, unknown>;

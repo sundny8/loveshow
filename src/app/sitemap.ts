@@ -29,6 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/gallery', priority: 0.6, changefreq: 'weekly' },
     { path: '/privacy', priority: 0.3, changefreq: 'yearly' },
     { path: '/terms', priority: 0.3, changefreq: 'yearly' },
+    { path: '/aup', priority: 0.3, changefreq: 'yearly' },
   ];
 
   const now = new Date();

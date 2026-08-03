@@ -107,6 +107,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/aup" className="text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
+                  {t('legal.aup')}
+                </Link>
+              </li>
+              <li>
                 <a
                   href={`mailto:${supportEmail}`}
                   className="text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"

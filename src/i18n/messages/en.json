@@ -493,6 +493,7 @@
       "title": "Legal",
       "privacy": "Privacy Policy",
       "terms": "Terms of Service",
+      "aup": "Acceptable Use Policy",
       "contact": "Contact Support"
     },
     "copyright": "© {year} LoveShow. All rights reserved."
@@ -1224,9 +1225,124 @@
       }
     }
   },
+  "aup": {
+    "title": "Acceptable Use Policy (AUP) — AI-Generated Content",
+    "lastUpdated": "Last updated: August 3, 2026",
+    "intro": "LoveShow is committed to providing safe, lawful, and responsible AI content-generation services. This policy applies to all content generated, edited, submitted, distributed, or stored through LoveShow and explains our content standards, platform moderation process, reporting process, and enforcement measures. Every user must follow this policy, which forms part of our Terms of Service.",
+    "sections": [
+      {
+        "title": "1. Scope",
+        "paragraphs": [
+          "This policy applies to every LoveShow AI feature and to the related inputs and outputs."
+        ],
+        "items": [
+          "Text: prompts, instructions, copy, analyses, and other AI-generated text.",
+          "Images: uploaded reference images and AI-generated or edited photos, portraits, and illustrations.",
+          "Audio: user inputs, AI-generated lyrics, music, and other audio content.",
+          "Account and usage activity: generation requests, sharing behavior, and attempts to evade safety measures."
+        ]
+      },
+      {
+        "title": "2. Content Standards and Six Prohibited Categories",
+        "paragraphs": [
+          "LoveShow expressly prohibits using the Service to generate, edit, upload, distribute, or store any of the following six categories. Each category applies to all AI image, image-editing, text, and music features."
+        ],
+        "items": [
+          "Pornography / NSFW content: pornography, explicit sexual activity, nudity, sexually suggestive material, sexual solicitation, or other adult content.",
+          "Violence / gore: graphic or extreme violence, abuse, self-harm, promotion of suicide, terrorism, or incitement of mass violence.",
+          "Hate speech: hatred, discrimination, degradation, harassment, or incitement to harm based on race, ethnicity, nationality, religion, sex, sexual orientation, disability, or another protected characteristic.",
+          "Child sexual abuse material and child-unsafe content (CSAM): any sexualization, nudity, grooming, exploitation, or abuse involving a minor, including fictional, synthetic, or edited content. We apply zero tolerance to this content.",
+          "Deepfakes / impersonation: using a real person's face, voice, or likeness without consent to create misleading or deceptive content, or impersonating an individual, brand, or organization.",
+          "Copyright / trademark infringement: generating, editing, or distributing content that uses a third party's copyrighted work, trademark, brand logo, character, patent, trade secret, or other intellectual property without authorization from the rights holder."
+        ]
+      },
+      {
+        "title": "2.1 Zero-Tolerance and Other Prohibited Conduct",
+        "paragraphs": [
+          "Child sexual exploitation, terrorism or extremism, instructions for weapons of mass destruction, incitement of genocide, and non-consensual sexual deepfakes of real people are zero-tolerance content. When identified, we immediately restrict access, preserve necessary evidence, and report to competent authorities where required by law."
+        ],
+        "items": [
+          "Generating or distributing fraud, illegal drugs, weapons, explosives, malware, or other unlawful content that endangers public safety.",
+          "Uploading or using photos, music, trademarks, works, personal information, or likenesses that you do not own or have permission to use.",
+          "Generating or spreading misinformation, or deceptively presenting AI-generated content as human-created.",
+          "Bulk-generating spam, harassment, phishing, fraudulent, or manipulative content.",
+          "Using jailbreak prompts or other methods to bypass content moderation, safety filters, access controls, or platform restrictions."
+        ]
+      },
+      {
+        "title": "3. Platform Content Moderation Process",
+        "paragraphs": [
+          "We use a layered system of automated screening, human review, and periodic sampling. Decisions consider context, potential harm, severity, repeat behavior, and applicable law."
+        ],
+        "subsections": [
+          {
+            "title": "3.1 Automated Review (Real Time)",
+            "items": [
+              "Input screening: before a generation model is called, the Creem Content Moderation API scans user prompts, instructions, and generation intent for semantic and safety risks. Requests that are denied or flagged do not proceed to generation.",
+              "Output screening: generated outputs are subject to the safety controls of our underlying mainstream model providers, including OpenAI gpt-image, Google Gemini, and Suno, and to LoveShow's content rules. Outputs detected or flagged as non-compliant are blocked, withheld, or access-restricted.",
+              "Abuse-pattern analysis: moderation outcomes and associated request identifiers are logged to identify repeat violations, automated abuse, and attempts to evade safety measures.",
+              "If the safety service is unavailable, production uses fail-closed protection: the request is blocked instead of bypassing moderation."
+            ]
+          },
+          {
+            "title": "3.2 Human Review and Report Assessment",
+            "items": [
+              "High-risk requests flagged by automated systems, user reports, intellectual-property complaints, and suspicious account activity may enter human review.",
+              "Reviewers assess this policy, the report, relevant inputs and outputs, request records, context, and evidence of rights while keeping the reporter's identity confidential.",
+              "If evidence is insufficient, we may request a content URL, generation job ID, screenshot, proof of ownership, or contact details. We do not impose an enforcement action solely on an unverified allegation.",
+              "At least monthly, we sample moderation records and resolved cases and use the findings to adjust rules, filters, and enforcement procedures."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "4. Reporting Mechanism and Reporting Channel",
+        "paragraphs": [
+          "To report content or conduct that violates this policy, email noreply@loveshow.life. This monitored channel accepts content-safety reports, urgent child-safety or terrorism reports, deepfake/impersonation complaints, and copyright or trademark infringement notices during our stated service hours.",
+          "Please include, where possible: the content or page URL, generation job ID, a description of the issue, and screenshots. A copyright or trademark notice should also identify the rights holder, provide evidence of ownership, identify the reported material, and include a good-faith statement. We keep reporter identities confidential, review reports independently and objectively, and record or restrict malicious or knowingly false reports."
+        ]
+      },
+      {
+        "title": "5. Classification, Response Times, and Review Workflow",
+        "paragraphs": [
+          "Our workflow is: report received → acknowledgement → initial classification → automated records and human review → enforcement decision → action → outcome notice. If a complex case requires more time, we will explain the delay."
+        ],
+        "items": [
+          "L1 Critical (child safety, terrorism, and similar risks): priority review with an initial action targeted within 24 hours; access may be blocked and authorities notified immediately where necessary.",
+          "L2 High Risk (serious infringement, non-consensual deepfakes, severe violence, or hate): initial response targeted within 1 business day and resolution within 3 business days.",
+          "L3 Medium Risk (general violations or repeated abuse): initial response targeted within 3 business days and resolution within 7 business days.",
+          "L4 Low Risk (minor issues or complaints with insufficient evidence): initial response targeted within 5 business days and resolution within 15 business days."
+        ]
+      },
+      {
+        "title": "6. Enforcement Actions",
+        "paragraphs": [
+          "After confirming a violation, we take one or more actions based on severity, reach, account history, and cooperation. Zero-tolerance content does not require a prior warning."
+        ],
+        "items": [
+          "Reject or block a generation request and notify the user that it violates the content policy.",
+          "Issue a warning and require deletion, modification, or cessation of distribution.",
+          "Remove content, withhold an output, or revoke access to a shared item.",
+          "Restrict features, reduce generation limits, or apply enhanced screening to future requests.",
+          "Temporarily suspend an account pending further review.",
+          "Permanently terminate the account and access to the Service.",
+          "Preserve necessary records and report to or cooperate with law enforcement, competent authorities, or relevant rights holders where legally required or an urgent safety risk exists."
+        ]
+      },
+      {
+        "title": "7. Appeals, Policy Updates, and Contact",
+        "paragraphs": [
+          "If you believe content or an account was acted on in error, email an appeal to noreply@loveshow.life within 15 days of notice. Include the account email, generation job or case ID, grounds for appeal, and supporting evidence. Where practicable, a person not involved in the original decision will review the appeal, with completion targeted within 10 business days; we will explain delays in complex cases.",
+          "We may update this policy to address changes in law, the product, or safety risks. Material changes will be announced on the website or sent to the registered email address. Continued use means acceptance of the updated policy. Content-safety, reporting, and appeals contact: noreply@loveshow.life."
+        ]
+      }
+    ]
+  },
   "terms": {
     "title": "Terms of Service",
     "lastUpdated": "Last updated",
+    "aupNotice": "AI image, image-editing, music, and text-generation features are also governed by our separate Acceptable Use Policy (AUP), which lists six prohibited categories, our platform moderation process, reporting channel, and enforcement actions.",
+    "aupLink": "Read the full AUP",
     "sections": {
       "acceptance": {
         "title": "1. Acceptance of Terms",
@@ -1274,7 +1390,7 @@
       },
       "acceptableUse": {
         "title": "10. Acceptable Use Policy",
-        "intro": "LoveShow is an AI-powered creative platform focused on romantic expression and couple memories. To keep the platform safe for everyone, the following six categories of content are strictly prohibited when using any AI generation feature (including AI image creation and editing, AI music, and AI text generation):",
+        "intro": "These rules apply together with the complete Acceptable Use Policy (AUP) published at https://loveshow.life/en/aup. To keep the platform safe for everyone, the following six categories of content are strictly prohibited when using any AI generation feature (including AI image creation and editing, AI music, and AI text generation):",
         "items": [
           "Pornography / NSFW Content: NSFW, sexually explicit, pornographic, suggestive, nude, or adult content of any kind.",
           "Violence / Gore: Gore, extreme violence, self-harm, suicide promotion, or terrorism-related content.",
@@ -1296,12 +1412,12 @@
             ]
           },
           {
-            "title": "Content Moderation Process",
+            "title": "Platform Content Moderation Process (Summary)",
             "intro": "We enforce this policy through a multi-layered moderation system that combines automated review and human review:",
             "items": [
-              "Automated review (real-time): every AI generation prompt is scanned with the Creem Content Moderation API before processing, and generated outputs are evaluated for policy compliance. Content flagged by our automated systems is blocked from generation.",
-              "Human review: content flagged by automated systems and content reported by users is manually reviewed by our staff.",
-              "Auditing: we maintain audit logs of all moderation actions and periodically sample generated content to evaluate and improve moderation accuracy."
+              "Automated review (real time): before generation, the Creem Content Moderation API scans prompts, instructions, and generation intent. Outputs are also subject to the safety controls of our underlying model providers and LoveShow's content rules. Denied or flagged requests and outputs are blocked, withheld, or access-restricted.",
+              "Human review: staff assess high-risk requests flagged by automated systems, user reports, intellectual-property complaints, and suspicious account activity, including relevant inputs and outputs, context, request records, and evidence of rights.",
+              "Periodic sampling: at least monthly, we sample moderation records and resolved cases to evaluate accuracy and improve rules, filters, and enforcement procedures. See the separate AUP page for the complete workflow, severity levels, response times, and appeals process."
             ]
           },
           {
