@@ -4,10 +4,12 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Check } from 'lucide-react';
 import { useSession } from '@/lib/auth-client';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { formatPlanPrice, USD_TO_CNY_RATE } from '@/lib/billing/price-display';
 
 export function PricingSection() {
   const { data: session } = useSession();
+  const locale = useLocale();
   const t = useTranslations('pricing');
   const paidHref = session ? '/dashboard/billing' : '/auth/signup';
   // Trial: signup if not logged-in, otherwise scroll to engines section to start creating
@@ -30,6 +32,9 @@ export function PricingSection() {
           <p className="text-lg text-slate-600 dark:text-slate-300">
             {t('description')}
           </p>
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+            {t('priceNote', { rate: USD_TO_CNY_RATE.toFixed(2) })}
+          </p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto items-stretch">
@@ -49,7 +54,7 @@ export function PricingSection() {
               )}
               <h3 className="text-lg font-semibold mb-2">{plan.name}</h3>
               <div className="flex items-baseline gap-2 mb-1">
-                <span className="text-4xl font-bold">{plan.price}</span>
+                <span className="text-4xl font-bold">{formatPlanPrice(plan.price, locale)}</span>
               </div>
               <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">
                 {plan.unit}

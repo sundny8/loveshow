@@ -7,17 +7,17 @@ import { eq, desc } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 import crypto from 'crypto';
 
-// LoveShow pricing tiers (zh CNY)
+// LoveShow pricing tiers (credits; payment plans are priced in USD)
 const PLAN_POINTS: Record<string, number> = {
-  creator: 400,
+  creator: 300,
   enthusiast: 700,
   studio: 1500,
 };
 
 const PLAN_SALTS: Record<string, string> = {
-  creator: '¥19.9',
-  enthusiast: '¥49.9',
-  studio: '¥99.9',
+  creator: 'USD 19.90',
+  enthusiast: 'USD 49.90',
+  studio: 'USD 99.90',
 };
 
 async function requireAdmin() {

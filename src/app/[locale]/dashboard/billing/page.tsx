@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Check, Loader2, ReceiptText, RefreshCw, Zap } from 'lucide-react';
 import Link from 'next/link';
+import { formatPlanPrice, formatUsdAmount, USD_TO_CNY_RATE } from '@/lib/billing/price-display';
 
 type PaidPlanKey = 'creator' | 'enthusiast' | 'studio';
 
@@ -178,12 +179,6 @@ export default function BillingPage() {
     }
   };
 
-  const formatCurrency = (amountCents: number, currency: string) =>
-    new Intl.NumberFormat(locale, {
-      style: 'currency',
-      currency,
-    }).format(amountCents / 100);
-
   const formatDate = (value: string | null) => {
     if (!value) return '—';
     return new Intl.DateTimeFormat(locale, {
@@ -250,6 +245,9 @@ export default function BillingPage() {
         <p className="text-slate-600 dark:text-slate-300">
           {t('subtitle')}
         </p>
+        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+          {t('priceNote', { rate: USD_TO_CNY_RATE.toFixed(2) })}
+        </p>
       </div>
 
       {paymentReturned && (
@@ -304,7 +302,7 @@ export default function BillingPage() {
               <CardDescription>{plan.unit}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col flex-1">
-              <p className="text-3xl font-bold mb-4">{plan.price}</p>
+              <p className="text-3xl font-bold mb-4">{formatPlanPrice(plan.price, locale)}</p>
               <ul className="space-y-2 mb-6 flex-1">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2 text-sm">
@@ -428,7 +426,7 @@ export default function BillingPage() {
                       </td>
                       <td className="py-3 px-4">
                         <span className="text-sm text-slate-700 dark:text-slate-200">
-                          {formatCurrency(order.amountCents, order.currency)}
+                          {formatUsdAmount(order.amountCents, locale)}
                         </span>
                       </td>
                       <td className="py-3 px-4">

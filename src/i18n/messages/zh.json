@@ -117,11 +117,12 @@
       "part2": "计费，不必订阅"
     },
     "description": "所有套餐均为一次性购买，积分永不过期。",
+    "priceNote": "套餐金额以美元结算，中文页面按 1 USD = {rate} CNY 换算显示。",
     "mostPopular": "最受欢迎",
     "plans": {
       "trial": {
         "name": "免费体验",
-        "price": "￥0",
+        "price": "$0",
         "unit": "注册即送 20 积分",
         "features": [
           "首次注册赠送 20 积分",
@@ -133,8 +134,8 @@
       },
       "creator": {
         "name": "创作者",
-        "price": "￥19.9",
-        "unit": "400 积分",
+        "price": "$19.90",
+        "unit": "300 积分",
         "features": [
           "全部免费体验功能",
           "批量上传最多 20 张",
@@ -145,7 +146,7 @@
       },
       "enthusiast": {
         "name": "发烧友",
-        "price": "￥49.9",
+        "price": "$49.90",
         "unit": "700 积分",
         "features": [
           "全部创作者功能",
@@ -157,7 +158,7 @@
       },
       "studio": {
         "name": "工作室",
-        "price": "￥99.9",
+        "price": "$99.90",
         "unit": "1500 积分",
         "features": [
           "全部发烧友功能",
@@ -331,6 +332,7 @@
       "status": "状态",
       "manage": "管理账单",
       "availablePlans": "可选套餐",
+      "priceNote": "套餐金额以美元结算，中文页面按 1 USD = {rate} CNY 换算显示。",
       "trialIncluded": "已包含",
       "refresh": "刷新",
       "signIn": {

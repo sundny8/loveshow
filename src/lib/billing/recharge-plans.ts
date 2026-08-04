@@ -1,7 +1,7 @@
 import 'server-only';
 
 export const RECHARGE_PLANS = {
-  creator: { name: 'Creator', amount: '19.90', amountCents: 1990, points: 400 },
+  creator: { name: 'Creator', amount: '19.90', amountCents: 1990, points: 300 },
   enthusiast: { name: 'Enthusiast', amount: '49.90', amountCents: 4990, points: 700 },
   studio: { name: 'Studio', amount: '99.90', amountCents: 9990, points: 1500 },
 } as const;

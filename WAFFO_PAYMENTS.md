@@ -33,7 +33,7 @@ The script creates:
 
 | Plan | Price | Points | Env variable |
 | --- | ---: | ---: | --- |
-| Creator | USD 19.90 | 400 | `WAFFO_PRODUCT_ID_CREATOR` |
+| Creator | USD 19.90 | 300 | `WAFFO_PRODUCT_ID_CREATOR` |
 | Enthusiast | USD 49.90 | 700 | `WAFFO_PRODUCT_ID_ENTHUSIAST` |
 | Studio | USD 99.90 | 1500 | `WAFFO_PRODUCT_ID_STUDIO` |
 

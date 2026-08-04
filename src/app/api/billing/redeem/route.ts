@@ -8,7 +8,7 @@ import { nanoid } from 'nanoid';
 
 const PLAN_POINTS: Record<string, number> = {
   starter: 140,
-  creator: 400,
+  creator: 300,
   enthusiast: 700,
   studio: 1500,
 };

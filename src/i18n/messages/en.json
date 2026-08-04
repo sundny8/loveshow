@@ -296,6 +296,7 @@
       "status": "Status",
       "manage": "Manage Billing",
       "availablePlans": "Available Plans",
+      "priceNote": "All plan amounts are settled in USD.",
       "trialIncluded": "Included",
       "refresh": "Refresh",
       "signIn": {
@@ -1027,6 +1028,7 @@
       "part2": ", No Subscription"
     },
     "description": "All plans are one-time purchases, credits never expire.",
+    "priceNote": "All plan amounts are settled in USD.",
     "mostPopular": "Most Popular",
     "plans": {
       "trial": {
@@ -1043,8 +1045,8 @@
       },
       "creator": {
         "name": "Creator",
-        "price": "$19.9",
-        "unit": "400 credits",
+        "price": "$19.90",
+        "unit": "300 credits",
         "features": [
           "All Free Trial features",
           "Batch upload up to 20 photos",
@@ -1055,7 +1057,7 @@
       },
       "enthusiast": {
         "name": "Enthusiast",
-        "price": "$49.9",
+        "price": "$49.90",
         "unit": "700 credits",
         "features": [
           "All Creator features",
@@ -1067,7 +1069,7 @@
       },
       "studio": {
         "name": "Studio",
-        "price": "$99.9",
+        "price": "$99.90",
         "unit": "1500 credits",
         "features": [
           "All Enthusiast features",
