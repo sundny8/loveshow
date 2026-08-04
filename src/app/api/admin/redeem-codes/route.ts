@@ -15,7 +15,7 @@ const PLAN_POINTS: Record<string, number> = {
 };
 
 const PLAN_SALTS: Record<string, string> = {
-  creator: 'USD 1.00',
+  creator: 'USD 19.90',
   enthusiast: 'USD 49.90',
   studio: 'USD 99.90',
 };
