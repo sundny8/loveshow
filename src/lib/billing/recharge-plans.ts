@@ -1,8 +1,7 @@
 import 'server-only';
 
 export const RECHARGE_PLANS = {
-  starter: { name: 'Starter', amount: '9.90', amountCents: 990, points: 140 },
-  creator: { name: 'Creator', amount: '29.90', amountCents: 2990, points: 400 },
+  creator: { name: 'Creator', amount: '19.90', amountCents: 1990, points: 400 },
   enthusiast: { name: 'Enthusiast', amount: '49.90', amountCents: 4990, points: 700 },
   studio: { name: 'Studio', amount: '99.90', amountCents: 9990, points: 1500 },
 } as const;
@@ -15,7 +14,6 @@ export function isRechargePlanKey(value: unknown): value is RechargePlanKey {
 
 export function getWaffoProductId(planKey: RechargePlanKey): string {
   const ids: Record<RechargePlanKey, string | undefined> = {
-    starter: process.env.WAFFO_PRODUCT_ID_STARTER,
     creator: process.env.WAFFO_PRODUCT_ID_CREATOR,
     enthusiast: process.env.WAFFO_PRODUCT_ID_ENTHUSIAST,
     studio: process.env.WAFFO_PRODUCT_ID_STUDIO,

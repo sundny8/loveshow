@@ -55,6 +55,7 @@ export async function POST(req: Request) {
       new URL(req.url).origin;
     const successUrl = new URL(`/${locale}/dashboard/billing`, configuredOrigin);
     successUrl.searchParams.set('payment', 'success');
+    successUrl.searchParams.set('order', orderId);
 
     const checkout = await waffo.checkout.authenticated.create({
       productId,

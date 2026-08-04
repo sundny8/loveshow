@@ -297,6 +297,7 @@
       "manage": "Manage Billing",
       "availablePlans": "Available Plans",
       "trialIncluded": "Included",
+      "refresh": "Refresh",
       "signIn": {
         "title": "Please Sign In",
         "description": "You need to be signed in to manage billing",
@@ -307,6 +308,17 @@
         "description": "Credits currently available on your account",
         "unit": "credits"
       },
+      "checkout": {
+        "opening": "Opening...",
+        "opened": "Checkout opened in a new tab.",
+        "ready": "Checkout is ready. Open it with the link below.",
+        "failed": "Unable to start checkout",
+        "openLink": "Open payment link"
+      },
+      "paymentReturn": {
+        "title": "Payment result returned",
+        "description": "If the payment completed, credits will be added after the Waffo callback confirms it. This page is refreshing your balance and order status automatically."
+      },
       "paymentMethod": {
         "title": "Payment Method",
         "description": "Manage your payment method",
@@ -315,12 +327,25 @@
       },
       "history": {
         "title": "Billing History",
-        "description": "Download your past invoices",
+        "description": "Real payment orders and credit fulfillment for this account",
         "invoice": "Invoice",
+        "order": "Order",
+        "plan": "Plan",
         "date": "Date",
         "amount": "Amount",
+        "credits": "Credits",
         "status": "Status",
-        "actions": "Actions"
+        "paidAt": "Paid At",
+        "paymentId": "Payment ID",
+        "actions": "Actions",
+        "loading": "Loading billing history...",
+        "emptyTitle": "No payment orders yet",
+        "emptyDesc": "Completed package purchases will appear here.",
+        "statuses": {
+          "pending": "Pending",
+          "paid": "Paid",
+          "failed": "Failed"
+        }
       },
       "qrcode": {
         "title": "Scan to Recharge",
@@ -1016,24 +1041,12 @@
         ],
         "cta": "Start Free"
       },
-      "starter": {
-        "name": "Starter",
-        "price": "$9.9",
-        "unit": "140 credits",
-        "features": [
-          "All Free Trial features",
-          "Enough for 1 custom song + 5 ID photos",
-          "Perfect for occasional use",
-          "Pay as you go, never expires"
-        ],
-        "cta": "Choose Starter"
-      },
       "creator": {
         "name": "Creator",
-        "price": "$29.9",
+        "price": "$19.9",
         "unit": "400 credits",
         "features": [
-          "All Starter features",
+          "All Free Trial features",
           "Batch upload up to 20 photos",
           "Works retained for 30 days",
           "Priority queue, shorter average time"

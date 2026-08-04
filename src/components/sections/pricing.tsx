@@ -15,7 +15,6 @@ export function PricingSection() {
 
   const plans = [
     { ...t.raw('plans.trial'), highlight: false, key: 'trial', href: trialHref },
-    { ...t.raw('plans.starter'), highlight: false, key: 'starter', href: paidHref },
     { ...t.raw('plans.creator'), highlight: false, key: 'creator', href: paidHref },
     { ...t.raw('plans.enthusiast'), highlight: true, key: 'enthusiast', href: paidHref },
     { ...t.raw('plans.studio'), highlight: false, key: 'studio', href: paidHref },
@@ -33,7 +32,7 @@ export function PricingSection() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto items-stretch">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto items-stretch">
           {plans.map((plan) => (
             <div
               key={plan.name}

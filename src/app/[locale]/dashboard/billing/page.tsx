@@ -1,17 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSession } from '@/lib/auth-client';
 import { useLocale, useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { CreditCard, Check, Zap, Download, Ticket, Loader2, QrCode, Copy, Smartphone, Check as CheckIcon } from 'lucide-react';
+import { Check, Loader2, ReceiptText, RefreshCw, Zap } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
 
-type PaidPlanKey = 'starter' | 'creator' | 'enthusiast' | 'studio';
+type PaidPlanKey = 'creator' | 'enthusiast' | 'studio';
 
 interface PlanItem {
   key: PaidPlanKey | 'trial';
@@ -23,24 +22,33 @@ interface PlanItem {
   highlight?: boolean;
 }
 
-const invoices = [
-  { id: 'INV-001', date: '2024-03-01', amount: '$29.00', status: 'Paid' },
-  { id: 'INV-002', date: '2024-02-01', amount: '$29.00', status: 'Paid' },
-  { id: 'INV-003', date: '2024-01-01', amount: '$29.00', status: 'Paid' },
-];
+interface BillingOrder {
+  id: string;
+  status: string;
+  amountCents: number;
+  currency: string;
+  planType: string | null;
+  planName: string;
+  expectedPoints: number | null;
+  creditedPoints: number | null;
+  externalTransactionId: string | null;
+  createdAt: string;
+  paidAt: string | null;
+  creditedAt: string | null;
+}
 
 export default function BillingPage() {
   const { data: session, isPending } = useSession();
   const locale = useLocale();
+  const searchParams = useSearchParams();
   const t = useTranslations('dashboard.billing');
   // Reuse homepage pricing copy so the plans stay in sync with the landing page
   const tPricing = useTranslations('pricing');
 
   const [points, setPoints] = useState<number | null>(null);
-  const [redeemCode, setRedeemCode] = useState('');
-  const [isRedeeming, setIsRedeeming] = useState(false);
-  const [redeemMessage, setRedeemMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-  const [linkCopied, setLinkCopied] = useState(false);
+  const [orders, setOrders] = useState<BillingOrder[]>([]);
+  const [isOrdersLoading, setIsOrdersLoading] = useState(false);
+  const [ordersError, setOrdersError] = useState<string | null>(null);
   const [checkoutPlan, setCheckoutPlan] = useState<PaidPlanKey | null>(null);
   const [checkoutMessage, setCheckoutMessage] = useState<{
     type: 'success' | 'error';
@@ -48,50 +56,92 @@ export default function BillingPage() {
     checkoutUrl?: string;
   } | null>(null);
 
-  const RECHARGE_URL = 'https://m.tb.cn/h.R3ZGx7S?tk=DjMk5ujFcNn MF278';
+  const paymentReturned = searchParams.get('payment') === 'success';
 
-  const handleCopyLink = async () => {
+  const fetchPoints = useCallback(async () => {
+    if (!session) return;
     try {
-      await navigator.clipboard.writeText(RECHARGE_URL);
-      setLinkCopied(true);
-      setTimeout(() => setLinkCopied(false), 1500);
-    } catch (e) {
-      console.error('copy failed:', e);
+      const res = await fetch('/api/user/points', { cache: 'no-store' });
+      const data = res.ok ? await res.json() : null;
+      if (data && typeof data.points === 'number') {
+        setPoints(data.points);
+      }
+    } catch {
+      // Keep the last known balance visible if a transient refresh fails.
     }
-  };
+  }, [session]);
+
+  const fetchOrders = useCallback(
+    async (silent = false) => {
+      if (!session) return;
+      if (!silent) setIsOrdersLoading(true);
+      setOrdersError(null);
+
+      try {
+        const res = await fetch('/api/billing/orders', { cache: 'no-store' });
+        const data = res.ok ? await res.json() : null;
+
+        if (!res.ok || !Array.isArray(data?.orders)) {
+          throw new Error(data?.error || 'Unable to load billing history');
+        }
+
+        setOrders(data.orders);
+      } catch (error) {
+        setOrdersError(error instanceof Error ? error.message : 'Unable to load billing history');
+      } finally {
+        if (!silent) setIsOrdersLoading(false);
+      }
+    },
+    [session]
+  );
+
+  const refreshBillingData = useCallback(
+    async (silent = false) => {
+      await Promise.all([fetchPoints(), fetchOrders(silent)]);
+    },
+    [fetchOrders, fetchPoints]
+  );
+
+  useEffect(() => {
+    void refreshBillingData();
+  }, [refreshBillingData]);
+
+  useEffect(() => {
+    if (!session || !paymentReturned) return;
+
+    let attempts = 0;
+    const intervalId = window.setInterval(() => {
+      attempts += 1;
+      void refreshBillingData(true);
+
+      if (attempts >= 30) {
+        window.clearInterval(intervalId);
+      }
+    }, 2000);
+
+    void refreshBillingData(true);
+
+    return () => window.clearInterval(intervalId);
+  }, [paymentReturned, refreshBillingData, session]);
 
   useEffect(() => {
     if (!session) return;
-    fetch('/api/user/points')
-      .then(r => r.ok ? r.json() : null)
-      .then(d => { if (d && typeof d.points === 'number') setPoints(d.points); })
-      .catch(() => {});
-  }, [session]);
 
-  const handleRedeem = async () => {
-    if (!redeemCode.trim()) return;
-    setIsRedeeming(true);
-    setRedeemMessage(null);
-    try {
-      const res = await fetch('/api/billing/redeem', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: redeemCode.trim() }),
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        setPoints(data.newBalance);
-        setRedeemCode('');
-        setRedeemMessage({ type: 'success', text: `兑换成功！获得 ${data.points} 积分，当前余额 ${data.newBalance} 积分` });
-      } else {
-        setRedeemMessage({ type: 'error', text: data.error || '兑换失败' });
-      }
-    } catch {
-      setRedeemMessage({ type: 'error', text: '兑换失败，请重试' });
-    } finally {
-      setIsRedeeming(false);
-    }
-  };
+    const refreshOnFocus = () => {
+      void refreshBillingData(true);
+    };
+    const refreshOnVisible = () => {
+      if (document.visibilityState === 'visible') refreshOnFocus();
+    };
+
+    window.addEventListener('focus', refreshOnFocus);
+    document.addEventListener('visibilitychange', refreshOnVisible);
+
+    return () => {
+      window.removeEventListener('focus', refreshOnFocus);
+      document.removeEventListener('visibilitychange', refreshOnVisible);
+    };
+  }, [refreshBillingData, session]);
 
   const handleCheckout = async (planKey: PaidPlanKey) => {
     setCheckoutPlan(planKey);
@@ -113,18 +163,55 @@ export default function BillingPage() {
       setCheckoutMessage({
         type: 'success',
         text: checkoutWindow
-          ? 'Checkout opened in a new tab.'
-          : 'Checkout is ready. Open it with the link below.',
+          ? t('checkout.opened')
+          : t('checkout.ready'),
         checkoutUrl: checkoutWindow ? undefined : data.checkoutUrl,
       });
+      void fetchOrders(true);
     } catch (error) {
       setCheckoutMessage({
         type: 'error',
-        text: error instanceof Error ? error.message : 'Unable to start checkout',
+        text: error instanceof Error ? error.message : t('checkout.failed'),
       });
     } finally {
       setCheckoutPlan(null);
     }
+  };
+
+  const formatCurrency = (amountCents: number, currency: string) =>
+    new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency,
+    }).format(amountCents / 100);
+
+  const formatDate = (value: string | null) => {
+    if (!value) return '—';
+    return new Intl.DateTimeFormat(locale, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(new Date(value));
+  };
+
+  const getPlanName = (order: BillingOrder) => {
+    if (!order.planType) return order.planName;
+    const pricingPlans = tPricing.raw('plans') as Record<string, { name?: string }>;
+    return pricingPlans[order.planType]?.name || order.planName;
+  };
+
+  const getStatusVariant = (status: string): 'success' | 'error' | 'secondary' => {
+    if (status === 'PAID') return 'success';
+    if (status === 'FAILED') return 'error';
+    return 'secondary';
+  };
+
+  const getStatusLabel = (status: string) => {
+    if (status === 'PAID') return t('history.statuses.paid');
+    if (status === 'FAILED') return t('history.statuses.failed');
+    if (status === 'PENDING') return t('history.statuses.pending');
+    return status;
   };
 
   if (isPending) {
@@ -151,7 +238,6 @@ export default function BillingPage() {
 
   const plans: PlanItem[] = [
     { ...tPricing.raw('plans.trial'), key: 'trial', highlight: false } as PlanItem,
-    { ...tPricing.raw('plans.starter'), key: 'starter', highlight: false } as PlanItem,
     { ...tPricing.raw('plans.creator'), key: 'creator', highlight: false } as PlanItem,
     { ...tPricing.raw('plans.enthusiast'), key: 'enthusiast', highlight: true } as PlanItem,
     { ...tPricing.raw('plans.studio'), key: 'studio', highlight: false } as PlanItem,
@@ -166,10 +252,17 @@ export default function BillingPage() {
         </p>
       </div>
 
+      {paymentReturned && (
+        <div className="mb-8 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/30 dark:text-emerald-300">
+          <p className="font-medium">{t('paymentReturn.title')}</p>
+          <p className="mt-1">{t('paymentReturn.description')}</p>
+        </div>
+      )}
+
       {/* Current Balance */}
       <Card className="mb-8 border-primary-200 dark:border-primary-800">
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4">
             <div>
               <CardTitle className="flex items-center gap-2">
                 <Zap className="h-5 w-5 text-primary-600" />
@@ -177,6 +270,10 @@ export default function BillingPage() {
               </CardTitle>
               <CardDescription>{t('balance.description')}</CardDescription>
             </div>
+            <Button variant="outline" size="sm" onClick={() => void refreshBillingData(true)}>
+              <RefreshCw className="h-4 w-4 mr-2" />
+              {t('refresh')}
+            </Button>
           </div>
         </CardHeader>
         <CardContent>
@@ -189,7 +286,7 @@ export default function BillingPage() {
 
       {/* Plans Comparison */}
       <h2 className="text-xl font-bold mb-4">{t('availablePlans')}</h2>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-8 items-stretch">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 items-stretch">
         {plans.map((plan) => (
           <Card
             key={plan.key}
@@ -225,7 +322,7 @@ export default function BillingPage() {
                 {checkoutPlan === plan.key ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                    Opening...
+                    {t('checkout.opening')}
                   </>
                 ) : plan.key === 'trial' ? (
                   t('trialIncluded')
@@ -253,189 +350,110 @@ export default function BillingPage() {
               rel="noopener noreferrer"
               className="mt-2 inline-flex underline underline-offset-4"
             >
-              Open Waffo checkout
+              {t('checkout.openLink')}
             </a>
           )}
         </div>
       )}
 
-      {/* QR Code Recharge */}
-      <Card className="mb-8 border-rose-200 dark:border-rose-800">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <QrCode className="h-5 w-5 text-rose-600" />
-            {t('qrcode.title')}
-          </CardTitle>
-          <CardDescription>{t('qrcode.description')}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col md:flex-row items-center gap-6">
-            {/* QR Code Image */}
-            <div className="flex flex-col items-center gap-3">
-              <div className="relative p-3 bg-white rounded-2xl shadow-md border border-rose-100 dark:border-rose-900/40">
-                <Image
-                  src="/qrcode/qrcode.jpg?v=2"
-                  alt="Recharge QR Code"
-                  width={200}
-                  height={200}
-                  className="rounded-lg object-contain"
-                  priority
-                  unoptimized
-                />
-              </div>
-              <div className="inline-flex items-center gap-1.5 text-sm font-medium text-rose-600 dark:text-rose-400">
-                <Smartphone className="h-4 w-4" />
-                {t('qrcode.scanHint')}
-              </div>
-            </div>
-
-            {/* Link Section */}
-            <div className="flex-1 w-full space-y-3">
-              <p className="text-sm text-slate-600 dark:text-slate-300">
-                {t('qrcode.linkLabel')}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <a
-                  href={RECHARGE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm font-mono text-slate-700 dark:text-slate-200 hover:border-rose-400 hover:text-rose-600 dark:hover:text-rose-400 transition-colors break-all"
-                >
-                  {RECHARGE_URL}
-                </a>
-                <Button
-                  onClick={handleCopyLink}
-                  variant="outline"
-                  className="min-w-[120px]"
-                >
-                  {linkCopied ? (
-                    <>
-                      <CheckIcon className="h-4 w-4 mr-2 text-emerald-500" />
-                      {t('qrcode.copied')}
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="h-4 w-4 mr-2" />
-                      {t('qrcode.copyLink')}
-                    </>
-                  )}
-                </Button>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Redeem Code */}
-      <Card className="mb-8 border-violet-200 dark:border-violet-800">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Ticket className="h-5 w-5 text-violet-600" />
-            {t('redeem.title')}
-          </CardTitle>
-          <CardDescription>{t('redeem.description')}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Input
-              placeholder={t('redeem.placeholder')}
-              value={redeemCode}
-              onChange={(e) => setRedeemCode(e.target.value)}
-              className="flex-1 font-mono"
-              disabled={isRedeeming}
-              onKeyDown={(e) => e.key === 'Enter' && handleRedeem()}
-            />
-            <Button
-              onClick={handleRedeem}
-              disabled={isRedeeming || !redeemCode.trim()}
-              className="min-w-[120px]"
-            >
-              {isRedeeming ? (
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              ) : (
-                <Ticket className="h-4 w-4 mr-2" />
-              )}
-              {isRedeeming ? t('redeem.redeeming') : t('redeem.button')}
-            </Button>
-          </div>
-          {redeemMessage && (
-            <p className={`mt-3 text-sm ${redeemMessage.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
-              {redeemMessage.text}
-            </p>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Payment Method */}
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CreditCard className="h-5 w-5" />
-            {t('paymentMethod.title')}
-          </CardTitle>
-          <CardDescription>{t('paymentMethod.description')}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200 dark:border-slate-700">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-8 bg-gradient-to-r from-blue-600 to-blue-400 rounded flex items-center justify-center text-white text-xs font-bold">
-                VISA
-              </div>
-              <div>
-                <p className="font-medium">•••• •••• •••• 4242</p>
-                <p className="text-sm text-slate-500">{t('paymentMethod.expires', { date: '12/2025' })}</p>
-              </div>
-            </div>
-            <Button variant="outline" size="sm">
-              {t('paymentMethod.update')}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Billing History */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Download className="h-5 w-5" />
-            {t('history.title')}
-          </CardTitle>
-          <CardDescription>{t('history.description')}</CardDescription>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <ReceiptText className="h-5 w-5" />
+                {t('history.title')}
+              </CardTitle>
+              <CardDescription>{t('history.description')}</CardDescription>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => void fetchOrders()}
+              disabled={isOrdersLoading}
+            >
+              {isOrdersLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+              ) : (
+                <RefreshCw className="h-4 w-4 mr-2" />
+              )}
+              {t('refresh')}
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
+          {ordersError && (
+            <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300">
+              {ordersError}
+            </div>
+          )}
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-slate-200 dark:border-slate-700">
-                  <th className="text-left py-3 px-4 text-sm font-medium text-slate-500">{t('history.invoice')}</th>
-                  <th className="text-left py-3 px-4 text-sm font-medium text-slate-500">{t('history.date')}</th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-slate-500">{t('history.order')}</th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-slate-500">{t('history.plan')}</th>
                   <th className="text-left py-3 px-4 text-sm font-medium text-slate-500">{t('history.amount')}</th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-slate-500">{t('history.credits')}</th>
                   <th className="text-left py-3 px-4 text-sm font-medium text-slate-500">{t('history.status')}</th>
-                  <th className="text-right py-3 px-4 text-sm font-medium text-slate-500">{t('history.actions')}</th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-slate-500">{t('history.paidAt')}</th>
+                  <th className="text-left py-3 px-4 text-sm font-medium text-slate-500">{t('history.paymentId')}</th>
                 </tr>
               </thead>
               <tbody>
-                {invoices.map((invoice) => (
-                  <tr key={invoice.id} className="border-b border-slate-100 dark:border-slate-800">
-                    <td className="py-3 px-4">
-                      <span className="text-sm font-medium">{invoice.id}</span>
-                    </td>
-                    <td className="py-3 px-4">
-                      <span className="text-sm text-slate-600 dark:text-slate-300">{invoice.date}</span>
-                    </td>
-                    <td className="py-3 px-4">
-                      <span className="text-sm text-slate-600 dark:text-slate-300">{invoice.amount}</span>
-                    </td>
-                    <td className="py-3 px-4">
-                      <Badge variant="success">{invoice.status}</Badge>
-                    </td>
-                    <td className="py-3 px-4 text-right">
-                      <Button variant="ghost" size="sm">
-                        <Download className="h-4 w-4" />
-                      </Button>
+                {isOrdersLoading ? (
+                  <tr>
+                    <td colSpan={7} className="py-10 text-center text-sm text-slate-500">
+                      <Loader2 className="mx-auto mb-3 h-5 w-5 animate-spin" />
+                      {t('history.loading')}
                     </td>
                   </tr>
-                ))}
+                ) : orders.length === 0 ? (
+                  <tr>
+                    <td colSpan={7} className="py-10 text-center text-sm text-slate-500">
+                      <p className="font-medium text-slate-700 dark:text-slate-200">{t('history.emptyTitle')}</p>
+                      <p className="mt-1">{t('history.emptyDesc')}</p>
+                    </td>
+                  </tr>
+                ) : (
+                  orders.map((order) => (
+                    <tr key={order.id} className="border-b border-slate-100 dark:border-slate-800">
+                      <td className="py-3 px-4">
+                        <span className="text-sm font-medium">{order.id.slice(0, 8)}</span>
+                        <span className="block text-xs text-slate-500">{formatDate(order.createdAt)}</span>
+                      </td>
+                      <td className="py-3 px-4">
+                        <span className="text-sm text-slate-700 dark:text-slate-200">{getPlanName(order)}</span>
+                      </td>
+                      <td className="py-3 px-4">
+                        <span className="text-sm text-slate-700 dark:text-slate-200">
+                          {formatCurrency(order.amountCents, order.currency)}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4">
+                        <span className="text-sm text-slate-700 dark:text-slate-200">
+                          {order.creditedPoints ?? order.expectedPoints ?? '—'}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4">
+                        <Badge variant={getStatusVariant(order.status)}>
+                          {getStatusLabel(order.status)}
+                        </Badge>
+                      </td>
+                      <td className="py-3 px-4">
+                        <span className="text-sm text-slate-600 dark:text-slate-300">
+                          {formatDate(order.paidAt || order.creditedAt)}
+                        </span>
+                      </td>
+                      <td className="py-3 px-4">
+                        <span className="block max-w-[220px] truncate font-mono text-xs text-slate-500">
+                          {order.externalTransactionId || '—'}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

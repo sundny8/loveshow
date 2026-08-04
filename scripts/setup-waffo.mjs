@@ -1,8 +1,7 @@
 import { TaxCategory, WaffoPancake, WebhookEventType } from '@waffo/pancake-ts';
 
 const plans = {
-  starter: { name: 'Starter', amount: '9.90', points: 140 },
-  creator: { name: 'Creator', amount: '29.90', points: 400 },
+  creator: { name: 'Creator', amount: '19.90', points: 400 },
   enthusiast: { name: 'Enthusiast', amount: '49.90', points: 700 },
   studio: { name: 'Studio', amount: '99.90', points: 1500 },
 };
