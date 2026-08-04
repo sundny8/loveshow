@@ -5,7 +5,7 @@ import { useSession } from '@/lib/auth-client';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Bell, Mail, Shield, Megaphone, Package, CreditCard, Save, Loader2 } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 
 const notificationSettings = [
   {

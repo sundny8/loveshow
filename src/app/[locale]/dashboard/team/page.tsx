@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar } from '@/components/ui/avatar';
 import { Modal } from '@/components/ui/modal';
 import { Users, UserPlus, Mail, MoreVertical, Shield, Crown, Eye, User } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 
 // Sample team data (in production, this would come from database)
 const teamMembers = [

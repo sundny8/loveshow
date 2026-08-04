@@ -4,7 +4,7 @@ import { useSession } from '@/lib/auth-client';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BarChart3, Users, Eye, MousePointer, TrendingUp, Clock } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 
 // Sample analytics data (in production, this would come from Posthog API)
 const analyticsData = {

@@ -8,7 +8,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Check, Loader2, ReceiptText, RefreshCw, Zap } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { formatPlanPrice, formatUsdAmount, USD_TO_CNY_RATE } from '@/lib/billing/price-display';
 
 type PaidPlanKey = 'creator' | 'enthusiast' | 'studio';

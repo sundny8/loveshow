@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link, useRouter } from '@/i18n/routing';
 import { 
   Building2, 
   Users, 
@@ -64,6 +64,7 @@ export default function OrganizationSettingsPage({
   params: Promise<{ id: string }>;
 }) {
   const resolvedParams = use(params);
+  const router = useRouter();
   const { data: session } = useSession();
   const [org, setOrg] = useState<Organization | null>(null);
   const [members, setMembers] = useState<Member[]>([]);
@@ -172,7 +173,7 @@ export default function OrganizationSettingsPage({
         method: 'DELETE',
       });
       if (res.ok) {
-        window.location.href = '/dashboard/organizations';
+        router.push('/dashboard/organizations');
       } else {
         const error = await res.json();
         alert(error.error || 'Failed to delete organization');
